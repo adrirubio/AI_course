@@ -1,21 +1,31 @@
-* Activation Functions:
-  We've learnt that the sigmoid function allows us to build neural networks
-  
-  Standarization:
-  - We prefer the inputs to be centered around 0 and aprox. the same range
-  - The sigmoid is problematic in this area
-  - This is where the Hyperbolic tangent (tanh) comes in
-* sigmoid:
-  - maps values from (0...1)
-  - makes the neural network's decicion boundary nonlinear
-  - Unfortunately, there are some problems with the sigmoid
-* hyperbolic tangent (tanh):
-  - maps values from (-1...1)
-  - still a bit problematic (Vanishing Gradient Problem)
-* ReLu (rectifier linear unit):
-  ReLu works
-* Other options:
-  - LReLu (Leaky ReLU)
-  - ELU
-  - Softplus
-* Machine Learning is experimentation, not philosophy
+* Activation Functions in Neural Networks
+  Neural networks use different types of activation functions to introduce non-linearity, enabling them to learn complex patterns in data.
+
+** Sigmoid Function
+   - Range: (0, 1)
+   - Usage: Common in the final layer of binary classification neural networks.
+   - Issues:
+     + Vanishing Gradient Problem: For inputs with large absolute values, the function's gradient is very small, leading to minimal weight updates during backpropagation.
+     + Output not Zero-Centered: The output is always positive, leading to gradients that are always all positive or all negative.
+
+** Hyperbolic Tangent (tanh)
+   - Range: (-1, 1)
+   - Usage: Often used in hidden layers; zero-centered, making learning in the next layer easier.
+   - Issues:
+     + Vanishing Gradient Problem: Like sigmoid, tanh also suffers from vanishing gradients for large absolute input values.
+
+** ReLU (Rectified Linear Unit)
+   - Characteristics: Outputs the input directly if positive; otherwise, zero.
+   - Usage: Very popular in hidden layers of deep neural networks.
+   - Advantages: Helps alleviate the vanishing gradient problem; allows for faster training.
+   - Issues:
+     + Dying ReLU Problem: For inputs less than zero, the gradient is zero, causing neurons to potentially "die".
+
+** Other Variants (Leaky ReLU, ELU)
+   - Purpose: Address issues of ReLU, such as the dying ReLU problem, by allowing small gradients when inactive.
+
+** Softplus
+   - Characteristics: A smooth approximation to the ReLU function.
+
+** Note
+   - Machine Learning is more about experimentation than philosophy, emphasizing practical application and testing over strict adherence to theoretical preferences.
