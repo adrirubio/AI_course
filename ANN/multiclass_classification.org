@@ -1,10 +1,9 @@
 * Classifications:
-  -Binary classification:
-    Only 2 options:
-    Example: fraud vs. no fraud
-             disease vs. no disease
-   
-  -Multiclass classification:
-    More than 2 options:
-    Example: image classification
-             speech recognition 
+** Binary classification:
+   - Only 2 options:
+     Example: fraud vs. no fraud
+     disease vs. no disease
+** Multiclass classification:
+   - More than 2 options:
+     Example: image classification
+     speech recognition 
