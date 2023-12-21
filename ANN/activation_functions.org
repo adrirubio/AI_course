@@ -1,0 +1,26 @@
+* Activation Functions:
+  We've learnt that the sigmoid function allows us to build neural networks
+  
+  Standarization:
+     We prefer the inputs to be centered around 0 and aprox. the same range
+     The sigmoid is problematic in this area
+     This is where the Hyperbolic tangent (tanh) comes in
+
+* sigmoid:
+  -maps values from (0...1)
+  -makes the neural network's decicion boundary nonlinear
+  Unfortunately, there are some problems with the sigmoid
+
+* hyperbolic tangent (tanh):
+  -maps values from (-1...1)
+  -still a bit problematic (Vanishing Gradient Problem)
+
+* ReLu (rectifier linear unit):
+  ReLu works
+
+* Other options:
+  - LReLu (Leaky ReLU)
+  - ELU
+  - Softplus
+
+Machine Learning is experimentation, not philosophy
