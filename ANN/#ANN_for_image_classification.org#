@@ -69,3 +69,5 @@
   #+END_SRC
   
   - This code checks if a GPU is available otherwise it uses a CPU
+
+
