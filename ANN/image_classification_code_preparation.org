@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 * steps:
   - Load the data
     - MNIST dataset
@@ -16,14 +17,42 @@
   handwritten digits each image is 28 x 28 = 784 pixels (grayscale) 0
   = black, 255 = white
   
+=======
+* Steps for Building and Training a Model
+  - Overview of the process to build and train a neural network model using the MNIST dataset in PyTorch.
+
+** Load the Data
+   - Dataset: MNIST dataset containing images of handwritten digits (0-9).
+   - Availability: Included in Pytorch.
+   - Characteristics: Each image is 28x28 pixels, grayscale (0 = black, 255 = white).
+
+** Build the Model
+   - Approach: Use sequential dense layers, ending with multiclass logistic regression.
+
+** Train the Model
+   - Method: Batch gradient descent due to large dataset size.
+
+** Evaluate the Model
+   - Consideration: Evaluate in batches due to memory constraints.
+
+** Make Predictions
+   - Process: Use the trained model to make predictions on new data.
+
+* Step 1: Load the Data
+  - Source: MNIST dataset is available in the torchvision library.
+  - Format: Images are 28x28 pixels, grayscale.
+
+>>>>>>> 9b1c925c8171119e74bcb7a5c2c8f58135ad9f06
   #+BEGIN_SRC python
   # Loading the data
   test_dataset = torchvision.datasets.MNIST(
     root='.',
-    train=_____,
-    transform=tran
+    train=False,
+    transform=transforms.ToTensor()
+  )
   #+END_SRC
 
+<<<<<<< HEAD
 * Step 3: Train the model:
   - The model has 60,000 samples and this is too big a number to fit
     into memory.
@@ -31,24 +60,31 @@
   
   Pytorch:
   
+=======
+* Step 2/3: Build and Train the Model
+  - Challenge: The dataset size (60,000 samples) is too large for memory.
+  - Solution: Use Batch Gradient Descent.
+
+>>>>>>> 9b1c925c8171119e74bcb7a5c2c8f58135ad9f06
   #+BEGIN_SRC python
-  # Batch Gradient Desent
+  # Batch Gradient Descent
   batch_size = 128
   train_loader = torch.utils.data.DataLoader(dataset=train_dataset, 
                                              batch_size=batch_size, 
                                              shuffle=True)
-  #Then:					     
+
+  # Training loop
   for it in range(n_epochs):
     train_loss = []
     for inputs, targets in train_loader:
+      # Training steps
   #+END_SRC
 
-* Step 4/5: Evaluating and Making Predictions:
-  - Can't evaluate the entire dataset at once
-  - Use the data loader again
+* Step 4/5: Evaluate and Make Predictions
+  - Note: Similar to training, evaluation is also done in batches due to memory constraints.
 
   #+BEGIN_SRC python
-   Evaluating a batch
+  # Evaluating a batch
   n_correct = 0.
   n_total = 0.
   for inputs, targets in test_loader:
