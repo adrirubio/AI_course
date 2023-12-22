@@ -1,0 +1,60 @@
+* steps:
+  - Load the data
+    - MNIST dataset
+    - 10 digits(0 - 9)
+    - Already included in Pytorch
+  - Build the model
+    - Sequential dense layers ending with multiclass logistic regression
+  - Train the model
+    - batch gradient descent
+  - Evaluate the model
+  - Make predictions
+
+* Step 1: Load the data:
+  Inside the torchvision library (already installed on Colab) uses the
+  famous MNIST dataset - standard machine learning benchmark of
+  handwritten digits each image is 28 x 28 = 784 pixels (grayscale) 0
+  = black, 255 = white
+  
+  #+BEGIN_SRC python
+  # Loading the data
+  test_dataset = torchvision.datasets.MNIST(
+    root='.',
+    train=_____,
+    transform=tran
+  #+END_SRC
+
+* Step 3: Train the model:
+  - The model has 60,000 samples and this is too big a number to fit
+    into memory.
+  Solution: Batch Gradient Desent
+  
+  Pytorch:
+  
+  #+BEGIN_SRC python
+  # Batch Gradient Desent
+  batch_size = 128
+  train_loader = torch.utils.data.DataLoader(dataset=train_dataset, 
+                                             batch_size=batch_size, 
+                                             shuffle=True)
+  #Then:					     
+  for it in range(n_epochs):
+    train_loss = []
+    for inputs, targets in train_loader:
+  #+END_SRC
+
+* Step 4/5: Evaluating and Making Predictions:
+  - Can't evaluate the entire dataset at once
+  - Use the data loader again
+
+  #+BEGIN_SRC python
+   Evaluating a batch
+  n_correct = 0.
+  n_total = 0.
+  for inputs, targets in test_loader:
+    # Forward pass
+    outputs = model(inputs)
+    ...
+  test_acc = n_correct / n_total
+  #+END_SRC
+
