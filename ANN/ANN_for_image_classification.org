@@ -79,4 +79,6 @@
   optimizer = torch.optim.Adam(model.parameters())
   #+END_SRC
 
+**** Using a data loader
+  - Useful because it automatically generates batches in the training loop
 
