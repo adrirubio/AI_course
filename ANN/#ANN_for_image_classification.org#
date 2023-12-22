@@ -32,13 +32,16 @@
 
   #+BEGIN_SRC python
   test_dataset = torchvision.datasets.MNIST(
+    # specify where to download the data, '.' means the current directory
     root='.',
+    # indicates that this is the test dataset by making train=False
     train=False,
+    # converts the images into PyTorch tensors
     transform=transforms.ToTensor(),
     download=True)
     test_dataset.data.shape
   #+END_SRC  
     
-  
+  Note that no
   
    
