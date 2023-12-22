@@ -80,5 +80,19 @@
   #+END_SRC
 
 **** Using a data loader
-  - Useful because it automatically generates batches in the training loop
+  - This is useful because it automatically generates batches in the training loop
+  
+  #+BEGIN_SRC python
+  
+  batch_size = 128
+  train_loader = torch.utils.data.DataLoader(dataset=train_dataset, 
+                                             batch_size=batch_size, 
+                                             shuffle=True)
+  
+  test_loader = torch.utils.data.DataLoader(dataset=test_dataset, 
+                                            batch_size=batch_size, 
+                                            shuffle=False)
+  #+END_SRC
 
+  - batch_size = 128: This sets the batch size to 128
+   
