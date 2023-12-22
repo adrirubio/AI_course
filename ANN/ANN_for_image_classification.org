@@ -1,7 +1,7 @@
 * Full Walkthrough
   We start by importing these libraries:
   
-  #+BEGIN_SRC
+  #+BEGIN_SRC python
   import torch
   import torch.nn as nn
   import torchvision
