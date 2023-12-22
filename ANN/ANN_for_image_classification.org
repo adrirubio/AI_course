@@ -94,5 +94,10 @@
                                             shuffle=False)
   #+END_SRC
 
-  - batch_size = 128: This sets the batch size to 128
+  - "batch_size = 128": This sets the batch size to 128
+  - "train_loader = torch.utils.data.DataLoader(...)": This creates a data loader for the training dataset.
+  - "test_loader = torch.utils.data.DataLoader(...)": This creates a data loader for the testing dataset.
+  - "dataset=train_dataset": This specifies that the data loader should use "train_dataset" (which we defined earlier)
+  - "dataset=test_dataset": This specifies that the data loader should use "test_dataset" (which we defined earlier)
+  - "shuffle=True/False": This should be True on the training dataset but False on the testing dataset.
    
