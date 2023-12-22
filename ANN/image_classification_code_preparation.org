@@ -1,4 +1,4 @@
-* steps:
+* Steps:
   - Load the data
     - MNIST dataset
     - 10 digits(0 - 9)
