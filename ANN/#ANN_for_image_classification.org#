@@ -11,3 +11,18 @@
   #+END_SRP
   
   The next step is to download the data:
+  
+  -Train Data:
+  
+  #+BEGIN_SRC python
+  train_dataset = torchvision.datasets.MNIST(
+    root='.',
+    # specify where to download the data, '.' means the current directory
+    train=True,
+    # make sure it is the train dataset
+    transform=transforms.ToTensor(),
+    # converts the images into PyTorch tensors
+    download=True)
+
+   # see the training data:
+   
