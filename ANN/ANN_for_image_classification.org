@@ -59,8 +59,8 @@
   - "nn.ReLU()": ReLU is a commonly used activation function in neural networks, especially in hidden layers 
   - "nn.Linear(128, 10)": This takes the 128-dimensional output from the previous layer and transforms it into a 10-dimensional output
 
-*** Using the GPU
-  - There is a need to make use of the GP you we know that GP use are useful for speeding up deep learning
+**** Using the GPU
+  - There is a need to make use of the GPU we know that GPU's use are useful for speeding up deep learning
   
   #+BEGIN_SRC python
   device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -69,3 +69,14 @@
   #+END_SRC
   
   - This code checks if a GPU is available otherwise it uses a CPU
+
+**** Setting loss and optimizer
+  - Here we set the loss and the optimizer
+     
+  #+BEGIN_SRC python
+  # Loss and optimizer
+  criterion = nn.CrossEntropyLoss()
+  optimizer = torch.optim.Adam(model.parameters())
+  #+END_SRC
+
+
