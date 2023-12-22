@@ -10,7 +10,7 @@
   import matplotlib.pyplot as plt
   #+END_SRC
   
-  The next step is to download the data:
+** The first step is to download the data
   
   - Train Data:
   
@@ -39,9 +39,11 @@
     # converts the images into PyTorch tensors
     transform=transforms.ToTensor(),
     download=True)
-    test_dataset.data.shape
   #+END_SRC  
     
-  Note that no
+  Note that nothing is downloaded because all the files were downloaded in the previous step
   
+** Now it is time to build the model
+   
+   #+BEGIN_SRC python
    
