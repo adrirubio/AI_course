@@ -52,4 +52,9 @@
     nn.Linear(128, 10)
    )
    #+END_SRC
-   
+
+  Lets break down what each part of the code does:
+  - "nn.Sequential": This is a sequential container from PyTorch's neural network module (torch.nn)
+  - "nn.Linear(784, 128)": The first argument (784) is the size of each input sample, and the second argument (128) is the size of each output sample.
+  - "nn.ReLU()": ReLU is a commonly used activation function in neural networks, especially in hidden layers 
+  - "nn.Linear(128, 10)": This takes the 128-dimensional output from the previous layer and transforms it into a 10-dimensional output
