@@ -257,7 +257,7 @@
    print(f"Train acc: {train_acc:.4f}, Test acc: {test_acc:.4f}")
    #+END_SRC
    
-   ** Initializing Counters
+**** Initializing Counters
    - The code begins by initializing counters for the correct predictions (`n_correct`) and the total number of samples (`n_total`). These are set to zero as floating-point numbers.
 
 **** Processing the Training Data
