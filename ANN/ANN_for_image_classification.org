@@ -206,7 +206,81 @@
    #+END_SRC
    
    - Now you should end up with plot showing the train and test loss
+
+** Calculating accuracy
    
+   #+BEGIN_SRC python
+   n_correct = 0.
+   n_total = 0.
+   for inputs, targets in train_loader:
+     # move data to GPU
+     inputs, targets = inputs.to(device), targets.to(device)
+
+     # reshape the input
+     inputs = inputs.view(-1, 784)
+
+     # Forward pass
+     outputs = model(inputs)
+
+     # Get prediction
+     # torch.max returns both max and argmax
+     _, predictions = torch.max(outputs, 1)
+  
+     # update counts
+     n_correct += (predictions == targets).sum().item()
+     n_total += targets.shape[0]
+
+   train_acc = n_correct / n_total
+
+
+   n_correct = 0.
+   n_total = 0.
+   for inputs, targets in test_loader:
+     # move data to GPU
+     inputs, targets = inputs.to(device), targets.to(device)
+
+     # reshape the input
+     inputs = inputs.view(-1, 784)
+
+     # Forward pass
+     outputs = model(inputs)
+
+     # Get prediction
+     # torch.max returns both max and argmax
+     _, predictions = torch.max(outputs, 1)
+  
+     # update counts
+     n_correct += (predictions == targets).sum().item()
+     n_total += targets.shape[0]
+
+   test_acc = n_correct / n_total
+   print(f"Train acc: {train_acc:.4f}, Test acc: {test_acc:.4f}")
+   #+END_SRC
+   
+   ** Initializing Counters
+   - The code begins by initializing counters for the correct predictions (`n_correct`) and the total number of samples (`n_total`). These are set to zero as floating-point numbers.
+
+**** Processing the Training Data
+   - The code iterates over the training data (`train_loader`), processing each batch of inputs and targets.
+   - For each batch, the data is first moved to the appropriate device (GPU or CPU) for processing. This is important for computational efficiency, especially when using GPUs.
+   - The input data is then reshaped to match the input requirements of the model. In the context of image data, this often involves flattening the image tensors.
+
+**** Forward Pass and Predictions
+   - A forward pass through the model is conducted to obtain the outputs (predictions).
+   - The model's predictions are determined using `torch.max`, which provides the indices of the maximum values along the specified dimension, effectively returning the class with the highest predicted probability.
+
+**** Updating Accuracy Counters
+   - The code updates the count of correct predictions by comparing the model's predictions with the actual targets.
+   - The total number of samples processed is also updated. This count is used to calculate the accuracy.
+
+**** Calculating Training Accuracy
+   - After processing all batches in the training dataset, the training accuracy is computed as the ratio of correct predictions to the total number of samples.
+
+**** Repeating the Process for Test Data
+   - The same process is repeated for the test dataset (`test_loader`). This step is crucial for evaluating how well the model generalizes to new, unseen data.
+
+**** Final Accuracy Calculation and Output
+   - Finally, the code calculates and prints the training and test accuracies. These metrics are fundamental for assessing the performance of the model in classification tasks, indicating how often the model makes correct predictions.
 
 
 
