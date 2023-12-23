@@ -206,6 +206,11 @@
    #+END_SRC
    
    - Now you should end up with plot showing the train and test loss
+
+** Calculating accuracy
+   
+   #+BEGIN_SRC python
+   
    
 
 
