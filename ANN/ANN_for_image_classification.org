@@ -282,6 +282,9 @@
 **** Final Accuracy Calculation and Output
    - Finally, the code calculates and prints the training and test accuracies. These metrics are fundamental for assessing the performance of the model in classification tasks, indicating how often the model makes correct predictions.
 
+** Conclusion
+
+In summary, this document has provided a detailed explanation of how to create an image classificatin ANN model.
 
 
 
