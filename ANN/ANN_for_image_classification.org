@@ -194,3 +194,16 @@
    Epoch 9/10, Train Loss: 0.0434, Test Loss: 0.0749
    Epoch 10/10, Train Loss: 0.0374, Test Loss: 0.0740 
    #+END_SRC
+
+** Plotting the loss per iteration
+   
+   #+BEGIN_SRC python
+   # Plot the train loss and test loss per iteration
+   plt.plot(train_losses, label='train loss')
+   plt.plot(test_losses, label='test loss')
+   plt.legend()
+   plt.show()
+   #+END_SRC
+   
+
+
