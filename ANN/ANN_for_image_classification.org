@@ -102,7 +102,9 @@
   - "shuffle=True/False": This should be "True" on the training dataset but "False" on the testing dataset.
 
 ** Training the model
+   Here we will train the model
 
-
+   #+BEGIN_SRC python
+   
 
    
