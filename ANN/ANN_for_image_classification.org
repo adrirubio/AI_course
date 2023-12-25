@@ -29,7 +29,7 @@
   #+END_SRC
 
 **** Test Data
-
+ 
   #+BEGIN_SRC python
   test_dataset = torchvision.datasets.MNIST(
     # specify where to download the data, '.' means the current directory
