@@ -1,3 +1,26 @@
 * Convolution On Color Images
   We know that images are 3-D objects
   But up until now we have seen only 2-D objects
+
+** 3D Convolution in Convolutional Neural Networks (CNNs)
+  3D convolution extends the principles of convolutional operations from 2D images to 3D volumetric data, crucial in areas like medical imaging, 3D modeling, and video processing.
+
+**** 3D Data Representation
+   - Data is represented in three dimensions: width, height, and depth.
+   - Example: In 3D medical images, each voxel (3D pixel) represents data in a volume.
+
+**** 3D Filters/Kernels
+   - 3D filters, or cubes of weights, slide over the input data across its width, height, and depth.
+   - These filters are analogous to 2D filters but extended to the third dimension.
+
+**** Convolution Operation
+   - The filter performs element-wise multiplication with the input volume at each position.
+   - The results are summed up to produce a single value in the output volume.
+   - This process repeats across the entire input volume.
+
+**** Feature Extraction
+   - Filters can extract various features (edges, textures, patterns) from 3D data.
+   - This is similar to feature extraction in 2D but in a volumetric context.
+
+**** Output
+   - The output is a 3D volume where each feature corresponds to the filter's response at each input position.
