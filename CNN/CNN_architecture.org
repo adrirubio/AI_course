@@ -1,0 +1,7 @@
+** CNN_architecture
+   You can think of a CNN as a "feature transformer"
+
+**** Pooling
+     - At a high level, pooling is downsampling
+     - Output a smaller image from a bigger image
+     - If input is 100x100, a pool size of 2 would yield 50x50
