@@ -9,4 +9,22 @@
      There are two types of pooling
         - Max pooling
 	- Average pooling
+
+***** Max pooling
+****** What is Max Pooling
+   - A process that reduces the size of the feature maps by summarizing the presence of features in patches of the feature map.
+
+****** How it Works
+   - A window (typically 2x2) slides over the feature map.
+   - At each position, the maximum value within the window is selected.
+   - This results in a new, reduced-size feature map where each element is the maximum value of a patch from the original map.
+
+****** Benefits
+   - Reduces the computational cost by decreasing the number of parameters.
+   - Helps in making the detection of features invariant to scale and orientation changes.
+   - Minimizes the risk of overfitting by providing an abstracted form of the features.
+
+****** Summary
+  Max pooling is a crucial component in CNNs for efficient and effective feature learning and representation.
+
      
