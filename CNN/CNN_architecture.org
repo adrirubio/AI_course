@@ -27,4 +27,6 @@
 ****** Summary
   Max pooling is a crucial component in CNNs for efficient and effective feature learning and representation.
 
-     
+  Max pooling example:
+  - [[.images/max-pooling.png]]
+    
