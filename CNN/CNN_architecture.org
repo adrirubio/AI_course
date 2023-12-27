@@ -27,6 +27,21 @@
 ****** Summary
   Max pooling is a crucial component in CNNs for efficient and effective feature learning and representation.
 
-  Max pooling example:
-  - [[.images/max-pooling.png]]
+***** Average pooling
+****** What is Average Pooling
+   - A process that summarizes the features in a patch of the feature map by calculating their average.
+
+****** How it Works
+   - A window (typically 2x2 or 3x3) slides over the feature map.
+   - At each position, it computes the average of the values within the window.
+   - This results in a new feature map where each element is the average of a patch from the original map.
+
+****** Benefits
+   - Reduces the number of parameters, lowering the computational load.
+   - Helps in extracting smooth and less noisy features.
+   - Contributes to the model's ability to generalize by focusing on the overall presence of features rather than their specific location.
+
+****** Summary
+  Average pooling is an important component in CNNs for feature abstraction and dimensionality reduction.
+
     
