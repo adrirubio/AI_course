@@ -4,5 +4,24 @@
     Same as usual imports
     Except for datetime to calculate the time taken for each epoc
     #+BEGIN_SRC python
-     
-    
+    import torch
+    import torch.nn as nn
+    import torchvision
+    import torchvision.transforms as transforms
+    import numpy as np
+    import matplotlib.pyplot as plt
+    from datetime import datetime 
+    #+END_SRC
+
+*** Loading the data
+    Same as the ANN MNIST only changing the name
+
+***** Training data
+      #+BEGIN_SRC python
+      train_dataset = torchvision.datasets.CIFAR10(
+          root='.',
+	  train=True,
+	  transform=transforms.ToTensor(),
+	  download=True)
+	  test_dataset = torchvision.datasets.CIFAR10(
+      #+END_SRC
