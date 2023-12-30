@@ -65,3 +65,10 @@
 	out = out.view(out.size(0), -1)
 	out = self.dense_layers(out)
 	return out    
+    #+END_SRC
+
+***** Instantiate the model
+      #+BEGIN_SRC python
+      # Instantiate the model
+      model = CNN(K)
+      #+END_SRC
