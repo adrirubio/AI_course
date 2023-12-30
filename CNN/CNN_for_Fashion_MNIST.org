@@ -1,8 +1,7 @@
 ** Full Walkthrough
 
 *** Imports
-    Same as usual imports
-    Except for datetime to calculate the time taken for each epoc
+    Same as usual imports except for datetime to calculate the time taken for each epoc
     #+BEGIN_SRC python
     import torch
     import torch.nn as nn
@@ -156,8 +155,7 @@
     #+END_SRC
 
 *** Training the model
-    The same as with the ANN model
-    Except for datetime calculation here and there
+    The same as with the ANN model except for datetime calculation here and there
     #+BEGIN_SRC python
       # A function to encapsulate the training loop
       def batch_gd(model, criterion, optimizer, train_loader, test_loader, epochs):
@@ -268,4 +266,4 @@
     #+END_SRC
 
 *** Conclusion
-    This model was very similar to the ANN but the only main difference was the defining of the model where it was a different
+    This model was very similar to the ANN but the only main difference was defining the model.
