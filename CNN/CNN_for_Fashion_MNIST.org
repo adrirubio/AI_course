@@ -67,8 +67,68 @@
 	return out    
     #+END_SRC
 
+**** Overview
+   The CNN model is designed for image classification tasks and is structured in two main parts: convolutional layers for feature extraction and dense (fully connected) layers for classification.
+
+***** Convolutional Layers
+   The model begins with a series of convolutional layers, which are crucial for capturing spatial hierarchies and features in the input images.
+
+***** Layer 1
+    - Starts with a 2D convolutional layer.
+    - It has 1 input channel, suitable for processing grayscale images.
+    - Applies 32 filters (or kernels), each of size 3x3.
+    - Uses a stride of 2, reducing the spatial dimensions of the output.
+
+***** Layer 2
+    - Another 2D convolutional layer.
+    - Increases the number of filters to 64, allowing the network to learn more complex features.
+    - Maintains a kernel size of 3x3 and a stride of 2.
+
+***** Layer 3
+    - The third convolutional layer.
+    - Further increases the filters to 128.
+    - Continues with the same kernel size and stride, progressively reducing the image dimensions and increasing the depth.
+
+***** Activation Function
+   - After each convolutional layer, a ReLU (Rectified Linear Unit) activation function is applied.
+   - ReLU introduces non-linearity, allowing the model to learn complex patterns.
+
+***** Transition to Dense Layers
+   - The output from the convolutional layers is a set of high-level feature maps.
+   - These feature maps are flattened into a one-dimensional vector before being fed into the dense layers.
+
+***** Dense (Fully Connected) Layers
+   - The flattened vector is processed through dense layers for the final classification.
+
+***** Dropout Layer
+    - A dropout layer is applied with a dropout rate of 0.2.
+    - This helps prevent overfitting by randomly setting a fraction of the inputs to zero.
+
+***** First Dense Layer
+    - Transforms the flattened features into an intermediate representation of 512 dimensions.
+
+***** Second Dropout Layer
+    - Another dropout layer is used, also with a rate of 0.2, for additional regularization.
+
+***** Final Dense Layer
+    - The last dense layer maps the 512-dimensional vector to the number of output classes (denoted as K).
+    - This layer's output can be used to determine the predicted class of the input image.
+
+***** Conclusion
+   The CNN model, through its architecture, effectively learns spatial hierarchies and complex patterns in the input data, making it suitable for image classification tasks. The combination of convolutional layers and dense layers, along with dropout for regularization, offers a balance between feature extraction and computational efficiency.
+
+
 ***** Instantiate the model
       #+BEGIN_SRC python
       # Instantiate the model
       model = CNN(K)
       #+END_SRC
+
+*** Move data to GPU
+    #+BEGIN_SRC python
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    print(device)
+    model.to(device)
+    #+END_SRC
+
+***
