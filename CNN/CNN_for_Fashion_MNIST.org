@@ -209,3 +209,63 @@
       train_losses, test_losses = batch_gd(
 	model, criterion, optimizer, train_loader, test_loader, epochs=15)
     #+END_SRC
+
+*** Plot the loss
+    Same as with ANN
+    #+BEGIN_SRC python
+    # Plot the train loss and test loss per iteration
+    plt.plot(train_losses, label='train loss')
+    plt.plot(test_losses, label='test loss')
+    plt.legend()
+    plt.show()
+    #+END_SRC
+
+*** Calculate Accuracy
+    Same as with ANN
+    #+BEGIN_SRC python
+      # Accuracy
+
+      model.eval()
+      n_correct = 0.
+      n_total = 0.
+      for inputs, targets in train_loader:
+	# move data to GPU
+	inputs, targets = inputs.to(device), targets.to(device)
+
+	# Forward pass
+	outputs = model(inputs)
+
+	# Get prediction
+	# torch.max returns both max and argmax
+	_, predictions = torch.max(outputs, 1)
+  
+	# update counts
+	n_correct += (predictions == targets).sum().item()
+	n_total += targets.shape[0]
+
+      train_acc = n_correct / n_total
+
+
+      n_correct = 0.
+      n_total = 0.
+      for inputs, targets in test_loader:
+	# move data to GPU
+	inputs, targets = inputs.to(device), targets.to(device)
+
+	# Forward pass
+	outputs = model(inputs)
+
+	# Get prediction
+	# torch.max returns both max and argmax
+	_, predictions = torch.max(outputs, 1)
+  
+	# update counts
+	n_correct += (predictions == targets).sum().item()
+	n_total += targets.shape[0]
+
+      test_acc = n_correct / n_total
+      print(f"Train acc: {train_acc:.4f}, Test acc: {test_acc:.4f}")
+    #+END_SRC
+
+*** Conclusion
+    This model was very similar to the ANN but the only main difference was the defining of the model where it was a different
