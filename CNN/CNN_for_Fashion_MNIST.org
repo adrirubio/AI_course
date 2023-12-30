@@ -131,4 +131,32 @@
     model.to(device)
     #+END_SRC
 
-***
+*** Loss and optimizer
+    Nothing new
+    #+BEGIN_SRC python
+    # Loss and optimizer
+    criterion = nn.CrossEntropyLoss()
+    optimizer = torch.optim.Adam(model.parameters())
+    #+END_SRC
+
+*** Data loader
+    #+BEGIN_SRC python
+    # Data loader
+    # Useful because it automatically generates batches in the training loop
+    # and takes care of shuffling
+
+    batch_size = 128
+    train_loader = torch.utils.data.DataLoader(dataset=train_dataset, 
+                                               batch_size=batch_size, 
+                                               shuffle=True)
+
+    test_loader = torch.utils.data.DataLoader(dataset=test_dataset, 
+                                              batch_size=batch_size, 
+                                              shuffle=False)
+    #+END_SRC
+
+*** Training the model
+    The same as with the ANN model
+    Except for datetime calculation here and there
+    #+BEGIN_SRC python
+    
