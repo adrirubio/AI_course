@@ -209,3 +209,14 @@
       train_losses, test_losses = batch_gd(
 	model, criterion, optimizer, train_loader, test_loader, epochs=15)
     #+END_SRC
+
+*** Plot the loss
+    #+BEGIN_SRC python
+    # Plot the train loss and test loss per iteration
+    plt.plot(train_losses, label='train loss')
+    plt.plot(test_losses, label='test loss')
+    plt.legend()
+    plt.show()
+    #+END_SRC
+
+*** Calculate Accur
