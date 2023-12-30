@@ -1,0 +1,8 @@
+** Full Walkthrough
+
+*** Imports
+    Same as usual imports
+    Except for datetime to calculate the time taken for each epoc
+    #+BEGIN_SRC python
+     
+    

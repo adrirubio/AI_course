@@ -1,0 +1,17 @@
+** Full Walkthrough
+
+*** Imports
+    Same as usual imports
+    Except for datetime to calculate the time taken for each epoc
+    #+BEGIN_SRC python
+    import torch
+    import torch.nn as nn
+    import torch.nn.functional as F
+    import torchvision
+    import torchvision.transforms as transforms
+    import numpy as np
+    import matplotlib.pyplot as plt
+    from datetime import datetime 
+    #+END_SRC
+
+
