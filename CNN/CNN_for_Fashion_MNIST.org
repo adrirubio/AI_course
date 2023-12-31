@@ -1,7 +1,7 @@
 ** Full Walkthrough
 
 *** Imports
-    Same as usual imports except for datetime to calculate the time taken for each epoc
+    Same as usual imports except for datetime to calculate the time taken for each epoch
     #+BEGIN_SRC python
     import torch
     import torch.nn as nn
@@ -267,3 +267,4 @@
 
 *** Conclusion
     This model was very similar to the ANN but the only main difference was defining the model.
+ 
