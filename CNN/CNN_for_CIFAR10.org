@@ -279,3 +279,31 @@
     #+END_SRC
 
 
+
+
+
+***** Output
+      The output should look a bit like this
+
+      #+BEGIN_SRC
+      Epoch 1/80, Train Loss: 0.9237,       Test Loss: 0.7972, Duration: 0:00:29.123917
+      Epoch 2/80, Train Loss: 0.7947,       Test Loss: 0.7722, Duration: 0:00:28.800789
+      Epoch 3/80, Train Loss: 0.7212,       Test Loss: 0.7293, Duration: 0:00:28.556962
+      Epoch 4/80, Train Loss: 0.6640,       Test Loss: 0.6850, Duration: 0:00:28.746121
+      Epoch 5/80, Train Loss: 0.6301,       Test Loss: 0.7859, Duration: 0:00:29.404001
+      Epoch 6/80, Train Loss: 0.5949,       Test Loss: 0.5976, Duration: 0:00:28.846777
+      Epoch 7/80, Train Loss: 0.5635,       Test Loss: 0.6176, Duration: 0:00:28.998962
+      Epoch 8/80, Train Loss: 0.5413,       Test Loss: 0.6167, Duration: 0:00:30.696687
+      Epoch 9/80, Train Loss: 0.5232,       Test Loss: 0.5548, Duration: 0:00:28.857727
+      Epoch 10/80, Train Loss: 0.5057,       Test Loss: 0.5892, Duration: 0:00:28.629748
+      Epoch 75/80, Train Loss: 0.1929,       Test Loss: 0.4106, Duration: 0:00:28.645027
+      Epoch 76/80, Train Loss: 0.1907,       Test Loss: 0.3895, Duration: 0:00:29.182263
+      Epoch 77/80, Train Loss: 0.1913,       Test Loss: 0.3805, Duration: 0:00:28.543988
+      Epoch 78/80, Train Loss: 0.1852,       Test Loss: 0.4197, Duration: 0:00:28.447630
+      Epoch 79/80, Train Loss: 0.1845,       Test Loss: 0.4108, Duration: 0:00:28.605826
+      Epoch 80/80, Train Loss: 0.1831,       Test Loss: 0.4396, Duration: 0:00:30.039941
+      #+END_SRC
+
+
+
+      
