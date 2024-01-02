@@ -13,7 +13,7 @@
     #+END_SRC
 
 *** Downloading the data
-    Here we are using data augmentation
+    Here we use data augmentation
     #+BEGIN_SRC python
       # examples: https://pytorch.org/docs/stable/torchvision/transforms.html
       transformer_train = torchvision.transforms.Compose([
@@ -39,8 +39,8 @@
           download=True)
     #+END_SRC
 
-    Here we are using just a few of the possible data augmentation techniques
-    As you can see we call the data augmentation techniques when we download the dataset
+    - Here we use just a few of the possible data augmentation techniques
+    - As you can see we call the data augmentation techniques when we download the dataset
 
     #+BEGIN_SRC python
     transform=transformer_train,
