@@ -148,7 +148,48 @@
         x = self.dropout(x, p=0.2)
         x = self.fc2(x)
     #+END_SRC
-    
+
+**** Class Definition
+   - The CNN is defined as a subclass of PyTorch's nn.Module, which is the base class for all neural network modules in PyTorch.
+   - The constructor of the class takes a parameter 'K', representing the number of output classes.
+
+**** Convolutional Layers
+   - The model consists of three sequential blocks of convolutional layers, each designed to extract features from the input image or preceding feature maps.
+
+***** Convolutional Layer Block 1
+    - Comprises two 2D convolutional layers with 32 filters each.
+    - Both layers use a kernel size of 3x3 and padding to maintain spatial dimensions.
+    - Each convolutional layer is followed by a ReLU activation function for non-linearity and batch normalization for stabilizing training.
+
+***** Convolutional Layer Block 2
+    - Similar to the first block but with 64 filters in each convolutional layer.
+    - Follows the same structure with ReLU activation and batch normalization.
+
+***** Convolutional Layer Block 3
+    - Contains convolutional layers with 128 filters each, also followed by ReLU and batch normalization.
+    - Each block ends with a Max Pooling layer to reduce spatial dimensions by half.
+
+**** Dense (Fully Connected) Layers
+   - Following the convolutional layers, the network includes dense layers to classify the extracted features into 'K' classes.
+
+***** First Dense Layer
+    - Transforms the flattened output from the convolutional layers into a 1024-dimensional space.
+
+***** Activation and Dropout
+    - A ReLU activation is applied after the first dense layer.
+    - Dropout is employed twice to reduce overfitting, with different dropout rates.
+
+***** Second Dense Layer
+    - Maps the 1024-dimensional features to the 'K' output classes, corresponding to the classification targets.
+
+**** Forward Pass
+   - The forward method defines the data flow through the CNN.
+   - Input data passes sequentially through the convolutional layers, then is flattened before being processed by the dense layers.
+   - The output of the network is the class scores for the input data.
+
+**** Conclusion
+  - This CNN architecture, with its combination of convolutional and dense layers, is suitable for various image classification tasks.
+  - The model is designed to learn hierarchical feature representations, making it effective for recognizing patterns in images.
 
 
-    
+
