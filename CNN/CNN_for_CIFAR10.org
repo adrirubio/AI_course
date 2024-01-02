@@ -9,7 +9,7 @@
     import torchvision.transforms as transforms
     import numpy as np
     import matplotlib.pyplot as plt
-    from datetime import datetime 
+    from datetime import datetime
     #+END_SRC
 
 *** Downloading the data
@@ -45,4 +45,24 @@
     #+BEGIN_SRC python
     transform=transformer_train,
     #+END_SRC
+
+*** Define number of classes
+    Here we define the number of classes (in our case 10) as K
+
+    #+BEGIN_SRC python
+    # number of classes
+    K = len(set(train_dataset.targets))
+    print("number of classes:", K)
+    #+END_SRC
+
+
+
+
+
+
+
+
+
+
+
     
