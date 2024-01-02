@@ -1,0 +1,41 @@
+** Full Walkthrough
+
+*** Imports
+    Same as usual imports except for datetime to calculate the time taken for each epoch
+    #+BEGIN_SRC python
+    import torch
+    import torch.nn as nn
+    import torchvision
+    import torchvision.transforms as transforms
+    import numpy as np
+    import matplotlib.pyplot as plt
+    from datetime import datetime 
+    #+END_SRC
+
+*** Downloading the data
+    Here we are using data augmentation
+    #+BEGIN_SRC python
+      # examples: https://pytorch.org/docs/stable/torchvision/transforms.html
+      transformer_train = torchvision.transforms.Compose([
+          # torchvision.transforms.ColorJitter(
+          #     brightness=0.2, contrast=0.2, saturation=0.2, hue=0.2),
+        transforms.RandomCrop(32, padding=4),
+        torchvision.transforms.RandomHorizontalFlip(p=0.5),
+        # torchvision.transforms.RandomRotation(degrees=15),
+        torchvision.transforms.RandomAffine(0, translate=(0.1, 0.1)),
+        # torchvision.transforms.RandomPerspective(),
+        transforms.ToTensor(),                                            
+      ])
+
+      train_dataset = torchvision.datasets.CIFAR10(
+          root='.',
+          train=True,
+          transform=transformer_train,
+          download=True)
+      test_dataset = torchvision.datasets.CIFAR10(
+          root='.',
+          train=False,
+          transform=transforms.ToTensor(),
+          download=True)
+    #+END_SRC
+
