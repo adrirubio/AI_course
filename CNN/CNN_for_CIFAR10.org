@@ -1,4 +1,4 @@
-** Full Walkthrough
+>** Full Walkthrough
 
 *** Imports
     Same as usual imports except for datetime to calculate the time taken for each epoch
@@ -57,6 +57,8 @@
 
 *** Data loader
 
+***** Train and test data loader
+
     #+BEGIN_SRC python
       # Data loader
       # Useful because it automatically generates batches in the training loop
@@ -70,6 +72,27 @@
       test_loader = torch.utils.data.DataLoader(dataset=test_dataset, 
                                                 batch_size=batch_size, 
                                                 shuffle=False)
-
-
     #+END_SRC
+
+
+***** Data loader for accuracy
+      In this block of code we create another data loader for later on calculating the accuracy
+
+      #+BEGIN_SRC python
+        # Make one for testing
+        train_dataset_fixed = torchvision.datasets.CIFAR10(
+            root='.',
+            train=True,
+            transform=transforms.ToTensor(),
+            download=True)
+        train_loader_fixed = torch.utils.data.DataLoader(
+            dataset=train_dataset_fixed, 
+            batch_size=batch_size, 
+            shuffle=False)
+      #+END_SRC
+
+
+
+
+
+    
