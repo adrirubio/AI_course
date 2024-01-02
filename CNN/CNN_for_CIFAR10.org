@@ -24,7 +24,7 @@
         # torchvision.transforms.RandomRotation(degrees=15),
         torchvision.transforms.RandomAffine(0, translate=(0.1, 0.1)),
         # torchvision.transforms.RandomPerspective(),
-        transforms.ToTensor(),                                            
+        transforms.ToTensor(),
       ])
 
       train_dataset = torchvision.datasets.CIFAR10(
@@ -39,3 +39,10 @@
           download=True)
     #+END_SRC
 
+    Here we are using just a few of the possible data augmentation techniques
+    As you can see we call the data augmentation techniques when we download the dataset
+
+    #+BEGIN_SRC python
+    transform=transformer_train,
+    #+END_SRC
+    
