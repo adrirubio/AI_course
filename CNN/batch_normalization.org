@@ -38,3 +38,4 @@
 
 ** Conclusion
   Batch normalization has become a staple in deep learning, facilitating faster and more stable training of deep neural networks. While it introduces some overhead and dependencies, its benefits in most scenarios outweigh these drawbacks.
+ 
