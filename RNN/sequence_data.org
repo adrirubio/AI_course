@@ -1,4 +1,4 @@
-** Sequence data
+** Sequence data 
     Recurrent Neural Networks (RNNs) are particularly well-suited for processing sequence data, where the order of elements is significant.
  
 *** Examples
