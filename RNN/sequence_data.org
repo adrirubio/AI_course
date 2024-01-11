@@ -1,4 +1,4 @@
-** Sequence data 
+**  Sequence data 
     Recurrent Neural Networks (RNNs) are particularly well-suited for processing sequence data, where the order of elements is significant.
  
 *** Examples
@@ -20,3 +20,41 @@
     + Letters: A, B, C, D (each letter is in alphabetical order)
     + Words in a sentence: The arrangement of words determines the sentence's meaning.
   - In computer science and mathematics, sequences are used to represent strings of text, lists of numbers, or other ordered data types.
+
+*** Understanding NxTxD Notation in Sequence Data (AI Context)
+  The notation NxTxD is commonly used in sequence data processing in AI, particularly with Python and frameworks like TensorFlow or PyTorch.
+
+** N (Batch Size)
+   - Description: Represents the number of sequences in a batch.
+   - Purpose: Efficient data processing, as neural networks often handle large datasets in batches.
+   - Example: If N = 32, there are 32 sequences in each batch.
+
+** T (Sequence Length)
+   - Description: The length of each sequence in the batch.
+   - Variability: Can be fixed or variable depending on the application.
+   - Example: In a time series with T = 10, each sequence consists of 10 time steps.
+
+** D (Feature Dimension)
+   - Description: Number of features in each time step of the sequence.
+   - Context: Each time step in a sequence can have multiple features.
+   - Example: In a stock market dataset, features might include stock price, volume, and other indicators for each time step.
+
+** Practical Example
+  - Scenario: Processing stock market data where each sequence is a week of trading data.
+  - Assuming:
+    + N = 100 (100 weeks of data in a batch)
+    + T = 5 (5 trading days in a week)
+    + D = 3 (3 features per day: price, volume, indicator)
+  - Representation: The data tensor would have dimensions 100x5x3.
+
+#+BEGIN_SRC python
+# Example in Python (Pseudo-code)
+import numpy as np
+
+# Simulated data tensor representing the stock market dataset
+data = np.random.rand(100, 5, 3) # 100 sequences, each with 5 time steps and 3 features
+#+END_SRC
+
+** Application in Deep Learning
+  - Models: Recurrent Neural Networks (RNNs), Long Short-Term Memory Networks (LSTMs), etc.
+  - Role: These dimensions define the input shape that these models expect for sequence data.
