@@ -1,1 +1,22 @@
-** Forecasting
+** Forecasting 
+  Recurrent Neural Networks (RNNs) are a class of neural networks that are particularly effective for sequence data like time series, making them suitable for forecasting tasks.
+
+*** Overview
+   - Description: RNNs are designed to process sequences by maintaining a 'memory' of previous inputs. This makes them ideal for tasks where the current output depends on previous elements in the sequence.
+   - Applications: Used in stock market prediction, weather forecasting, demand forecasting in retail, etc.
+
+*** Key Concepts
+   - **Sequence Data**: Data where the order of inputs is significant.
+   - **Hidden State**: The 'memory' of the network, updated at each step of the sequence.
+   - **Time Steps**: Each individual point in the sequence.
+   - **Features**: Data points at each time step, can be multidimensional.
+
+*** Training the Model
+   - Data Preprocessing: Normalize data, convert to sequences.
+   - Loss Function: Typically Mean Squared Error for forecasting.
+   - Optimization: Use algorithms like Adam or SGD.
+
+*** Challenges in RNN Forecasting
+   - **Vanishing Gradient Problem**: Can occur during training of deep RNNs, where gradients shrink and learning slows down or stops.
+   - **Overfitting**: Especially in cases with noisy time series data.
+   - **Data Preprocessing**: Requires careful preparation of sequences and normalization.
