@@ -23,21 +23,25 @@
 
 *** build the dataset
     #+BEGIN_SRC python
-    ### build the dataset
-    # let's see if we can use T past values to predict the next value
-    T = 10
-    X = []
-    Y = []
-    for t in range(len(series) - T):
-      x = series[t:t+T]
-      X.append(x)
-      y = series[t+T]
-      Y.append(y)
+    #+BEGIN_SRC python
+    T = 10  # Number of time steps to look back
+    X = []  # Input sequences
+    Y = []  # Output values
 
+    # Loop to create sequences (X) and corresponding labels (Y)
+    for t in range(len(series) - T):
+        x = series[t:t+T]  # Get a sequence of 'T' values from the series
+        X.append(x)        # Append the sequence to the input list
+        y = series[t+T]    # The next value after the sequence ends
+        Y.append(y)        # Append this next value to the output list
+
+    # Reshape data to fit the model input
     X = np.array(X).reshape(-1, T, 1)
     Y = np.array(Y).reshape(-1, 1)
     N = len(X)
     print("X.shape", X.shape, "Y.shape", Y.shape)
     #+END_SRC
+
+
 
 
