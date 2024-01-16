@@ -9,4 +9,7 @@
     import matplotlib.pyplot as plt
     #+END_SRC
 
+*** make the original data
+    #+BEGIN_SRC python
+    This generates the time series data set and then plots it.
     
