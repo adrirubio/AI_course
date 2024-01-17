@@ -72,3 +72,59 @@
    X_test, y_test = X_test.to(device), y_test.to(device)
    #+END_SRC
 
+** training
+   Nothing new 
+   #+BEGIN_SRC python
+   # Training
+   def full_gd(model,
+               criterion,
+               optimizer,
+               X_train,
+               y_train,
+               X_test,
+               y_test,
+               epochs=1000):
+
+     # Stuff to store
+     train_losses = np.zeros(epochs)
+     test_losses = np.zeros(epochs)
+
+     for it in range(epochs):
+       # zero the parameter gradients
+       optimizer.zero_grad()
+
+       # Forward pass
+       outputs = model(X_train)
+       loss = criterion(outputs, y_train)
+      
+       # Backward and optimize
+       loss.backward()
+       optimizer.step()
+
+       # Save losses
+       train_losses[it] = loss.item()
+
+       # Test loss
+       test_outputs = model(X_test)
+       test_loss = criterion(test_outputs, y_test)
+       test_losses[it] = test_loss.item()
+      
+       if (it + 1) % 5 == 0:
+         print(f'Epoch {it+1}/{epochs}, Train Loss: {loss.item():.4f}, Test Loss: {test_loss.item():.4f}')
+  
+     return train_losses, test_losses
+   #+END_SRC
+
+
+** start training
+   #+BEGIN_SRC python
+   train_losses, test_losses = full_gd(model,
+                                       criterion,
+                                       optimizer,
+                                       X_train,
+                                       y_train,
+                                       X_test,
+                                       y_test)
+   #+END_SRC
+
+
