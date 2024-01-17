@@ -165,3 +165,16 @@
    Epoch 165/1000, Train Loss: 0.0005, Test Loss: 0.0005
    Epoch 170/1000, Train Loss: 0.0004, Test Loss: 0.0004
    #+END_SRC
+
+** train and test loss
+   Plot the loss
+   #+BEGIN_SRC python
+   # Plot the train loss and test loss per iteration
+   plt.plot(train_losses, label='train loss')
+   plt.plot(test_losses, label='test loss')
+   plt.legend()
+   plt.show()
+   #+END_SRC
+
+** plot the predictions
+   calculate the predictions
