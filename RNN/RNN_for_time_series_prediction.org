@@ -42,4 +42,8 @@
     print("X.shape", X.shape, "Y.shape", Y.shape)
     #+END_SRC
 
-
+    #+BEGIN_SRC python
+    # Instantiate the model
+    model = SimpleRNN(n_inputs=1, n_hidden=15, n_rnnlayers=1, n_outputs=1)
+    model.to(device)
+    #+END_SRC 
