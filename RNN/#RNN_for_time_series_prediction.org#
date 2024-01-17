@@ -1,0 +1,117 @@
+** RNN for time series prediction
+   Most of the code in this notebook has been seen before in previous notebooks so will not be revised.
+
+*** imports
+    #+BEGIN_SRC python
+    import torch
+    import torch.nn as nn
+    import numpy as np
+    import matplotlib.pyplot as plt
+    #+END_SRC
+
+*** make the original data
+    This generates the time series data set and then plots it.
+    #+BEGIN_SRC python
+    # make the original data
+    N = 1000
+    series = np.sin(0.1*np.arange(N)) #+ np.random.randn(N)*0.1
+    
+    # plot it
+    plt.plot(series)
+    plt.show()
+    #+END_SRC
+
+*** build the dataset
+    #+BEGIN_SRC python
+    #+BEGIN_SRC python
+    T = 10  # Number of time steps to look back
+    X = []  # Input sequences
+    Y = []  # Output values
+
+    # Loop to create sequences (X) and corresponding labels (Y)
+    for t in range(len(series) - T):
+        x = series[t:t+T]  # Get a sequence of 'T' values from the series
+        X.append(x)        # Append the sequence to the input list
+        y = series[t+T]    # The next value after the sequence ends
+        Y.append(y)        # Append this next value to the output list
+
+    # Reshape data to fit the model input
+    X = np.array(X).reshape(-1, T, 1)
+    Y = np.array(Y).reshape(-1, 1)
+    N = len(X)
+    print("X.shape", X.shape, "Y.shape", Y.shape)
+    #+END_SRC
+
+    #+BEGIN_SRC python
+    # Instantiate the model
+    model = SimpleRNN(n_inputs=1, n_hidden=15, n_rnnlayers=1, n_outputs=1)
+    model.to(device)
+    #+END_SRC 
+
+
+
+** loss and optimizer
+   #+BEGIN_SRC python
+   # Loss and optimizer
+   criterion = nn.MSELoss()
+   optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+   #+END_SRC
+
+** prepare the data
+   Here we split the data into parts and inputs and targets
+   #+BEGIN_SRC python
+   # Loss and optimizer
+   criterion = nn.MSELoss()
+   optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+   #+END_SRC
+   
+   Here we move the inputs and targets to the GPU
+   #+BEGIN_SRC python
+   # move data to GPU
+   X_train, y_train = X_train.to(device), y_train.to(device)
+   X_test, y_test = X_test.to(device), y_test.to(device)
+   #+END_SRC
+
+** training
+   Nothing new 
+   #+BEGIN_SRC python
+   # Training
+   def full_gd(model,
+            criterion,
+            optimizer,
+            X_train,
+            y_train,
+            X_test,
+            y_test,
+            epochs=1000):
+
+  # Stuff to store
+  train_losses = np.zeros(epochs)
+  test_losses = np.zeros(epochs)
+
+  for it in range(epochs):
+    # zero the parameter gradients
+    optimizer.zero_grad()
+
+    # Forward pass
+    outputs = model(X_train)
+    loss = criterion(outputs, y_train)
+      
+    # Backward and optimize
+    loss.backward()
+    optimizer.step()
+
+    # Save losses
+    train_losses[it] = loss.item()
+
+    # Test loss
+    test_outputs = model(X_test)
+    test_loss = criterion(test_outputs, y_test)
+    test_losses[it] = test_loss.item()
+      
+    if (it + 1) % 5 == 0:
+      print(f'Epoch {it+1}/{epochs}, Train Loss: {loss.item():.4f}, Test Loss: {test_loss.item():.4f}')
+  
+  return train_losses, test_losses
+   
+
