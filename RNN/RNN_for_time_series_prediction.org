@@ -50,14 +50,14 @@
 
 
 
-** loss and optimizer
+*** loss and optimizer
    #+BEGIN_SRC python
    # Loss and optimizer
    criterion = nn.MSELoss()
    optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
    #+END_SRC
 
-** prepare the data
+*** prepare the data
    Here we split the data into parts and inputs and targets
    #+BEGIN_SRC python
    # Loss and optimizer
@@ -72,7 +72,7 @@
    X_test, y_test = X_test.to(device), y_test.to(device)
    #+END_SRC
 
-** training
+*** training
    Nothing new 
    #+BEGIN_SRC python
    # Training
@@ -116,7 +116,7 @@
    #+END_SRC
 
 
-** start training
+*** start training
    #+BEGIN_SRC python
    train_losses, test_losses = full_gd(model,
                                        criterion,
@@ -165,3 +165,46 @@
    Epoch 165/1000, Train Loss: 0.0005, Test Loss: 0.0005
    Epoch 170/1000, Train Loss: 0.0004, Test Loss: 0.0004
    #+END_SRC
+
+*** train and test loss
+   Plot the loss
+   #+BEGIN_SRC python
+   # Plot the train loss and test loss per iteration
+   plt.plot(train_losses, label='train loss')
+   plt.plot(test_losses, label='test loss')
+   plt.legend()
+   plt.show()
+   #+END_SRC
+
+*** plot the predictions
+   calculate the predictions
+   #+BEGIN_SRC python
+   T = 10  # Number of time steps to look back
+   X = []  # Input sequences
+   Y = []  # Output values
+
+   # Creating the sequences of inputs (X) and the corresponding labels (Y)
+   for t in range(len(series) - T):
+       x = series[t:t+T]  # Extract a sequence of 'T' values from the series
+       X.append(x)        # Append the sequence to the inputs list
+       y = series[t+T]    # Get the next value in the series, post the sequence
+       Y.append(y)        # Append this value to the labels list
+
+   # Reshaping the data for model compatibility
+   X = np.array(X).reshape(-1, T, 1)
+   Y = np.array(Y).reshape(-1, 1)
+   N = len(X)
+   print("X.shape", X.shape, "Y.shape", Y.shape)
+   #+END_SRC
+
+   plot the prediction
+   #+BEGIN_SRC python
+   plt.plot(validation_target, label='forecast target')
+   plt.plot(validation_predictions, label='forecast prediction')
+   plt.legend()
+   #+END_SRC
+   
+   As a sidenote all the plots are in the images folder
+   
+*** Summary
+   As a summary now you should know how to create a simple RNN
