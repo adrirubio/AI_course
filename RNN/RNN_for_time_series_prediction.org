@@ -194,7 +194,7 @@
    X = np.array(X).reshape(-1, T, 1)
    Y = np.array(Y).reshape(-1, 1)
    N = len(X)
-   print("X.shape", X.shape, "Y.shape", Y.shape)
+
    #+END_SRC
 
    plot the prediction
