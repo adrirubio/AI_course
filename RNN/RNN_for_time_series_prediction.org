@@ -18,7 +18,7 @@
     
     # plot it
     plt.plot(series)
-    plt.show()
+    plt.show() 
     #+END_SRC
 
 *** build the dataset
@@ -208,3 +208,6 @@
    
 *** Summary
    As of now you should know how to create a simple RNN
+
+
+
