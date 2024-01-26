@@ -210,4 +210,4 @@
    As of now you should know how to create a simple RNN
 
 
-
+ 
