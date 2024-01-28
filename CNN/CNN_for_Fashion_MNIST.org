@@ -16,23 +16,22 @@
     Same as the ANN MNIST only changing the name
 
 ***** Training data
-      #+BEGIN_SRC python
-      train_dataset = torchvision.datasets.CIFAR10(
-          root='.',
-	  train=True,
-	  transform=transforms.ToTensor(),
-	  download=True)
-	  test_dataset = torchvision.datasets.CIFAR10(
-      #+END_SRC
-
+    #+BEGIN_SRC python
+    train_dataset = torchvision.datasets.FashionMNIST(
+    root='.',
+    train=True,
+    transform=transforms.ToTensor(),
+    download=True)
+    #+END_SRC
+      
 ***** Test data
-      #+BEGIN_SRC python
-      test_dataset = torchvision.datasets.FashionMNIST(
-          root='.',
-	  train=False,
-	  transform=transforms.ToTensor(),
-	  download=True)
-      #+END_SRC
+    #+BEGIN_SRC python
+    test_dataset = torchvision.datasets.FashionMNIST(
+       root='.',
+       train=False,
+       transform=transforms.ToTensor(),
+       download=True)
+    #+END_SRC
 
 *** Defining the model
     #+BEGIN_SRC python
