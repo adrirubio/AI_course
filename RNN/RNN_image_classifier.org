@@ -2,7 +2,6 @@
    In this model we will use the MNIST dataset but this time with and RNN
 
 *** Imports
-
 #+BEGIN_SRC python
 import torch
 import torch.nn as nn
@@ -12,3 +11,64 @@ import numpy as np
 import matplotlib.pyplot as plt
 from datetime import datetime
 #+END_SRC
+
+*** Load the data
+    - Here we use the data loader
+#+BEGIN_SRC python
+train_dataset = torchvision.datasets.MNIST(
+    root='.',
+    train=True,
+    transform=transforms.ToTensor(),
+    download=True)
+test_dataset = torchvision.datasets.MNIST(
+    root='.',
+    train=False,
+    transform=transforms.ToTensor(),
+    download=True)
+
+batch_size = 128
+train_loader = torch.utils.data.DataLoader(dataset=train_dataset, 
+                                           batch_size=batch_size, 
+                                           shuffle=True)
+
+test_loader = torch.utils.data.DataLoader(dataset=test_dataset, 
+                                          batch_size=batch_size, 
+                                          shuffle=False)
+#+END_SRC
+
+*** Building the model
+    - We have already covered this code
+#+BEGIN_SRC python
+# Build the model
+class RNN(nn.Module):
+  def __init__(self, n_inputs, n_hidden, n_rnnlayers, n_outputs):
+    super(RNN, self).__init__()
+    self.D = n_inputs
+    self.M = n_hidden
+    self.K = n_outputs
+    self.L = n_rnnlayers
+
+    self.rnn = nn.LSTM(
+        input_size=self.D,
+        hidden_size=self.M,
+        num_layers=self.L,
+        batch_first=True)
+    self.fc =nn.Linear(self.M, self.K)
+  
+  def forward(self, X):
+    # initial hidden states
+    h0 = torch.zeros(self.L, X.size(0), self.M).to(device)
+    c0 = torch.zeros(self.L, X.size(0), self.M).to(device)
+
+    # get RNN unit output
+    out, _ = self.rnn(X, (h0, c0))
+
+    # we only want h(T) at the final time step
+    out = self.fc(out[:, -1, :])
+    return out
+#+END_SRC
+
+#+BEGIN_SRC
+model = RNN(28, 128, 2, 10)
+#+END_SRC
+
