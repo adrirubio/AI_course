@@ -265,8 +265,4 @@
    As a sidenote all the plots are in the images folder
    
 *** Summary
-   As of now you should know how to create a simple RNN
-
-
- 
- 
+   As of now you should know how to create a simple RNN   
