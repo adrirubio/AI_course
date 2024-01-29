@@ -1,5 +1,6 @@
 ** Image classifier
-   In this model we will use the MNIST dataset but this time with and RNN
+   In this model we will use the MNIST dataset but this time with and RNN.
+   This model contains nothing new but is a good way to show our understanding.
 
 *** Imports
 #+BEGIN_SRC python
