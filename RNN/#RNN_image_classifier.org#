@@ -1,0 +1,17 @@
+** Image classifier
+   In this model we will use the MNIST dataset but this time with and RNN
+
+*** Imports
+#+BEGIN_SRC python
+import torch
+import torch.nn as nn
+import torchvision
+import torchvision.transforms as transforms
+import numpy as np
+import matplotlib.pyplot as plt
+from datetime import datetime
+#+END_SRC
+
+*** Load the data
+    - Here we use the data loader
+#+BEGIN_SRC python
