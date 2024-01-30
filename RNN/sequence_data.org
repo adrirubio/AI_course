@@ -57,4 +57,3 @@ data = np.random.rand(100, 5, 3) # 100 sequences, each with 5 time steps and 3 f
 ** Application in Deep Learning
   - Models: Recurrent Neural Networks (RNNs), Long Short-Term Memory Networks (LSTMs), etc.
   - Role: These dimensions define the input shape that these models expect for sequence data.
-
