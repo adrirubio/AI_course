@@ -1,0 +1,18 @@
+** Stock Prediction
+
+*** Imports
+#+BEGIN_SRC
+import torch
+import torch.nn as nn
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import StandardScaler
+#+END_SRC
+
+*** Load the data from a URL
+#+BEGIN_SRC python
+# yes, you can read dataframes from URLs!
+df = pd.read_csv('https://raw.githubusercontent.com/lazyprogrammer/machine_learning_examples/master/tf2.0/sbux.csv')
+
+
