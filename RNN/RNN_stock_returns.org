@@ -1,4 +1,31 @@
 ** Stock Prediction
 
 *** Imports
+#+BEGIN_SRC
+import torch
+import torch.nn as nn
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import StandardScaler
+#+END_SRC
 
+*** Load the data from a URL
+#+BEGIN_SRC python
+# yes, you can read dataframes from URLs!
+df = pd.read_csv('https://raw.githubusercontent.com/lazyprogrammer/machine_learning_examples/master/tf2.0/sbux.csv')
+#+END_SRC
+
+*** prepare the data
+#+BEGIN_SRC python
+# calculate returns by first shifting the data
+df['PrevClose'] = df['close'].shift(1) # move everything up 1
+
+# so now it's like
+# close / prev close
+# x[2] x[1]
+# x[3] x[2]
+# x[4] x[3]
+# ...
+# x[t] x[t-1]
+#+END_SRC
