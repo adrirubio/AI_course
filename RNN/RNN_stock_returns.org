@@ -29,3 +29,10 @@ df['PrevClose'] = df['close'].shift(1) # move everything up 1
 # ...
 # x[t] x[t-1]
 #+END_SRC
+
+#+BEGIN_SRC python
+# then the return is
+# (x[t] - x[t-1]) / x[t-1]
+df['Return'] = (df['close'] - df['PrevClose']) / df['PrevClose']
+#+END_SRC
+

@@ -30,4 +30,16 @@ df['PrevClose'] = df['close'].shift(1) # move everything up 1
 # x[t] x[t-1]
 #+END_SRC
 
-#+
+#+BEGIN_SRC python
+# then the return is
+# (x[t] - x[t-1]) / x[t-1]
+df['Return'] = (df['close'] - df['PrevClose']) / df['PrevClose']
+#+END_SRC
+
+
+|date |	open	        high	        low	        close	volume	Name	PrevClose	Return
+|0    |	2013-02-08	27.920	28.325	27.920	28.185	7146296	SBUX	NaN	NaN
+|1    |	2013-02-11	28.260	28.260	27.930	28.070	5457354	SBUX	28.185	-0.004080
+|2    |	2013-02-12	28.000	28.275	27.975	28.130	8665592	SBUX	28.070	0.002138
+|3    |	2013-02-13	28.230	28.230	27.750	27.915	7022056	SBUX	28.130	-0.007643
+|4    |	2013-02-14	27.765	27.905	27.675	27.775	8899188	SBUX	27.915	-0.005015
