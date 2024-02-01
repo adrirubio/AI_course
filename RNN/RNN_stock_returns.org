@@ -37,7 +37,7 @@ df['Return'] = (df['close'] - df['PrevClose']) / df['PrevClose']
 #+END_SRC
 
 
-|       date	        open	high	low	close	volume	Name	PrevClose      Return
+|     | date	        open	high	low	close	volume	Name	PrevClose      Return
 |0    |	2013-02-08	27.920	28.325	27.920	28.185	7146296	SBUX	NaN	       NaN
 |1    |	2013-02-11	28.260	28.260	27.930	28.070	5457354	SBUX	28.185	       -0.004080
 |2    |	2013-02-12	28.000	28.275	27.975	28.130	8665592	SBUX	28.070	        0.002138
