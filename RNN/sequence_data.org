@@ -1,7 +1,7 @@
-**  Sequence data 
+**  Sequence data
     Recurrent Neural Networks (RNNs) are particularly well-suited for processing sequence data, where the order of elements is significant.
-  
-*** Examples     
+
+*** Examples
     - Natural Language Text
     - Time Series Data
     - Speech Recognition
@@ -10,7 +10,7 @@
     - Handwriting Recognition
     - Biological Sequences
     - Language Translation
-      
+
 *** What is a Sequence?
   - A sequence is an ordered collection of elements.
   - The order of these elements is crucial to the meaning or function of the sequence.
