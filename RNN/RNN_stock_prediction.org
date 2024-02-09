@@ -264,3 +264,9 @@ plt.plot(test_losses, label='test loss')
 plt.legend()
 plt.show()
 #+END_SRC
+
+
+** Summary:
+As you can see this model is very complicated because it is dificult to predict how a stock will change over time but it is a good learning opportunity.
+Most if not all the syntax in this model has already been covered.
+We have practically already learnt RNN but there is always space for improvement. 
