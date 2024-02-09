@@ -83,3 +83,25 @@ scaler = StandardScaler()
 scaler.fit(series[:len(series) // 2])
 series = scaler.transform(series).flatten()
 END_SRC
+
+
+*** Build the dataset
+#+BEGIN_SRC pytho
+### build the dataset
+# let's see if we can use T past values to predict the next value
+T = 20
+D = 1
+X = []
+Y = []
+for t in range(len(series) - T):
+  x = series[t:t+T]
+  X.append(x)
+  y = series[t+T]
+  Y.append(y)
+
+X = np.array(X).reshape(-1, T, 1) # Now the data should be N x T x D
+Y = np.array(Y).reshape(-1, 1)
+N = len(X)
+print("X.shape", X.shape, "Y.shape", Y.shape)
+#+END_SRC
+
