@@ -83,3 +83,9 @@ scaler = StandardScaler()
 scaler.fit(series[:len(series) // 2])
 series = scaler.transform(series).flatten()
 END_SRC
+
+
+*** Build the dataset
+
+
+
