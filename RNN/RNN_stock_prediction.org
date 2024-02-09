@@ -105,3 +105,53 @@ N = len(X)
 print("X.shape", X.shape, "Y.shape", Y.shape)
 #+END_SRC
 
+*** Defining the model
+#+BEGIN_SRC python
+### try autoregressive RNN model
+class RNN(nn.Module):
+  def __init__(self, n_inputs, n_hidden, n_rnnlayers, n_outputs):
+    super(RNN, self).__init__()
+    self.D = n_inputs
+    self.M = n_hidden
+    self.K = n_outputs
+    self.L = n_rnnlayers
+
+    self.rnn = nn.LSTM(
+        input_size=self.D,
+        hidden_size=self.M,
+        num_layers=self.L,
+        batch_first=True)
+    self.fc = nn.Linear(self.M, self.K)
+  
+  def forward(self, X):
+    # initial hidden states
+    h0 = torch.zeros(self.L, X.size(0), self.M).to(device)
+    c0 = torch.zeros(self.L, X.size(0), self.M).to(device)
+
+    # get RNN unit output
+    out, _ = self.rnn(X, (h0, c0))
+
+    # we only want h(T) at the final time step
+    out = self.fc(out[:, -1, :])
+    return out
+#+END_SRC
+
+#+BEGIN_SRC python
+model = RNN(1, 5, 1, 1)
+#+END_SRC 
+
+*** Using GPU
+#+BEGIN_SRC python
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+print(device)
+model.to(device)
+#+END_SRC
+
+*** Loss and optimizer
+#+END_SRC python
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+print(device)
+model.to(device)
+END_SRC
+
+
