@@ -148,10 +148,102 @@ model.to(device)
 #+END_SRC
 
 *** Loss and optimizer
-#+END_SRC python
+#+BEGIN_SRC python
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print(device)
 model.to(device)
-END_SRC
+#+END_SRC
 
+*** Training
+#+BEGIN_SRC python
+# Training
+def full_gd(model,
+            criterion,
+            optimizer,
+            X_train,
+            y_train,
+            X_test,
+            y_test,
+            epochs=200):
+
+  # Stuff to store
+  train_losses = np.zeros(epochs)
+  test_losses = np.zeros(epochs)
+
+  for it in range(epochs):
+    # zero the parameter gradients
+    optimizer.zero_grad()
+
+    # Forward pass
+    outputs = model(X_train)
+    loss = criterion(outputs, y_train)
+      
+    # Backward and optimize
+    loss.backward()
+    optimizer.step()
+
+    # Save losses
+    train_losses[it] = loss.item()
+
+    # Test loss
+    test_outputs = model(X_test)
+    test_loss = criterion(test_outputs, y_test)
+    test_losses[it] = test_loss.item()
+      
+    if (it + 1) % 5 == 0:
+      print(f'Epoch {it+1}/{epochs}, Train Loss: {loss.item():.4f}, Test Loss: {test_loss.item():.4f}')
+  
+  return train_losses, test_losses
+#+END_SRC
+
+
+#+BEGIN_SRC python
+# Make inputs and targets
+X_train = torch.from_numpy(X[:-N//2].astype(np.float32))
+y_train = torch.from_numpy(Y[:-N//2].astype(np.float32))
+X_test = torch.from_numpy(X[-N//2:].astype(np.float32))
+y_test = torch.from_numpy(Y[-N//2:].astype(np.float32))
+#+END_SRC 
+
+#+BEGIN_SRC python
+# move data to GPU
+X_train, y_train = X_train.to(device), y_train.to(device)
+X_test, y_test = X_test.to(device), y_test.to(device)
+#+END_SRC
+
+#+BEGIN_SRC python
+train_losses, test_losses = full_gd(model,
+                                    criterion,
+                                    optimizer,
+                                    X_train,
+                                    y_train,
+                                    X_test,
+                                    y_test)
+#+END_SRC
+
+
+#+BEGIN_SRC
+Epoch 5/200, Train Loss: 1.0666, Test Loss: 1.0724
+Epoch 10/200, Train Loss: 1.0527, Test Loss: 1.0909
+Epoch 15/200, Train Loss: 1.0557, Test Loss: 1.0907
+Epoch 20/200, Train Loss: 1.0484, Test Loss: 1.0770
+Epoch 25/200, Train Loss: 1.0476, Test Loss: 1.0735
+Epoch 30/200, Train Loss: 1.0461, Test Loss: 1.0746
+Epoch 35/200, Train Loss: 1.0427, Test Loss: 1.0791
+Epoch 40/200, Train Loss: 1.0401, Test Loss: 1.0858
+Epoch 45/200, Train Loss: 1.0374, Test Loss: 1.0897
+Epoch 50/200, Train Loss: 1.0346, Test Loss: 1.0920
+Epoch 55/200, Train Loss: 1.0327, Test Loss: 1.0969
+Epoch 60/200, Train Loss: 1.0312, Test Loss: 1.1038
+Epoch 65/200, Train Loss: 1.0300, Test Loss: 1.1083
+Epoch 70/200, Train Loss: 1.0286, Test Loss: 1.1085
+Epoch 75/200, Train Loss: 1.0272, Test Loss: 1.1080
+Epoch 80/200, Train Loss: 1.0258, Test Loss: 1.1086
+Epoch 85/200, Train Loss: 1.0244, Test Loss: 1.1095
+Epoch 90/200, Train Loss: 1.0229, Test Loss: 1.1113
+Epoch 95/200, Train Loss: 1.0212, Test Loss: 1.1132
+Epoch 100/200, Train Loss: 1.0192, Test Loss: 1.1146
+Epoch 105/200, Train Loss: 1.0170, Test Loss: 1.1161
+Epoch 110/200, Train Loss: 1.0143, Test Loss: 1.1165
+#+END_SRC
 
