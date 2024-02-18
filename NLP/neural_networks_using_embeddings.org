@@ -1,4 +1,31 @@
-** Embeddings
+** Embeddings 
 
+In the context of a neural network, the terms "V" and "D" have specific meanings that are crucial for understanding the model architecture.
 
+*** V (Number of Input Features)
 
+"V" stands for the number of input features in the dataset. It represents the dimensionality of the input space, i.e., the number of individual pieces of information the model uses to make predictions.
+
+*** D (Dimensionality of Embedding Layer)
+
+"D" represents the dimensionality of the embedding layer in the neural network. The embedding layer is often used to transform categorical variables into continuous vectors. In this context:
+- "D" determines the size of the continuous vector representations.
+- It is particularly relevant when dealing with categorical data, like words in natural language processing.
+
+*** Example in Python
+
+Let's see how "V" and "D" might be used in a neural network constructor in Python.
+
+#+BEGIN_SRC python
+  # Define the model
+  class RNN(nn.Module):
+    def __init__(self, ...):
+      super(RNN, self).__init__()
+      self.V = n_vocab
+      self.D = embed_dim
+      ...
+
+  self.embed = nn.Embedding(self.V, self.D)
+#+END_SRC
+
+This example illustrates how "V" and "D" are used as parameters in the constructor of a neural network class in Python.
