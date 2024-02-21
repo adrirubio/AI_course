@@ -29,4 +29,3 @@ Let's see how "V" and "D" might be used in a neural network constructor in Pytho
 #+END_SRC
 
 This example illustrates how "V" and "D" are used as parameters in the constructor of a neural network class in Python.
-
