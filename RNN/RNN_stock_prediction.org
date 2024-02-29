@@ -122,7 +122,7 @@ class RNN(nn.Module):
         num_layers=self.L,
         batch_first=True)
     self.fc = nn.Linear(self.M, self.K)
-  
+
   def forward(self, X):
     # initial hidden states
     h0 = torch.zeros(self.L, X.size(0), self.M).to(device)
@@ -177,7 +177,7 @@ def full_gd(model,
     # Forward pass
     outputs = model(X_train)
     loss = criterion(outputs, y_train)
-      
+ 
     # Backward and optimize
     loss.backward()
     optimizer.step()
@@ -189,10 +189,10 @@ def full_gd(model,
     test_outputs = model(X_test)
     test_loss = criterion(test_outputs, y_test)
     test_losses[it] = test_loss.item()
-      
+
     if (it + 1) % 5 == 0:
       print(f'Epoch {it+1}/{epochs}, Train Loss: {loss.item():.4f}, Test Loss: {test_loss.item():.4f}')
-  
+
   return train_losses, test_losses
 #+END_SRC
 
