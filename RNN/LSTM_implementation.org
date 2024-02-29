@@ -36,7 +36,7 @@ class RNN(nn.Module):
         num_layers=self.L,
         batch_first=True)
     self.fc = nn.Linear(self.M, self.K)
-  
+
   def forward(self, X):
     h0 = torch.zeros(self.L, X.size(0), self.M).to(device)
     c0 = torch.zeros(self.L, X.size(0), self.M).to(device)
@@ -61,4 +61,3 @@ class RNN(nn.Module):
    - Initializes zero tensors for the hidden state (h0) and the cell state (c0).
    - Computes the output of the LSTM layer. The LSTM returns the output and the new hidden and cell states, but here only the output is used.
    - The output at the final time step is passed through the fully connected layer to produce the final output.
-
