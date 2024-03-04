@@ -9,9 +9,9 @@
     import torchvision.transforms as transforms
     import numpy as np
     import matplotlib.pyplot as plt
-    from datetime import datetime 
+    from datetime import datetime
     #+END_SRC
- 
+
 *** Loading the data
     Same as the ANN MNIST only changing the name
 
@@ -23,7 +23,7 @@
     transform=transforms.ToTensor(),
     download=True)
     #+END_SRC
-      
+ 
 ***** Test data
     #+BEGIN_SRC python
     test_dataset = torchvision.datasets.FashionMNIST(
