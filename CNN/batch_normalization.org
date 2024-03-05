@@ -26,7 +26,7 @@
    - /Improves Gradient Flow/: Helps in stabilizing and speeding up the convergence of neural networks.
    - /Enables Higher Learning Rates/: Reduces the risk of gradient explosion and allows for higher learning rates.
    - /Reduces Sensitivity to Initialization/: Makes the choice of weight initialization less crucial.
-     
+
 *** Usage in Deep Learning
    - Batch normalization is widely used in deep neural networks, especially in architectures like CNNs and deep feedforward networks.
    - It is typically applied before the activation function of a layer.
@@ -38,4 +38,4 @@
 
 ** Conclusion
   Batch normalization has become a staple in deep learning, facilitating faster and more stable training of deep neural networks. While it introduces some overhead and dependencies, its benefits in most scenarios outweigh these drawbacks.
- 
+
