@@ -43,5 +43,3 @@
 
 ****** Summary
   Average pooling is an important component in CNNs for feature abstraction and dimensionality reduction.
- 
-    
