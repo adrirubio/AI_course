@@ -28,5 +28,3 @@
 
 ***** Summary
   This `nn.Conv2d` layer is a fundamental building block in CNN architectures for tasks like image recognition, playing a crucial role in feature extraction and dimensionality reduction.
-   
- 
