@@ -1,6 +1,6 @@
 ** CNN_code_preparation
- 
-**** The convolution module 
+
+**** The convolution module
 
    #+BEGIN_SRC python
    nn.Conv2d(in_channels=1, out_channels=32, kernel_size=3, stride=2)
