@@ -131,7 +131,7 @@
    #+END_SRC
 
 *** training
-   Nothing new 
+   Nothing new
    #+BEGIN_SRC python
      # Training
      def full_gd(model,
