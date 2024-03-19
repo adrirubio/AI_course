@@ -29,7 +29,7 @@ test_dataset = torchvision.datasets.MNIST(
 
 batch_size = 128
 train_loader = torch.utils.data.DataLoader(dataset=train_dataset, 
-                                           batch_size=batch_size, 
+                                           batch_size=batch_size,
                                            shuffle=True)
 
 test_loader = torch.utils.data.DataLoader(dataset=test_dataset,
@@ -55,7 +55,7 @@ class RNN(nn.Module):
         num_layers=self.L,
         batch_first=True)
     self.fc =nn.Linear(self.M, self.K)
-  
+
   def forward(self, X):
     # initial hidden states
     h0 = torch.zeros(self.L, X.size(0), self.M).to(device)
