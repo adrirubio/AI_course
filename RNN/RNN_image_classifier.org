@@ -28,7 +28,7 @@ test_dataset = torchvision.datasets.MNIST(
     download=True)
 
 batch_size = 128
-train_loader = torch.utils.data.DataLoader(dataset=train_dataset, 
+train_loader = torch.utils.data.DataLoader(dataset=train_dataset,
                                            batch_size=batch_size,
                                            shuffle=True)
 
@@ -85,7 +85,7 @@ model.to(device)
 # Loss and optimizer
 criterion = nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(model.parameters())
-#+END_SRC 
+#+END_SRC
 
 *** Training
 #+BEGIN_SRC  python
