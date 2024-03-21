@@ -111,7 +111,7 @@ for it in range(n_epochs):
     # Forward pass
     outputs = model(inputs)
     loss = criterion(outputs, targets)
-      
+
     # Backward and optimize
     loss.backward()
     optimizer.step()
