@@ -120,7 +120,7 @@ for it in range(n_epochs):
 
   # Get train loss and test loss
   train_loss = np.mean(train_loss) # a little misleading
-  
+
   test_loss = []
   for inputs, targets in test_loader:
     inputs, targets = inputs.to(device), targets.to(device)
