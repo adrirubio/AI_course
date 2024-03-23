@@ -133,7 +133,7 @@ for it in range(n_epochs):
   # Save losses
   train_losses[it] = train_loss
   test_losses[it] = test_loss
-    
+
   print(f'Epoch {it+1}/{n_epochs}, Train Loss: {train_loss:.4f}, Test Loss: {test_loss:.4f}')
 #+END_SRC
 
@@ -149,7 +149,7 @@ Epoch 7/10, Train Loss: 0.0349, Test Loss: 0.0533
 Epoch 8/10, Train Loss: 0.0321, Test Loss: 0.0580
 Epoch 9/10, Train Loss: 0.0303, Test Loss: 0.0501
 Epoch 10/10, Train Loss: 0.0231, Test Loss: 0.0532
-#+END_SRC 
+#+END_SRC
 
 *** Plot the loss
 #+BEGIN_SRC python
