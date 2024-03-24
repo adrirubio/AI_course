@@ -1,7 +1,7 @@
 ** Image classifier
    In this model we will use the MNIST dataset but this time with and RNN.
    This model contains nothing new but is a good way to show our understanding.
- 
+
 *** Imports
 #+BEGIN_SRC python
 import torch
@@ -137,7 +137,7 @@ for it in range(n_epochs):
   print(f'Epoch {it+1}/{n_epochs}, Train Loss: {train_loss:.4f}, Test Loss: {test_loss:.4f}')
 #+END_SRC
 
-    - Loss:
+- Loss:
 #+BEGIN_SRC
 Epoch 1/10, Train Loss: 0.5545, Test Loss: 0.1612
 Epoch 2/10, Train Loss: 0.1322, Test Loss: 0.0946
