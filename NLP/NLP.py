@@ -74,3 +74,14 @@ def data_generator(X, y, batch_size=32):
     yield X_batch, y_batch
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
+
+
+
+
+
+
+
+
+
+
