@@ -139,7 +139,7 @@ def batch_gd(model, criterion, optimizer, epochs):
       optimizer.zero_grad()
 
       # Forward pass
-      outputs = inputs
+      outputs = model(inputs)
       loss = criterion(outputs, targets)
 
       # Backward and optimize
