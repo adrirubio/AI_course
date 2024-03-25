@@ -75,13 +75,99 @@ def data_generator(X, y, batch_size=32):
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
+# Define the model
+class RNN(nn.Module):
+  def __init__(self, n_vocab, embed_dim, n_hidden, n_rnnlayers, n_outputs):
+    super(RNN, self).__init__()
+    self.V = n_vocab
+    self.D = embed_dim
+    self.M = n_hidden
+    self.K = n_outputs
+    self.L = n_rnnlayers
+
+    self.embed = nn.Embedding(self.V, self.D)
+    self.rnn = nn.LSTM(
+        input_size=self.D,
+        hidden_size=self.M,
+        num_layers=self.L,
+        batch_first=True)
+    self.fc = nn.Linear(self.M, self.K)
+
+  def forward(self, X):
+    # initial hidden states
+    h0 = torch.zeros(self.L, X.size(0), self.M).to(device)
+    c0 = torch.zeros(self.L, X.size(0), self.M).to(device)
+
+    # embedding layer
+    # turns word indexes into word vectors
+    out = self.embed(X)
+
+    # get RNN unit output
+    out, _ = self.rnn(out, (h0, c0))
+
+    # max pool
+    out, _ = torch.max(out, 1)
+
+    # we only want h(T) at the final time step
+    out = self.fc(out)
+    return out
 
 
+model = RNN(len(word2idx), 20, 15, 1, 1)
 
 
+# Loss and optimizer
+criterion = nn.BCEWithLogitsLoss()
+optimizer = torch.optim.Adam(model.parameters())
 
+train_gen = lambda: data_generator(train_sentences_as_int, df_train.b_labels)
+test_gen = lambda: data_generator(test_sentences_as_int, df_test.b_labels)
 
+# A function to encapsulate the training loop
+def batch_gd(model, criterion, optimizer, epochs):
+  train_losses = np.zeros(epochs)
+  test_losses = np.zeros(epochs)
 
+  for it in range(epochs):
+    t0 = datetime.now()
+    train_loss = []
+    for inputs, targets in train_gen():
+      # print("inputs.shape:", inputs.shape, "targets.shape:", targets.shape)
+      targets = targets.view(-1, 1).float()
+      # move data to GPU
+      inputs, targets = inputs.to(device), targets.to(device)
 
+      # zero the parameter gradients
+      optimizer.zero_grad()
 
+      # Forward pass
+      outputs = model(inputs)
+      loss = criterion(outputs, targets)
 
+      # Backward and optimize
+      loss.backward()
+      optimizer.step()
+
+      train_loss.append(loss.item())
+
+    # Get train loss and test loss
+    train_loss = np.mean(train_loss) # a little misleading
+
+    test_loss = []
+    for inputs, targets in test_gen():
+      inputs, targets = inputs.to(device), targets.to(device)
+      targets = targets.view(-1, 1).float()
+      outputs = model(inputs)
+      loss = criterion(outputs, targets)
+      test_loss.append(loss.item())
+    test_loss = np.mean(test_loss)
+
+    # Save losses
+    train_losses[it] = train_loss
+    test_losses[it] = test_loss
+
+    dt = datetime.now() - t0
+    print(f'Epoch {it+1}/{epochs}, Train Loss: {train_loss:.4f}, \
+      Test Loss: {test_loss:.4f}, Duration: {dt}')
+
+  return train_losses, test_losses
