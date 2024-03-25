@@ -124,7 +124,7 @@ train_gen = lambda: data_generator(train_sentences_as_int, df_train.b_labels)
 test_gen = lambda: data_generator(test_sentences_as_int, df_test.b_labels)
 
 # A function to encapsulate the training loop
-def batch_gd(criterion, optimizer, epochs):
+def batch_gd(model, criterion, optimizer, epochs):
   train_losses = np.zeros(epochs)
   test_losses = np.zeros(epochs)
 
@@ -153,7 +153,6 @@ def batch_gd(criterion, optimizer, epochs):
 
     test_loss = []
     for inputs, targets in test_gen():
-      inputs, targets = inputs.to(device), targets.to(device)
       targets = targets.view(-1, 1).float()
       loss = criterion(outputs, targets)
       test_loss.append(loss.item())
@@ -169,4 +168,4 @@ def batch_gd(criterion, optimizer, epochs):
 
   return train_losses, test_losses
 
-train_losses, test_losses = batch_gd(criterion, optimizer, 15)
+train_losses, test_losses = batch_gd(model, criterion, optimizer, 15)
