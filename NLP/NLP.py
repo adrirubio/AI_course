@@ -74,6 +74,7 @@ def data_generator(X, y, batch_size=32):
     yield X_batch, y_batch
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+print(device)
 
 # Define the model
 class RNN(nn.Module):
@@ -114,7 +115,6 @@ class RNN(nn.Module):
 
 
 model = RNN(len(word2idx), 20, 15, 1, 1)
-
 
 # Loss and optimizer
 criterion = nn.BCEWithLogitsLoss()
