@@ -60,5 +60,6 @@ idx = 1 # starts at 1
 word2idx = {'<PAD>': 0}
 #+END_SRC
 
+- In this code we looped through every item and gave it an integer and added it to a dictionary
 
 
