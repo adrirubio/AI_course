@@ -113,4 +113,23 @@ Now word2idx has is dictionary of words all of them mapped to an integer:
 len(word2idx)
 #+END_SRC
 
-*** 
+- This would print
+
+#+BEGIN_SRC
+10445
+#+END_SRC
+
+*** Create train and test data
+- In this code we convert data into word indices
+#+BEGIN_SRC python
+# convert data into word indices
+# note: could have done this on the fly earlier
+train_sentences_as_int = []
+for i, row in df_train.iterrows():
+  tokens = row['data'].lower().split()
+  sentence_as_int = [word2idx[token] for token in tokens] # finds the integer of the token
+  train_sentences_as_int.append(sentence_as_int)
+#+END_SRC
+
+
+
