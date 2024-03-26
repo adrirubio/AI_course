@@ -119,7 +119,7 @@ len(word2idx)
 10445
 #+END_SRC
 
-*** Create train and test data
+*** create train and test data
 - In this code we convert data into word indices
 
 #+BEGIN_SRC python
@@ -155,6 +155,60 @@ Result:
 #+END_SRC
 
 
+*** creating the data generator
+#+BEGIN_SRC python
+  def data_generator(X, y, batch_size=32):
+      X, y = shuffle(X, y)
+      n_batches = int(np.ceil(len(y) / batch_size))
+      for i in range(n_batches):
+          end = min((i + 1) * batch_size, len(y))
+
+          X_batch = X[i * batch_size:end]
+          y_batch = y[i * batch_size:end]
+
+          # pad X_batch to be N x T
+          max_len = np.max([len(x) for x in X_batch])
+          for j in range(len(X_batch)):
+              x = X_batch[j]
+              pad = [0] * (max_len - len(x))
+              X_batch[j] = pad + x
+
+          # convert to tensor
+          X_batch = torch.from_numpy(np.array(X_batch)).long()
+          y_batch = torch.from_numpy(np.array(y_batch)).long()
+
+          yield X_batch, y_batch
+#+END_SRC
+
+**** Explanation
+Now let's break down the function step by step:
+
+**** Input Parameters:
+   - `X`: Input data, typically a list or array of input sequences.
+   - `y`: Output labels corresponding to the input data.
+   - `batch_size`: Number of samples per batch. Default is set to 32.
+
+**** Data Shuffling:
+   The input data `X` and labels `y` are shuffled to randomize the order of samples before batching.
+
+**** Batching:
+   - The total number of batches (`n_batches`) is calculated based on the length of the output labels `y` and the specified `batch_size`.
+   - The function iterates over each batch index `i`.
+   - For each batch, it selects a subset of input data and labels (`X_batch` and `y_batch`) based on the batch index `i`.
+   - If the data size is not perfectly divisible by the batch size, the last batch may contain fewer samples.
+
+**** Padding:
+   - The input sequences in `X_batch` are padded to ensure uniform length within each batch.
+   - The maximum length of sequences in the current batch (`max_len`) is calculated.
+   - Each input sequence in `X_batch` is padded with zeros to match the maximum length.
+
+**** Data Conversion:
+   - The padded input sequences (`X_batch`) and corresponding labels (`y_batch`) are converted into PyTorch tensors.
+   - The input sequences are converted to tensors of type `long`.
+
+**** Yielding Batches:
+   - The function yields each batch of input-output pairs (`X_batch`, `y_batch`) using the `yield` keyword.
+   - This allows the function to be used in a loop for generating batches during the training process.
 
 
 
