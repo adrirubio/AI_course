@@ -40,4 +40,25 @@ df.columns = ['labels', 'data']
 df['b_labels'] = df['labels'].map({'ham': 0, 'spam': 1})
 #+END_SRC
 
-*** 
+*** map an integer to each token
+- In this code we divide the file into df_train and df_test
+#+BEGIN_SRC python
+df_train, df_test = train_test_split(df, test_size=0.33)
+df_train.shape, df_test.shape
+#+END_SRC
+
+This would print
+
+#+BEGIN_SRC
+((3733, 3), (1839, 3))
+#+END_SRC
+
+- In this next code padding is 0 so we start mapping integers to tokens from 1 onward
+#+BEGIN_SRC python
+# 0 = padding
+idx = 1 # starts at 1
+word2idx = {'<PAD>': 0}
+#+END_SRC
+
+
+
