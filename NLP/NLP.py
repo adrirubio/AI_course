@@ -96,8 +96,8 @@ class RNN(nn.Module):
 
   def forward(self, X):
     # initial hidden states
-    h0 = torch.zeros(self.L, X.size(0), self.M).to(device)
-    c0 = torch.zeros(self.L, X.size(0), self.M).to(device)
+    h0 = torch.zeros(self.L, X.size(0), self.M)
+    c0 = torch.zeros(self.L, X.size(0), self.M)
 
     # embedding layer
     # turns word indexes into word vectors
