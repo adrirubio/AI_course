@@ -74,7 +74,6 @@ def data_generator(X, y, batch_size=32):
     yield X_batch, y_batch
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-print(device)
 
 # Define the model
 class RNN(nn.Module):
@@ -132,7 +131,6 @@ def batch_gd(model, criterion, optimizer, epochs):
     t0 = datetime.now()
     train_loss = []
     for inputs, targets in train_gen():
-      # print("inputs.shape:", inputs.shape, "targets.shape:", targets.shape)
       targets = targets.view(-1, 1).float()
 
       # zero the parameter gradients
@@ -149,11 +147,12 @@ def batch_gd(model, criterion, optimizer, epochs):
       train_loss.append(loss.item())
 
     # Get train loss and test loss
-    train_loss = np.mean(train_loss)
+    train_loss = np.mean(train_loss) # a little misleading
 
     test_loss = []
     for inputs, targets in test_gen():
       targets = targets.view(-1, 1).float()
+      outputs = model(inputs)
       loss = criterion(outputs, targets)
       test_loss.append(loss.item())
     test_loss = np.mean(test_loss)
@@ -168,4 +167,50 @@ def batch_gd(model, criterion, optimizer, epochs):
 
   return train_losses, test_losses
 
-train_losses, test_losses = batch_gd(model, criterion, optimizer, 15)
+train_losses, test_losses = batch_gd(
+  model, criterion, optimizer, 15)
+
+# Plot the train loss and test loss per iteration
+plt.plot(train_losses, label='train loss')
+plt.plot(test_losses, label='test loss')
+plt.legend()
+plt.show()
+
+# Accuracy
+
+n_correct = 0.
+n_total = 0.
+for inputs, targets in train_gen():
+  targets = targets.view(-1, 1).float()
+
+  # Forward pass
+  outputs = model(inputs)
+
+  # Get prediction
+  predictions = (outputs > 0)
+
+  # update counts
+  n_correct += (predictions == targets).sum().item()
+  n_total += targets.shape[0]
+
+train_acc = n_correct / n_total
+
+
+n_correct = 0.
+n_total = 0.
+for inputs, targets in test_gen():
+  targets = targets.view(-1, 1).float()
+
+  # Forward pass
+  outputs = model(inputs)
+
+  # Get prediction
+  predictions = (outputs > 0)
+
+  # update counts
+  n_correct += (predictions == targets).sum().item()
+  n_total += targets.shape[0]
+
+test_acc = n_correct / n_total
+print(f"Train acc: {train_acc:.4f}, Test acc: {test_acc:.4f}")
+
