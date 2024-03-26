@@ -30,12 +30,14 @@ df = pd.read_csv(io.StringIO(response.content.decode('latin-1')), encoding='lati
 *** prepare the data
 Using pandas we can prepare the file to later create the dataset
 #+BEGIN_SRC python
+# drop unnecessary columns
 df = df.drop(["Unnamed: 2", "Unnamed: 3", "Unnamed: 4"], axis=1)
 
+# remame columns to something better
 df.columns = ['labels', 'data']
 
 # create binary labels
 df['b_labels'] = df['labels'].map({'ham': 0, 'spam': 1})
 #+END_SRC
 
-
+*** 
