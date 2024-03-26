@@ -1,0 +1,18 @@
+** NLP for text classification
+- This notebook is a custom NLP and some code will be new
+
+*** imports
+#+BEGIN_SRC python
+import torch
+import torch.nn as nn
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from datetime import datetime
+from sklearn.model_selection import train_test_split
+from sklearn.utils import shuffle
+import requests
+import io
+#+END_SRC
+
+
