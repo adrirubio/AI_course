@@ -15,4 +15,27 @@ import requests
 import io
 #+END_SRC
 
+- Some of the imports are new
+
+*** load the data
+Here we load the data from a url:
+#+BEGIN_SRC python
+url = 'https://lazyprogrammer.me/course_files/spam.csv'
+response = requests.get(url)
+response.raise_for_status()  # Raise an error if download fails
+
+df = pd.read_csv(io.StringIO(response.content.decode('latin-1')), encoding='latin-1')
+#+END_SRC
+
+*** prepare the data
+Using pandas we can prepare the file to later create the dataset
+#+BEGIN_SRC python
+df = df.drop(["Unnamed: 2", "Unnamed: 3", "Unnamed: 4"], axis=1)
+
+df.columns = ['labels', 'data']
+
+# create binary labels
+df['b_labels'] = df['labels'].map({'ham': 0, 'spam': 1})
+#+END_SRC
+
 

@@ -21,6 +21,8 @@ df.columns = ['labels', 'data']
 
 # create binary labels
 df['b_labels'] = df['labels'].map({'ham': 0, 'spam': 1})
+
+
 df_train, df_test = train_test_split(df, test_size=0.33)
 
 # 0 = padding
@@ -213,4 +215,3 @@ for inputs, targets in test_gen():
 
 test_acc = n_correct / n_total
 print(f"Train acc: {train_acc:.4f}, Test acc: {test_acc:.4f}")
-
