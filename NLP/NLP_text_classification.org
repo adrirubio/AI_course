@@ -62,4 +62,55 @@ word2idx = {'<PAD>': 0}
 
 - In this code we looped through every item and gave it an integer and added it to a dictionary
 
+#+BEGIN_SRC python
+# you could always use gensim or spacy for tokenization,
+# but let's keep it simple!
+for i, row in df_train.iterrows():
+  tokens = row['data'].lower().split() # simple tokenization
+  for token in tokens:
+    if token not in word2idx:
+      word2idx[token] = idx
+      idx += 1
+#+END_SRC
 
+Now word2idx has is dictionary of words all of them mapped to an integer:
+
+#+BEGIN_SRC
+{'<PAD>': 0,
+ 'many': 1,
+ 'more': 2,
+ 'happy': 3,
+ 'returns': 4,
+ 'of': 5,
+ 'the': 6,
+ 'day.': 7,
+ 'i': 8,
+ 'wish': 9,
+ 'you': 10,
+ 'birthday.': 11,
+ 'hmmm': 12,
+ '...': 13,
+ 'and': 14,
+ 'imagine': 15,
+ 'after': 16,
+ "you've": 17,
+ 'come': 18,
+ 'home': 19,
+ 'from': 20,
+ 'that': 21,
+ 'having': 22,
+ 'to': 23,
+ 'rub': 24,
+ 'my': 25,
+ 'feet,': 26,
+ 'make': 27,
+ 'me': 28,
+ 'dinner': 29
+ ...
+#+END_SRC
+
+#+BEGIN_SRC python
+len(word2idx)
+#+END_SRC
+
+*** 
