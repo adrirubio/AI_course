@@ -1,5 +1,5 @@
 ** RNN for time series prediction
-   Most of the code in this notebook has been seen before in previous notebooks so will not be revised.
+Most of the code in this notebook has been seen before in previous notebooks so will not be revised.
  
 *** imports
     #+BEGIN_SRC python
