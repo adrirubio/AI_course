@@ -121,6 +121,7 @@ len(word2idx)
 
 *** Create train and test data
 - In this code we convert data into word indices
+
 #+BEGIN_SRC python
 # convert data into word indices
 # note: could have done this on the fly earlier
@@ -131,7 +132,34 @@ for i, row in df_train.iterrows():
   train_sentences_as_int.append(sentence_as_int)
 #+END_SRC
 
--
+- Now we do the same but with the test data
+
+#+BEGIN_SRC python
+test_sentences_as_int = []
+for i, row in df_test.iterrows():
+  tokens = row['data'].lower().split()
+  sentence_as_int = [word2idx[token] for token in tokens if token in word2idx]
+  test_sentences_as_int.append(sentence_as_int)
+#+END_SRC
+
+As expected there are more train sentences than test sentences
+
+#+BEGIN_SRC python
+len(train_sentences_as_int), len(test_sentences_as_int)
+#+END_SRC
+
+Result:
+
+#+BEGIN_SRC
+(3733, 1839)
+#+END_SRC
+
+
+
+
+
+
+
 
 
 
