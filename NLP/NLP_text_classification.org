@@ -209,3 +209,5 @@ Now let's break down the function step by step:
 **** Yielding Batches:
    - The function yields each batch of input-output pairs (`X_batch`, `y_batch`) using the `yield` keyword.
    - This allows the function to be used in a loop for generating batches during the training process.
+
+
