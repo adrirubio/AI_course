@@ -511,4 +511,3 @@ print(f"Train acc: {train_acc:.4f}, Test acc: {test_acc:.4f}")
 #+BEGIN_SRC
 Train acc: 0.9965, Test acc: 0.9717
 #+END_SRC
-
