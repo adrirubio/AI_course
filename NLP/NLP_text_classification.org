@@ -267,9 +267,99 @@ targets tensor([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 #+END_SRC
 
+*** defining the model
 
+Here is the code and although we have already covered the code I will explain it once more
 
+#+BEGIN_SRC python
+# Define the model
+class RNN(nn.Module):
+  def __init__(self, n_vocab, embed_dim, n_hidden, n_rnnlayers, n_outputs):
+    super(RNN, self).__init__()
+    self.V = n_vocab
+    self.D = embed_dim
+    self.M = n_hidden
+    self.K = n_outputs
+    self.L = n_rnnlayers
 
+    self.embed = nn.Embedding(self.V, self.D)
+    self.rnn = nn.LSTM(
+        input_size=self.D,
+        hidden_size=self.M,
+        num_layers=self.L,
+        batch_first=True)
+    self.fc = nn.Linear(self.M, self.K)
+
+  def forward(self, X):
+    # initial hidden states
+    h0 = torch.zeros(self.L, X.size(0), self.M).to(device)
+    c0 = torch.zeros(self.L, X.size(0), self.M).to(device)
+
+    # embedding layer
+    # turns word indexes into word vectors
+    out = self.embed(X)
+
+    # get RNN unit output
+    out, _ = self.rnn(out, (h0, c0))
+
+    # max pool
+    out, _ = torch.max(out, 1)
+
+    # we only want h(T) at the final time step
+    out = self.fc(out)
+    return out
+#+END_SRC
+
+**** Model Definition
+The RNN model is defined with the following parameters:
+  - `n_vocab`: Size of the vocabulary (number of unique words).
+  - `embed_dim`: Dimensionality of the word embeddings.
+  - `n_hidden`: Number of hidden units in the RNN.
+  - `n_rnnlayers`: Number of layers in the RNN.
+  - `n_outputs`: Number of output classes.
+
+**** Components
+The model consists of the following components:
+
+***** Embedding Layer:
+   - Maps word indices to word vectors.
+   - Implemented using PyTorch's nn.Embedding module.
+
+***** Recurrent Neural Network (LSTM):
+   - Utilizes Long Short-Term Memory (LSTM) cells.
+   - Parameters:
+     - `input_size`: Dimensionality of input embeddings.
+     - `hidden_size`: Number of hidden units in each LSTM layer.
+     - `num_layers`: Number of LSTM layers.
+     - `batch_first`: Indicates whether the input tensor has batch size as the first dimension.
+   - Implemented using PyTorch's nn.LSTM module.
+
+***** Fully Connected Layer (Linear):
+   - Maps the output of the RNN to the desired number of output classes.
+   - Implemented using PyTorch's nn.Linear module.
+
+**** Forward Pass
+The forward pass of the model involves the following steps:
+
+***** Initialization of Hidden States:
+   - Initializes the hidden states `h0` and `c0` for the LSTM.
+   - `h0` and `c0` are tensors of zeros with appropriate dimensions.
+
+***** Embedding Layer:
+   - Converts input indices into word embeddings.
+   - Outputs a tensor of word vectors.
+
+***** RNN Unit:
+   - Passes the embedded input through the LSTM layers.
+   - Returns the output of the LSTM layers.
+
+***** Max Pooling:
+   - Performs max pooling operation across the time dimension.
+   - Reduces the sequence of outputs to a single vector.
+
+***** Output Layer:
+   - Applies a linear transformation to the pooled output.
+   - Produces the final output tensor.
 
 
 
