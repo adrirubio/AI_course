@@ -23,4 +23,3 @@
    - This is similar to feature extraction in 2D but in a volumetric context.
 
 **** Output
-   - The output is a 3D volume where each feature corresponds to the filter's response at each input position.
