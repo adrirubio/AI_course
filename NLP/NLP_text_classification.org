@@ -1,5 +1,5 @@
 ** NLP for text classification
-- This notebook is a custom NLP and some code will be new
+- This notebook is a custom NLP
 
 *** imports
 #+BEGIN_SRC python
@@ -14,8 +14,6 @@ from sklearn.utils import shuffle
 import requests
 import io
 #+END_SRC
-
-- Some of the imports are new
 
 *** load the data
 Here we load the data from a url:
@@ -376,3 +374,89 @@ optimizer = torch.optim.Adam(model.parameters())
 train_gen = lambda: data_generator(train_sentences_as_int, df_train.b_labels)
 test_gen = lambda: data_generator(test_sentences_as_int, df_test.b_labels)
 #+END_SRC
+
+*** start training
+- We have already covered this code many times
+
+#+BEGIN_SRC python
+# A function to encapsulate the training loop
+def batch_gd(model, criterion, optimizer, epochs):
+  train_losses = np.zeros(epochs)
+  test_losses = np.zeros(epochs)
+
+  for it in range(epochs):
+    t0 = datetime.now()
+    train_loss = []
+    for inputs, targets in train_gen():
+      targets = targets.view(-1, 1).float()
+
+      # zero the parameter gradients
+      optimizer.zero_grad()
+
+      # Forward pass
+      outputs = model(inputs)
+      loss = criterion(outputs, targets)
+
+      # Backward and optimize
+      loss.backward()
+      optimizer.step()
+
+      train_loss.append(loss.item())
+
+    # Get train loss and test loss
+    train_loss = np.mean(train_loss) # a little misleading
+
+    test_loss = []
+    for inputs, targets in test_gen():
+      targets = targets.view(-1, 1).float()
+      outputs = model(inputs)
+      loss = criterion(outputs, targets)
+      test_loss.append(loss.item())
+    test_loss = np.mean(test_loss)
+
+    # Save losses
+    train_losses[it] = train_loss
+    test_losses[it] = test_loss
+
+    dt = datetime.now() - t0
+    print(f'Epoch {it+1}/{epochs}, Train Loss: {train_loss:.4f}, \
+      Test Loss: {test_loss:.4f}, Duration: {dt}')
+
+  return train_losses, test_losses
+
+train_losses, test_losses = batch_gd(
+  model, criterion, optimizer, 15)
+#+END_SRC
+
+- The training would look something like this:
+
+#+BEGIN_SRC
+Epoch 1/15, Train Loss: 0.4788,       Test Loss: 0.3751, Duration: 0:00:00.728465
+Epoch 2/15, Train Loss: 0.3320,       Test Loss: 0.3173, Duration: 0:00:00.482931
+Epoch 3/15, Train Loss: 0.2665,       Test Loss: 0.2512, Duration: 0:00:00.484434
+Epoch 4/15, Train Loss: 0.1976,       Test Loss: 0.1981, Duration: 0:00:00.478833
+Epoch 5/15, Train Loss: 0.1450,       Test Loss: 0.1610, Duration: 0:00:00.466815
+Epoch 6/15, Train Loss: 0.1071,       Test Loss: 0.1403, Duration: 0:00:00.483673
+Epoch 7/15, Train Loss: 0.0857,       Test Loss: 0.1127, Duration: 0:00:00.466951
+Epoch 8/15, Train Loss: 0.0671,       Test Loss: 0.1317, Duration: 0:00:00.476132
+Epoch 9/15, Train Loss: 0.0563,       Test Loss: 0.1059, Duration: 0:00:00.474110
+Epoch 10/15, Train Loss: 0.0456,       Test Loss: 0.1017, Duration: 0:00:00.468616
+Epoch 11/15, Train Loss: 0.0378,       Test Loss: 0.0999, Duration: 0:00:00.466557
+Epoch 12/15, Train Loss: 0.0339,       Test Loss: 0.1038, Duration: 0:00:00.473968
+Epoch 13/15, Train Loss: 0.0425,       Test Loss: 0.0886, Duration: 0:00:00.464582
+Epoch 14/15, Train Loss: 0.0298,       Test Loss: 0.0967, Duration: 0:00:00.480014
+Epoch 15/15, Train Loss: 0.0224,       Test Loss: 0.1013, Duration: 0:00:00.473611
+#+END_SRC
+
+*** plot loss
+- Here we plot the loss which you can visit in images
+- As you can see the loss is quite good
+
+#+BEGIN_SRC python
+# Plot the train loss and test loss per iteration
+plt.plot(train_losses, label='train loss')
+plt.plot(test_losses, label='test loss')
+plt.legend()
+plt.show()
+#+END_SRC
+
