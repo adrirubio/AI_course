@@ -211,3 +211,74 @@ Now let's break down the function step by step:
    - The function yields each batch of input-output pairs (`X_batch`, `y_batch`) using the `yield` keyword.
    - This allows the function to be used in a loop for generating batches during the training process.
 
+*** train and test sentences
+
+- Now we can see the inputs and targets for the train and test sentences
+
+As you can observe the inputs are the sentences but in integer format and the targets are ham:0 or spam:1
+
+**** train sentences
+#+BEGIN_SRC python
+for inputs, targets in data_generator(train_sentences_as_int, df_train.b_labels):
+  print("inputs", inputs, "shape:", inputs.shape)
+  print("targets", targets, "shape:", targets.shape)
+  break
+#+END_SRC
+
+- This would print:
+
+#+BEGIN_SRC
+inputs tensor([[   0,    0,    0,  ..., 2325,  988,    7],
+        [   0,    0,    0,  ...,  590,  591,  592],
+        [   0,    0,    0,  ...,    8,  184,  543],
+        ...,
+        [   0,    0,    0,  ...,   88,  101, 2391],
+        [   0,    0,    0,  ...,  928,    5, 9043],
+        [   0,    0,    0,  ..., 2250,  511, 2251]]) shape: torch.Size([32, 33])
+targets tensor([0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0]) shape: torch.Size([32])
+#+END_SRC
+
+**** test sentences
+#+BEGIN_SRC python
+for inputs, targets in data_generator(test_sentences_as_int, df_test.b_labels):
+  print("inputs", inputs, "shape:", inputs.shape)
+  print("targets", targets, "shape:", targets.shape)
+  break
+#+END_SRC
+
+- This would print:
+
+#+BEGIN_SRC
+inputs tensor([[   0,    0,    0,  ...,   73,    1, 2476],
+        [   0,    0,    0,  ...,   23,  150,  204],
+        [   0,    0,    0,  ..., 1012,  166, 2425],
+        ...,
+        [   0,    0,    0,  ...,  332, 5798,  841],
+        [   0,    0,    0,  ..., 1529, 8136,  353],
+        [   0,    0,    0,  ...,    0, 5200,  459]]) shape: torch.Size([32, 85])
+targets tensor([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0]) shape: torch.Size([32])
+#+END_SRC
+
+*** start using the GPU
+
+#+BEGIN_SRC python
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+#+END_SRC
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
