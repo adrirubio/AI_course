@@ -1,7 +1,7 @@
 * Convolution On Color Images
   We know that images are 3-D objects
   But up until now we have seen only 2-D objects
- 
+
 ** 3D Convolution in Convolutional Neural Networks (CNNs)
   3D convolution extends the principles of convolutional operations from 2D images to 3D volumetric data, crucial in areas like medical imaging, 3D modeling, and video processing.
 

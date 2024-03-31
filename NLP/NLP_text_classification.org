@@ -461,3 +461,54 @@ plt.show()
 #+END_SRC
 
 
+*** accuracy
+- Now we see how accurate the model actually was
+
+#+BEGIN_SRC python
+# Accuracy
+
+n_correct = 0.
+n_total = 0.
+for inputs, targets in train_gen():
+  targets = targets.view(-1, 1).float()
+  inputs, targets = inputs.to(device), targets.to(device)
+
+  # Forward pass
+  outputs = model(inputs)
+
+  # Get prediction
+  predictions = (outputs > 0)
+
+  # update counts
+  n_correct += (predictions == targets).sum().item()
+  n_total += targets.shape[0]
+
+train_acc = n_correct / n_total
+
+
+n_correct = 0.
+n_total = 0.
+for inputs, targets in test_gen():
+  targets = targets.view(-1, 1).float()
+  inputs, targets = inputs.to(device), targets.to(device)
+
+  # Forward pass
+  outputs = model(inputs)
+
+  # Get prediction
+  predictions = (outputs > 0)
+
+  # update counts
+  n_correct += (predictions == targets).sum().item()
+  n_total += targets.shape[0]
+
+test_acc = n_correct / n_total
+print(f"Train acc: {train_acc:.4f}, Test acc: {test_acc:.4f}")
+#+END_SRC
+
+- Clearly the model was quite accurate
+
+#+BEGIN_SRC
+Train acc: 0.9965, Test acc: 0.9717
+#+END_SRC
+
