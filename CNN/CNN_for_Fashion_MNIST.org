@@ -292,4 +292,3 @@
       #+END_SRC
 
 *** Conclusion
-    This model was very similar to the ANN but the only main difference was defining the model.
