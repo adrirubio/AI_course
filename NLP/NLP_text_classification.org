@@ -157,27 +157,27 @@ Result:
 
 *** creating the data generator
 #+BEGIN_SRC python
-  def data_generator(X, y, batch_size=32):
-      X, y = shuffle(X, y)
-      n_batches = int(np.ceil(len(y) / batch_size))
-      for i in range(n_batches):
-          end = min((i + 1) * batch_size, len(y))
+def data_generator(X, y, batch_size=32):
+  X, y = shuffle(X, y)
+  n_batches = int(np.ceil(len(y) / batch_size))
+  for i in range(n_batches):
+    end = min((i + 1) * batch_size, len(y))
 
-          X_batch = X[i * batch_size:end]
-          y_batch = y[i * batch_size:end]
+    X_batch = X[i * batch_size:end]
+    y_batch = y[i * batch_size:end]
 
-          # pad X_batch to be N x T
-          max_len = np.max([len(x) for x in X_batch])
-          for j in range(len(X_batch)):
-              x = X_batch[j]
-              pad = [0] * (max_len - len(x))
-              X_batch[j] = pad + x
+    # pad X_batch to be N x T
+    max_len = np.max([len(x) for x in X_batch])
+    for j in range(len(X_batch)):
+      x = X_batch[j]
+      pad = [0] * (max_len - len(x))
+      X_batch[j] = pad + x
 
-          # convert to tensor
-          X_batch = torch.from_numpy(np.array(X_batch)).long()
-          y_batch = torch.from_numpy(np.array(y_batch)).long()
+    # convert to tensor
+    X_batch = torch.from_numpy(np.array(X_batch)).long()
+    y_batch = torch.from_numpy(np.array(y_batch)).long()
 
-          yield X_batch, y_batch
+    yield X_batch, y_batch
 #+END_SRC
 
 
@@ -308,6 +308,8 @@ class RNN(nn.Module):
     # we only want h(T) at the final time step
     out = self.fc(out)
     return out
+
+model = RNN(len(word2idx), 20, 15, 1, 1)
 #+END_SRC
 
 **** Model Definition
@@ -361,16 +363,16 @@ The forward pass of the model involves the following steps:
    - Applies a linear transformation to the pooled output.
    - Produces the final output tensor.
 
+*** loss and optimizer
+#+BEGIN_SRC python
+# Loss and optimizer
+criterion = nn.BCEWithLogitsLoss()
+optimizer = torch.optim.Adam(model.parameters())
+#+END_SRC
 
+*** generating batches
 
-
-
-
-
-
-
-
-
-
-
-
+#+BEGIN_SRC python
+train_gen = lambda: data_generator(train_sentences_as_int, df_train.b_labels)
+test_gen = lambda: data_generator(test_sentences_as_int, df_test.b_labels)
+#+END_SRC
