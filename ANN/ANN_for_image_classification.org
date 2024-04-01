@@ -285,8 +285,3 @@
 ** Conclusion
 
    In summary, this document has provided a detailed explanation of how to create an image classificatin ANN model.
-
-
-
-
-

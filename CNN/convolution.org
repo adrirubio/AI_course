@@ -31,5 +31,3 @@
     | Same  | N         | Typical  |
     | Full  | N + K - 1 | Atypical |
     |-------+-----------+----------|
-
-
