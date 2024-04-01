@@ -58,7 +58,7 @@ idx = 1 # starts at 1
 word2idx = {'<PAD>': 0}
 #+END_SRC
 
-- In this code we looped through every item and gave it an integer and added it to a dictionary
+- In this code we loop through every item, give it an integer and add it to a dictionary
 
 #+BEGIN_SRC python
 # you could always use gensim or spacy for tokenization,
