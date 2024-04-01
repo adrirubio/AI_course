@@ -213,7 +213,7 @@ Now let's break down the function step by step:
 
 - Now we can see the inputs and targets for the train and test sentences
 
-As you can observe the inputs are the sentences but in integer format and the targets are ham:0 or spam:1
+As you can observe the inputs are the sentences but in an integer format and the targets are ham:0 or spam:1
 
 **** train sentences
 #+BEGIN_SRC python
@@ -290,8 +290,8 @@ class RNN(nn.Module):
 
   def forward(self, X):
     # initial hidden states
-    h0 = torch.zeros(self.L, X.size(0), self.M).to(device)
-    c0 = torch.zeros(self.L, X.size(0), self.M).to(device)
+    h0 = torch.zeros(self.L, X.size(0), self.M)
+    c0 = torch.zeros(self.L, X.size(0), self.M)
 
     # embedding layer
     # turns word indexes into word vectors
