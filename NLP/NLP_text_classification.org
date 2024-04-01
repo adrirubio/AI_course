@@ -111,7 +111,7 @@ Now word2idx has is dictionary of words all of them mapped to an integer:
 len(word2idx)
 #+END_SRC
 
-- This would print
+- This would print:
 
 #+BEGIN_SRC
 10445
