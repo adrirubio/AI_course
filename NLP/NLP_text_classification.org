@@ -450,7 +450,7 @@ Epoch 15/15, Train Loss: 0.0224,       Test Loss: 0.1013, Duration: 0:00:00.4736
 
 *** plot loss
 - Here we plot the loss which you can visit in images
-- As you can see the loss is quite good 
+- As you can see the loss is quite good
 
 #+BEGIN_SRC python
 # Plot the train loss and test loss per iteration
