@@ -464,7 +464,7 @@ plt.show()
 - Now we see how accurate the model actually was
 
 #+BEGIN_SRC python
-# Accuracy
+# Accuracy like always
 
 n_correct = 0.
 n_total = 0.
