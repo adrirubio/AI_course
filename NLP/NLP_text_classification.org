@@ -464,13 +464,12 @@ plt.show()
 - Now we see how accurate the model actually was
 
 #+BEGIN_SRC python
-# Accuracy like always
+# Accuracy
 
 n_correct = 0.
 n_total = 0.
 for inputs, targets in train_gen():
   targets = targets.view(-1, 1).float()
-  inputs, targets = inputs.to(device), targets.to(device)
 
   # Forward pass
   outputs = model(inputs)
@@ -489,7 +488,6 @@ n_correct = 0.
 n_total = 0.
 for inputs, targets in test_gen():
   targets = targets.view(-1, 1).float()
-  inputs, targets = inputs.to(device), targets.to(device)
 
   # Forward pass
   outputs = model(inputs)
@@ -505,8 +503,6 @@ test_acc = n_correct / n_total
 print(f"Train acc: {train_acc:.4f}, Test acc: {test_acc:.4f}")
 #+END_SRC
 
-- Clearly the model was quite accurate
-
 #+BEGIN_SRC
-Train acc: 0.9965, Test acc: 0.9717
+    Train acc: 0.9965, Test acc: 0.9717
 #+END_SRC
