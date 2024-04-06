@@ -461,7 +461,7 @@ plt.show()
 #+END_SRC
 
 *** accuracy
-- Now we see how accurate the model actually was
+- Now like always we see how accurate the model actually was
 
 #+BEGIN_SRC python
 # Accuracy
