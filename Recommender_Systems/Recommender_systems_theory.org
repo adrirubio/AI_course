@@ -6,31 +6,31 @@
 *** Types of Recommender Systems
    There are several types of recommender systems:
 
-   *** Collaborative Filtering
+       Collaborative Filtering
        Predicts user preferences based on the preferences of similar users.
 
-   *** Content-based Filtering
+       Content-based Filtering
        Recommends items similar to those the user has liked in the past.
 
-   *** Hybrid Recommender Systems
+       Hybrid Recommender Systems
        Combine collaborative filtering and content-based filtering for better recommendations.
 
-   *** Sequential Recommender Systems
+       Sequential Recommender Systems
        Model the sequential nature of user interactions with items over time.
 
 *** Deep Learning in Recommender Systems
    Deep learning techniques are increasingly used in recommender systems for their ability to learn complex patterns.
 
-   *** Collaborative Filtering with Neural Networks
+       Collaborative Filtering with Neural Networks
        Use neural networks to learn embeddings of users and items from interactions.
 
-   *** Content-based Filtering with Deep Learning
+       Content-based Filtering with Deep Learning
        Utilize neural networks to learn representations of item features such as images or text.
 
-   *** Hybrid Recommender Systems with Deep Learning
+       Hybrid Recommender Systems with Deep Learning
        Enhance collaborative and content-based filtering components using deep learning techniques.
 
-   *** Sequential Recommender Systems with RNNs
+       Sequential Recommender Systems with RNNs
        Model sequential interactions using recurrent neural networks (RNNs) for personalized recommendations.
 
 *** Conclusion
