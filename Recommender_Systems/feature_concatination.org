@@ -1,0 +1,14 @@
+** Recommender Systems: Feature Concatenation
+The user and movie feature matrices represent entities in a shared latent feature space with dimensionality 'D'.
+Each row in the user matrix corresponds to a user's affinity towards 'D' latent features, while each row in the movie matrix represents 'D' latent features of a movie.
+
+*** Concatenated Features for Prediction
+To predict a user's preference for a particular movie, their feature vectors are concatenated, forming a new feature space with dimensionality '2D'. This allows a predictive model to learn interactions between user preferences and movie attributes.
+
+#+BEGIN_SRC python
+u = self.u_emb(u) # output is (num_samples, D)
+m = self.m_emb(m) # output is (num_samples, D)
+
+# merge
+out = torch.cat((u, m), 1) # output is (num_samples, 2D)
+#+END_SRC
