@@ -8,6 +8,3 @@ from datetime import datetime
 from sklearn.utils import shuffle
 import requests
 import io
-
-url ='http://files.grouplens.org/datasets/movielens/ml-20m.zip'
-response = requests.get(url)
