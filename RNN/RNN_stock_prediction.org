@@ -1,0 +1,273 @@
+** Stock Prediction
+
+*** Imports
+#+BEGIN_SRC python
+import torch
+import torch.nn as nn
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import StandardScaler
+#+END_SRC
+
+*** Load the data from a URL
+#+BEGIN_SRC python
+# yes, you can read dataframes from URLs!
+df = pd.read_csv('https://raw.githubusercontent.com/lazyprogrammer/machine_learning_examples/master/tf2.0/sbux.csv')
+
+#+END_SRC
+
+- Currently
+
+| date       | open  | high  | low   | close | volume  | Name |
+|------------+-------+-------+-------+-------+---------+------|
+| 2013-02-08 | 27.92 | 28.325| 27.92 | 28.185| 7146296 | SBUX |
+| 2013-02-11 | 28.26 | 28.26 | 27.93 | 28.07 | 5457354 | SBUX |
+| 2013-02-12 | 28.00 | 28.275| 27.975| 28.13 | 8665592 | SBUX |
+| 2013-02-13 | 28.23 | 28.23 | 27.75 | 27.915| 7022056 | SBUX |
+| 2013-02-14 | 27.765| 27.905| 27.675| 27.775| 8899188 | SBUX |
+
+
+*** prepare the data
+#+BEGIN_SRC python
+# calculate returns by first shifting the data
+df['PrevClose'] = df['close'].shift(1) # move everything up 1
+
+# so now it's like
+# close / prev close
+# x[2] x[1]
+# x[3] x[2]
+# x[4] x[3]
+# ...
+# x[t] x[t-1]
+#+END_SRC
+
+- After that:
+
+| date       | open  | high  | low   | close | volume  | Name | PrevClose |
+|------------+-------+-------+-------+-------+---------+------+-----------|
+| 2013-02-08 | 27.92 | 28.325| 27.92 | 28.185| 7146296 | SBUX | NaN       |
+| 2013-02-11 | 28.26 | 28.26 | 27.93 | 28.07 | 5457354 | SBUX | 28.185    |
+| 2013-02-12 | 28.00 | 28.275| 27.975| 28.13 | 8665592 | SBUX | 28.07     |
+| 2013-02-13 | 28.23 | 28.23 | 27.75 | 27.915| 7022056 | SBUX | 28.13     |
+| 2013-02-14 | 27.765| 27.905| 27.675| 27.775| 8899188 | SBUX | 27.915    |
+
+#+BEGIN_SRC python
+# then the return is
+# (x[t] - x[t-1]) / x[t-1]
+df['Return'] = (df['close'] - df['PrevClose']) / df['PrevClose']
+#+END_SRC
+
+- Now it would look like this:
+
+| date       | open  | high  | low   | close | volume  | Name | PrevClose | Return    |
+|------------+-------+-------+-------+-------+---------+------+-----------+-----------|
+| 2013-02-08 | 27.92 | 28.325| 27.92 | 28.185| 7146296 | SBUX | NaN       | NaN       |
+| 2013-02-11 | 28.26 | 28.26 | 27.93 | 28.07 | 5457354 | SBUX | 28.185    | -0.004080 |
+| 2013-02-12 | 28.00 | 28.275| 27.975| 28.13 | 8665592 | SBUX | 28.07     | 0.002138  |
+| 2013-02-13 | 28.23 | 28.23 | 27.75 | 27.915| 7022056 | SBUX | 28.13     | -0.007643 |
+| 2013-02-14 | 27.765| 27.905| 27.675| 27.775| 8899188 | SBUX | 27.915    | -0.005015 |
+
+Plot:
+#+BEGIN_SRC python
+plt.plot(df['Return']);
+#+END_SRC
+
+Normalize the data:
+#+BEGIN_SRC python
+series = df['Return'].values[1:].reshape(-1, 1)
+
+# Normalize the data
+# Note: I didn't think about where the true boundary is, this is just approx.
+scaler = StandardScaler()
+scaler.fit(series[:len(series) // 2])
+series = scaler.transform(series).flatten()
+END_SRC
+
+
+*** Build the dataset
+#+BEGIN_SRC pytho
+### build the dataset
+# let's see if we can use T past values to predict the next value
+T = 20
+D = 1
+X = []
+Y = []
+for t in range(len(series) - T):
+  x = series[t:t+T]
+  X.append(x)
+  y = series[t+T]
+  Y.append(y)
+
+X = np.array(X).reshape(-1, T, 1) # Now the data should be N x T x D
+Y = np.array(Y).reshape(-1, 1)
+N = len(X)
+print("X.shape", X.shape, "Y.shape", Y.shape)
+#+END_SRC
+
+*** Defining the model
+#+BEGIN_SRC python
+### try autoregressive RNN model
+class RNN(nn.Module):
+  def __init__(self, n_inputs, n_hidden, n_rnnlayers, n_outputs):
+    super(RNN, self).__init__()
+    self.D = n_inputs
+    self.M = n_hidden
+    self.K = n_outputs
+    self.L = n_rnnlayers
+
+    self.rnn = nn.LSTM(
+        input_size=self.D,
+        hidden_size=self.M,
+        num_layers=self.L,
+        batch_first=True)
+    self.fc = nn.Linear(self.M, self.K)
+
+  def forward(self, X):
+    # initial hidden states
+    h0 = torch.zeros(self.L, X.size(0), self.M).to(device)
+    c0 = torch.zeros(self.L, X.size(0), self.M).to(device)
+
+    # get RNN unit output
+    out, _ = self.rnn(X, (h0, c0))
+
+    # we only want h(T) at the final time step
+    out = self.fc(out[:, -1, :])
+    return out
+#+END_SRC
+
+#+BEGIN_SRC python
+model = RNN(1, 5, 1, 1)
+#+END_SRC 
+
+*** Using GPU
+#+BEGIN_SRC python
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+print(device)
+model.to(device)
+#+END_SRC
+
+*** Loss and optimizer
+#+BEGIN_SRC python
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+print(device)
+model.to(device)
+#+END_SRC
+
+*** Training
+#+BEGIN_SRC python
+# Training
+def full_gd(model,
+            criterion,
+            optimizer,
+            X_train,
+            y_train,
+            X_test,
+            y_test,
+            epochs=200):
+
+  # Stuff to store
+  train_losses = np.zeros(epochs)
+  test_losses = np.zeros(epochs)
+
+  for it in range(epochs):
+    # zero the parameter gradients
+    optimizer.zero_grad()
+
+    # Forward pass
+    outputs = model(X_train)
+    loss = criterion(outputs, y_train)
+ 
+    # Backward and optimize
+    loss.backward()
+    optimizer.step()
+
+    # Save losses
+    train_losses[it] = loss.item()
+
+    # Test loss
+    test_outputs = model(X_test)
+    test_loss = criterion(test_outputs, y_test)
+    test_losses[it] = test_loss.item()
+
+    if (it + 1) % 5 == 0:
+      print(f'Epoch {it+1}/{epochs}, Train Loss: {loss.item():.4f}, Test Loss: {test_loss.item():.4f}')
+
+  return train_losses, test_losses
+#+END_SRC
+
+
+#+BEGIN_SRC python
+# Make inputs and targets
+X_train = torch.from_numpy(X[:-N//2].astype(np.float32))
+y_train = torch.from_numpy(Y[:-N//2].astype(np.float32))
+X_test = torch.from_numpy(X[-N//2:].astype(np.float32))
+y_test = torch.from_numpy(Y[-N//2:].astype(np.float32))
+#+END_SRC 
+
+#+BEGIN_SRC python
+# move data to GPU
+X_train, y_train = X_train.to(device), y_train.to(device)
+X_test, y_test = X_test.to(device), y_test.to(device)
+#+END_SRC
+
+#+BEGIN_SRC python
+train_losses, test_losses = full_gd(model,
+                                    criterion,
+                                    optimizer,
+                                    X_train,
+                                    y_train,
+                                    X_test,
+                                    y_test)
+#+END_SRC
+
+
+#+BEGIN_SRC
+Epoch 5/200, Train Loss: 1.0666, Test Loss: 1.0724
+Epoch 10/200, Train Loss: 1.0527, Test Loss: 1.0909
+Epoch 15/200, Train Loss: 1.0557, Test Loss: 1.0907
+Epoch 20/200, Train Loss: 1.0484, Test Loss: 1.0770
+Epoch 25/200, Train Loss: 1.0476, Test Loss: 1.0735
+Epoch 30/200, Train Loss: 1.0461, Test Loss: 1.0746
+Epoch 35/200, Train Loss: 1.0427, Test Loss: 1.0791
+Epoch 40/200, Train Loss: 1.0401, Test Loss: 1.0858
+Epoch 45/200, Train Loss: 1.0374, Test Loss: 1.0897
+Epoch 50/200, Train Loss: 1.0346, Test Loss: 1.0920
+Epoch 55/200, Train Loss: 1.0327, Test Loss: 1.0969
+Epoch 60/200, Train Loss: 1.0312, Test Loss: 1.1038
+Epoch 65/200, Train Loss: 1.0300, Test Loss: 1.1083
+Epoch 70/200, Train Loss: 1.0286, Test Loss: 1.1085
+Epoch 75/200, Train Loss: 1.0272, Test Loss: 1.1080
+Epoch 80/200, Train Loss: 1.0258, Test Loss: 1.1086
+Epoch 85/200, Train Loss: 1.0244, Test Loss: 1.1095
+Epoch 90/200, Train Loss: 1.0229, Test Loss: 1.1113
+Epoch 95/200, Train Loss: 1.0212, Test Loss: 1.1132
+Epoch 100/200, Train Loss: 1.0192, Test Loss: 1.1146
+Epoch 105/200, Train Loss: 1.0170, Test Loss: 1.1161
+Epoch 110/200, Train Loss: 1.0143, Test Loss: 1.1165
+#+END_SRC
+
+*** Loss
+#+BEGIN_SRC python
+# Plot the train loss and test loss per iteration
+plt.plot(train_losses, label='train loss')
+plt.plot(test_losses, label='test loss')
+plt.legend()
+plt.show()
+#+END_SRC
+
+*** Forcast prediction
+#+BEGIN_SRC python
+# Plot the train loss and test loss per iteration
+plt.plot(train_losses, label='train loss')
+plt.plot(test_losses, label='test loss')
+plt.legend()
+plt.show()
+#+END_SRC
+
+
+** Summary:
+As you can see this model is very complicated because it is dificult to predict how a stock will change over time but it is a good learning opportunity.
+Most if not all the syntax in this model has already been covered.
+We have practically already learnt RNN but there is always space for improvement. 
+ 

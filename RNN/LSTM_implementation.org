@@ -1,0 +1,63 @@
+** Introduction
+  Long Short-Term Memory (LSTM) networks are a type of Recurrent Neural Network (RNN) that are designed to overcome certain limitations of traditional RNNs, particularly in learning long-term dependencies.
+
+** Why LSTMs are Effective
+
+*** Overcoming the Vanishing Gradient Problem
+   - Traditional RNNs struggle with the vanishing gradient problem, where gradients become extremely small during backpropagation. This makes it difficult to learn long-term dependencies in sequences.
+   - LSTMs tackle this problem with a unique architecture that includes memory cells and gates. These components allow the network to regulate the flow of information, enabling it to remember or forget information over long periods.
+
+*** Memory Cells
+   - Each LSTM unit has a memory cell that can maintain information in memory for long periods. The amount of information stored is controlled by structures called gates.
+
+*** Gates in LSTM
+   - Input Gate: Decides how much new information to add to the cell state.
+   - Forget Gate: Determines what information should be discarded from the cell state.
+   - Output Gate: Controls the extent to which the value in the cell is used to compute the output activation of the LSTM unit.
+   - These gates allow the LSTM to make fine-grained decisions about what information to store, discard, or output at each step in the sequence.
+
+*** Advantages in Sequence Modeling
+   - LSTMs are particularly well-suited for applications where context from the distant past is essential for making accurate predictions. Examples include time series prediction, language modeling, and sequence generation.
+   - By effectively capturing long-range dependencies, LSTMs can remember and utilize patterns and information from earlier in the sequence, which might be missed by other models.
+
+*** An example of an LSTM
+
+#+BEGIN_SRC python
+class RNN(nn.Module):
+  def __init__(self, n_inputs, n_hidden, n_rnnlayers, n_outputs):
+    super(RNN, self).__init__()
+    self.D = n_inputs
+    self.M = n_hidden
+    self.K = n_outputs
+    self.L = n_rnnlayers
+    self.rnn = nn.LSTM(
+        input_size=self.D,
+        hidden_size=self.M,
+        num_layers=self.L,
+        batch_first=True)
+    self.fc = nn.Linear(self.M, self.K)
+
+  def forward(self, X):
+    h0 = torch.zeros(self.L, X.size(0), self.M).to(device)
+    c0 = torch.zeros(self.L, X.size(0), self.M).to(device)
+    out, _ = self.rnn(X, (h0, c0))
+    out = self.fc(out[:, -1, :])
+    return out
+#+END_SRC
+
+*** Class Definition
+   The RNN class extends nn.Module, the base class for all neural network modules in PyTorch.
+
+*** Constructor (__init__)
+   The constructor initializes the RNN with parameters for input features (n_inputs), hidden units (n_hidden), number of RNN layers (n_rnnlayers), and output features (n_outputs). It creates an LSTM layer and a linear layer for the network.
+
+*** LSTM Layer
+   Unlike the simple RNN, this class uses LSTM (Long Short-Term Memory) for the rnn layer. LSTM is beneficial for learning long-term dependencies. The input tensor is assumed to have the batch size as its first dimension (`batch_first=True`).
+
+*** Fully Connected Layer
+   A linear layer (self.fc) maps the hidden state to the output space.
+
+*** Forward Pass (forward)
+   - Initializes zero tensors for the hidden state (h0) and the cell state (c0).
+   - Computes the output of the LSTM layer. The LSTM returns the output and the new hidden and cell states, but here only the output is used.
+   - The output at the final time step is passed through the fully connected layer to produce the final output.

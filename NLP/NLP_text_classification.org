@@ -1,0 +1,508 @@
+** NLP for text classification
+- This notebook is a custom NLP
+
+*** imports
+#+BEGIN_SRC python
+import torch
+import torch.nn as nn
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from datetime import datetime
+from sklearn.model_selection import train_test_split
+from sklearn.utils import shuffle
+import requests
+import io
+#+END_SRC
+
+*** load the data
+Here we load the data from a url:
+#+BEGIN_SRC python
+url = 'https://lazyprogrammer.me/course_files/spam.csv'
+response = requests.get(url)
+response.raise_for_status()  # Raise an error if download fails
+
+df = pd.read_csv(io.StringIO(response.content.decode('latin-1')), encoding='latin-1')
+#+END_SRC
+
+*** prepare the file
+Using pandas we can prepare the file to later create the dataset
+#+BEGIN_SRC python
+# drop unnecessary columns
+df = df.drop(["Unnamed: 2", "Unnamed: 3", "Unnamed: 4"], axis=1)
+
+# remame columns to something better
+df.columns = ['labels', 'data']
+
+# create binary labels
+df['b_labels'] = df['labels'].map({'ham': 0, 'spam': 1})
+#+END_SRC
+
+*** map an integer to each token
+- In this code we divide the file into df_train and df_test
+#+BEGIN_SRC python
+df_train, df_test = train_test_split(df, test_size=0.33)
+df_train.shape, df_test.shape
+#+END_SRC
+
+This would print:
+
+#+BEGIN_SRC
+((3733, 3), (1839, 3))
+#+END_SRC
+
+- In this next code padding is 0 so we start mapping integers to tokens from 1 onward
+#+BEGIN_SRC python
+# 0 = padding
+idx = 1 # starts at 1
+word2idx = {'<PAD>': 0}
+#+END_SRC
+
+- In this code we loop through every item, give it an integer and add it to a dictionary
+
+#+BEGIN_SRC python
+# you could always use gensim or spacy for tokenization,
+# but let's keep it simple!
+for i, row in df_train.iterrows():
+  tokens = row['data'].lower().split() # simple tokenization
+  for token in tokens:
+    if token not in word2idx:
+      word2idx[token] = idx
+      idx += 1
+#+END_SRC
+
+Now word2idx has is dictionary of words all of them mapped to an integer:
+
+#+BEGIN_SRC
+{'<PAD>': 0,
+ 'many': 1,
+ 'more': 2,
+ 'happy': 3,
+ 'returns': 4,
+ 'of': 5,
+ 'the': 6,
+ 'day.': 7,
+ 'i': 8,
+ 'wish': 9,
+ 'you': 10,
+ 'birthday.': 11,
+ 'hmmm': 12,
+ '...': 13,
+ 'and': 14,
+ 'imagine': 15,
+ 'after': 16,
+ "you've": 17,
+ 'come': 18,
+ 'home': 19,
+ 'from': 20,
+ 'that': 21,
+ 'having': 22,
+ 'to': 23,
+ 'rub': 24,
+ 'my': 25,
+ 'feet,': 26,
+ 'make': 27,
+ 'me': 28,
+ 'dinner': 29
+ ...
+#+END_SRC
+
+#+BEGIN_SRC python
+len(word2idx)
+#+END_SRC
+
+- This would print:
+
+#+BEGIN_SRC
+10445
+#+END_SRC
+
+*** create train and test data
+- In this code we convert data into word indices
+
+#+BEGIN_SRC python
+# convert data into word indices
+# note: could have done this on the fly earlier
+train_sentences_as_int = []
+for i, row in df_train.iterrows():
+  tokens = row['data'].lower().split()
+  sentence_as_int = [word2idx[token] for token in tokens] # finds the integer of the token
+  train_sentences_as_int.append(sentence_as_int)
+#+END_SRC
+
+- Now we do the same but with the test data
+
+#+BEGIN_SRC python
+test_sentences_as_int = []
+for i, row in df_test.iterrows():
+  tokens = row['data'].lower().split()
+  sentence_as_int = [word2idx[token] for token in tokens if token in word2idx]
+  test_sentences_as_int.append(sentence_as_int)
+#+END_SRC
+
+As expected there are more train sentences than test sentences
+
+#+BEGIN_SRC python
+len(train_sentences_as_int), len(test_sentences_as_int)
+#+END_SRC
+
+Result:
+
+#+BEGIN_SRC
+(3733, 1839)
+#+END_SRC
+
+
+*** creating the data generator
+#+BEGIN_SRC python
+def data_generator(X, y, batch_size=32):
+  X, y = shuffle(X, y)
+  n_batches = int(np.ceil(len(y) / batch_size))
+  for i in range(n_batches):
+    end = min((i + 1) * batch_size, len(y))
+
+    X_batch = X[i * batch_size:end]
+    y_batch = y[i * batch_size:end]
+
+    # pad X_batch to be N x T
+    max_len = np.max([len(x) for x in X_batch])
+    for j in range(len(X_batch)):
+      x = X_batch[j]
+      pad = [0] * (max_len - len(x))
+      X_batch[j] = pad + x
+
+    # convert to tensor
+    X_batch = torch.from_numpy(np.array(X_batch)).long()
+    y_batch = torch.from_numpy(np.array(y_batch)).long()
+
+    yield X_batch, y_batch
+#+END_SRC
+
+
+**** Explanation
+Now let's break down the function step by step:
+
+**** Input Parameters:
+   - `X`: Input data, typically a list or array of input sequences.
+   - `y`: Output labels corresponding to the input data.
+   - `batch_size`: Number of samples per batch. Default is set to 32.
+
+**** Data Shuffling:
+   The input data `X` and labels `y` are shuffled to randomize the order of samples before batching.
+
+**** Batching:
+   - The total number of batches (`n_batches`) is calculated based on the length of the output labels `y` and the specified `batch_size`.
+   - The function iterates over each batch index `i`.
+   - For each batch, it selects a subset of input data and labels (`X_batch` and `y_batch`) based on the batch index `i`.
+   - If the data size is not perfectly divisible by the batch size, the last batch may contain fewer samples.
+
+**** Padding:
+   - The input sequences in `X_batch` are padded to ensure uniform length within each batch.
+   - The maximum length of sequences in the current batch (`max_len`) is calculated.
+   - Each input sequence in `X_batch` is padded with zeros to match the maximum length.
+
+**** Data Conversion:
+   - The padded input sequences (`X_batch`) and corresponding labels (`y_batch`) are converted into PyTorch tensors.
+   - The input sequences are converted to tensors of type `long`.
+
+**** Yielding Batches:
+   - The function yields each batch of input-output pairs (`X_batch`, `y_batch`) using the `yield` keyword.
+   - This allows the function to be used in a loop for generating batches during the training process.
+
+*** train and test sentences
+
+- Now we can see the inputs and targets for the train and test sentences
+
+As you can observe the inputs are the sentences but in an integer format and the targets are ham:0 or spam:1
+
+**** train sentences
+#+BEGIN_SRC python
+for inputs, targets in data_generator(train_sentences_as_int, df_train.b_labels):
+  print("inputs", inputs, "shape:", inputs.shape)
+  print("targets", targets, "shape:", targets.shape)
+  break
+#+END_SRC
+
+- This would print:
+
+#+BEGIN_SRC
+inputs tensor([[   0,    0,    0,  ..., 2325,  988,    7],
+        [   0,    0,    0,  ...,  590,  591,  592],
+        [   0,    0,    0,  ...,    8,  184,  543],
+        ...,
+        [   0,    0,    0,  ...,   88,  101, 2391],
+        [   0,    0,    0,  ...,  928,    5, 9043],
+        [   0,    0,    0,  ..., 2250,  511, 2251]]) shape: torch.Size([32, 33])
+targets tensor([0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0]) shape: torch.Size([32])
+#+END_SRC
+
+**** test sentences
+#+BEGIN_SRC python
+for inputs, targets in data_generator(test_sentences_as_int, df_test.b_labels):
+  print("inputs", inputs, "shape:", inputs.shape)
+  print("targets", targets, "shape:", targets.shape)
+  break
+#+END_SRC
+
+- This would print:
+
+#+BEGIN_SRC
+inputs tensor([[   0,    0,    0,  ...,   73,    1, 2476],
+        [   0,    0,    0,  ...,   23,  150,  204],
+        [   0,    0,    0,  ..., 1012,  166, 2425],
+        ...,
+        [   0,    0,    0,  ...,  332, 5798,  841],
+        [   0,    0,    0,  ..., 1529, 8136,  353],
+        [   0,    0,    0,  ...,    0, 5200,  459]]) shape: torch.Size([32, 85])
+targets tensor([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0]) shape: torch.Size([32])
+#+END_SRC
+
+*** start using the GPU
+
+#+BEGIN_SRC python
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+#+END_SRC
+
+*** defining the model
+
+Here is the code and although we have already covered the code I will explain it once more
+
+#+BEGIN_SRC python
+# Define the model
+class RNN(nn.Module):
+  def __init__(self, n_vocab, embed_dim, n_hidden, n_rnnlayers, n_outputs):
+    super(RNN, self).__init__()
+    self.V = n_vocab
+    self.D = embed_dim
+    self.M = n_hidden
+    self.K = n_outputs
+    self.L = n_rnnlayers
+
+    self.embed = nn.Embedding(self.V, self.D)
+    self.rnn = nn.LSTM(
+        input_size=self.D,
+        hidden_size=self.M,
+        num_layers=self.L,
+        batch_first=True)
+    self.fc = nn.Linear(self.M, self.K)
+
+  def forward(self, X):
+    # initial hidden states
+    h0 = torch.zeros(self.L, X.size(0), self.M)
+    c0 = torch.zeros(self.L, X.size(0), self.M)
+
+    # embedding layer
+    # turns word indexes into word vectors
+    out = self.embed(X)
+
+    # get RNN unit output
+    out, _ = self.rnn(out, (h0, c0))
+
+    # max pool
+    out, _ = torch.max(out, 1)
+
+    # we only want h(T) at the final time step
+    out = self.fc(out)
+    return out
+
+model = RNN(len(word2idx), 20, 15, 1, 1)
+#+END_SRC
+
+**** Model Definition
+The RNN model is defined with the following parameters:
+  - `n_vocab`: Size of the vocabulary (number of unique words).
+  - `embed_dim`: Dimensionality of the word embeddings.
+  - `n_hidden`: Number of hidden units in the RNN.
+  - `n_rnnlayers`: Number of layers in the RNN.
+  - `n_outputs`: Number of output classes.
+
+**** Components
+The model consists of the following components:
+
+***** Embedding Layer:
+   - Maps word indices to word vectors.
+   - Implemented using PyTorch's nn.Embedding module.
+
+***** Recurrent Neural Network (LSTM):
+   - Utilizes Long Short-Term Memory (LSTM) cells.
+   - Parameters:
+     - `input_size`: Dimensionality of input embeddings.
+     - `hidden_size`: Number of hidden units in each LSTM layer.
+     - `num_layers`: Number of LSTM layers.
+     - `batch_first`: Indicates whether the input tensor has batch size as the first dimension.
+   - Implemented using PyTorch's nn.LSTM module.
+
+***** Fully Connected Layer (Linear):
+   - Maps the output of the RNN to the desired number of output classes.
+   - Implemented using PyTorch's nn.Linear module.
+
+**** Forward Pass
+The forward pass of the model involves the following steps:
+
+***** Initialization of Hidden States:
+   - Initializes the hidden states `h0` and `c0` for the LSTM.
+   - `h0` and `c0` are tensors of zeros with appropriate dimensions.
+
+***** Embedding Layer:
+   - Converts input indices into word embeddings.
+   - Outputs a tensor of word vectors.
+
+***** RNN Unit:
+   - Passes the embedded input through the LSTM layers.
+   - Returns the output of the LSTM layers.
+
+***** Max Pooling:
+   - Performs max pooling operation across the time dimension.
+   - Reduces the sequence of outputs to a single vector.
+
+***** Output Layer:
+   - Applies a linear transformation to the pooled output.
+   - Produces the final output tensor.
+
+*** loss and optimizer
+#+BEGIN_SRC python
+# Loss and optimizer
+criterion = nn.BCEWithLogitsLoss()
+optimizer = torch.optim.Adam(model.parameters())
+#+END_SRC
+
+*** generating batches
+
+#+BEGIN_SRC python
+train_gen = lambda: data_generator(train_sentences_as_int, df_train.b_labels)
+test_gen = lambda: data_generator(test_sentences_as_int, df_test.b_labels)
+#+END_SRC
+
+*** start training
+- We have already covered this code many times
+
+#+BEGIN_SRC python
+# A function to encapsulate the training loop
+def batch_gd(model, criterion, optimizer, epochs):
+  train_losses = np.zeros(epochs)
+  test_losses = np.zeros(epochs)
+
+  for it in range(epochs):
+    t0 = datetime.now()
+    train_loss = []
+    for inputs, targets in train_gen():
+      targets = targets.view(-1, 1).float()
+
+      # zero the parameter gradients
+      optimizer.zero_grad()
+
+      # Forward pass
+      outputs = model(inputs)
+      loss = criterion(outputs, targets)
+
+      # Backward and optimize
+      loss.backward()
+      optimizer.step()
+
+      train_loss.append(loss.item())
+
+    # Get train loss and test loss
+    train_loss = np.mean(train_loss) # a little misleading
+
+    test_loss = []
+    for inputs, targets in test_gen():
+      targets = targets.view(-1, 1).float()
+      outputs = model(inputs)
+      loss = criterion(outputs, targets)
+      test_loss.append(loss.item())
+    test_loss = np.mean(test_loss)
+
+    # Save losses
+    train_losses[it] = train_loss
+    test_losses[it] = test_loss
+
+    dt = datetime.now() - t0
+    print(f'Epoch {it+1}/{epochs}, Train Loss: {train_loss:.4f}, \
+      Test Loss: {test_loss:.4f}, Duration: {dt}')
+
+  return train_losses, test_losses
+
+train_losses, test_losses = batch_gd(
+  model, criterion, optimizer, 15)
+#+END_SRC
+
+- The training would look something like this:
+
+#+BEGIN_SRC
+Epoch 1/15, Train Loss: 0.4788,       Test Loss: 0.3751, Duration: 0:00:00.728465
+Epoch 2/15, Train Loss: 0.3320,       Test Loss: 0.3173, Duration: 0:00:00.482931
+Epoch 3/15, Train Loss: 0.2665,       Test Loss: 0.2512, Duration: 0:00:00.484434
+Epoch 4/15, Train Loss: 0.1976,       Test Loss: 0.1981, Duration: 0:00:00.478833
+Epoch 5/15, Train Loss: 0.1450,       Test Loss: 0.1610, Duration: 0:00:00.466815
+Epoch 6/15, Train Loss: 0.1071,       Test Loss: 0.1403, Duration: 0:00:00.483673
+Epoch 7/15, Train Loss: 0.0857,       Test Loss: 0.1127, Duration: 0:00:00.466951
+Epoch 8/15, Train Loss: 0.0671,       Test Loss: 0.1317, Duration: 0:00:00.476132
+Epoch 9/15, Train Loss: 0.0563,       Test Loss: 0.1059, Duration: 0:00:00.474110
+Epoch 10/15, Train Loss: 0.0456,       Test Loss: 0.1017, Duration: 0:00:00.468616
+Epoch 11/15, Train Loss: 0.0378,       Test Loss: 0.0999, Duration: 0:00:00.466557
+Epoch 12/15, Train Loss: 0.0339,       Test Loss: 0.1038, Duration: 0:00:00.473968
+Epoch 13/15, Train Loss: 0.0425,       Test Loss: 0.0886, Duration: 0:00:00.464582
+Epoch 14/15, Train Loss: 0.0298,       Test Loss: 0.0967, Duration: 0:00:00.480014
+Epoch 15/15, Train Loss: 0.0224,       Test Loss: 0.1013, Duration: 0:00:00.473611
+#+END_SRC
+
+*** plot loss
+- Here we plot the loss which you can visit in images
+- As you can see the loss is quite good
+
+#+BEGIN_SRC python
+# Plot the train loss and test loss per iteration
+plt.plot(train_losses, label='train loss')
+plt.plot(test_losses, label='test loss')
+plt.legend()
+plt.show()
+#+END_SRC
+
+*** accuracy
+- Now like always we see how accurate the model actually was
+
+#+BEGIN_SRC python
+# Accuracy
+
+n_correct = 0.
+n_total = 0.
+for inputs, targets in train_gen():
+  targets = targets.view(-1, 1).float()
+
+  # Forward pass
+  outputs = model(inputs)
+
+  # Get prediction
+  predictions = (outputs > 0)
+
+  # update counts
+  n_correct += (predictions == targets).sum().item()
+  n_total += targets.shape[0]
+
+train_acc = n_correct / n_total
+
+
+n_correct = 0.
+n_total = 0.
+for inputs, targets in test_gen():
+  targets = targets.view(-1, 1).float()
+
+  # Forward pass
+  outputs = model(inputs)
+
+  # Get prediction
+  predictions = (outputs > 0)
+
+  # update counts
+  n_correct += (predictions == targets).sum().item()
+  n_total += targets.shape[0]
+
+test_acc = n_correct / n_total
+print(f"Train acc: {train_acc:.4f}, Test acc: {test_acc:.4f}")
+#+END_SRC
+
+#+BEGIN_SRC
+    Train acc: 0.9965, Test acc: 0.9717
+#+END_SRC

@@ -1,6 +1,11 @@
 ** RNN for time series prediction
+<<<<<<< HEAD
    Most of the code in this notebook has been seen before in previous notebooks so will not be revised.
 
+=======
+Most of the code in this notebook has been seen before in previous notebooks so will not be revised.
+ 
+>>>>>>> f1e68bb40ad498c952fecccec2b783978e5c321f
 *** imports
     #+BEGIN_SRC python
     import torch
@@ -15,10 +20,10 @@
     # make the original data
     N = 1000
     series = np.sin(0.1*np.arange(N)) #+ np.random.randn(N)*0.1
-    
+
     # plot it
     plt.plot(series)
-    plt.show() 
+    plt.show()
     #+END_SRC
 
 *** build the dataset
@@ -42,11 +47,69 @@
     print("X.shape", X.shape, "Y.shape", Y.shape)
     #+END_SRC
 
+*** define simple RNN
+
+    #+BEGIN_SRC python
+      ### Define simple RNN
+      class SimpleRNN(nn.Module):
+        def __init__(self, n_inputs, n_hidden, n_rnnlayers, n_outputs):
+          super(SimpleRNN, self).__init__()
+          self.D = n_inputs
+          self.M = n_hidden
+          self.K = n_outputs
+          self.L = n_rnnlayers
+
+          # note: batch_first=True
+          # applies the convention that our data will be of shape:
+          # (num_samples, sequence_length, num_features)
+          # rather than:
+          # (sequence_length, num_samples, num_features)
+          self.rnn = nn.RNN(
+              input_size=self.D,
+              hidden_size=self.M,
+              num_layers=self.L,
+              nonlinearity='relu',
+              batch_first=True)
+          self.fc = nn.Linear(self.M, self.K)
+
+        def forward(self, X):
+          # initial hidden states
+          h0 = torch.zeros(self.L, X.size(0), self.M).to(device)
+
+          # get RNN unit output
+          # out is of size (N, T, M)
+          # 2nd return value is hidden states at each hidden layer
+          # we don't need those now
+          out, _ = self.rnn(X, h0)
+
+          # we only want h(T) at the final time step
+          # N x M -> N x K
+          out = self.fc(out[:, -1, :])
+          return out
+    #+END_SRC
+
+***** Explanation
+****** Class Definition
+   The SimpleRNN class inherits from nn.Module, which is a standard practice in PyTorch for defining neural network models.
+
+****** Constructor (__init__)
+   The constructor initializes the RNN with four parameters: n_inputs, n_hidden, n_rnnlayers, and n_outputs. These parameters represent the number of input features, hidden units, RNN layers, and output features, respectively. The class also defines an RNN layer and a fully connected (linear) layer.
+
+****** RNN Layer
+   The RNN layer is configured to use the 'relu' nonlinearity and assumes that the input tensor's first dimension represents the batch size (batch_first=True).
+
+****** Fully Connected Layer
+   This layer maps the final hidden state to the output space.
+
+****** Forward Pass (forward)
+   The forward method defines the forward pass of the network. It initializes the hidden state, computes the RNN output, and passes the last hidden state through the fully connected layer to produce the final output.
+
+
     #+BEGIN_SRC python
     # Instantiate the model
     model = SimpleRNN(n_inputs=1, n_hidden=15, n_rnnlayers=1, n_outputs=1)
     model.to(device)
-    #+END_SRC 
+    #+END_SRC
 
 
 
@@ -64,7 +127,7 @@
    criterion = nn.MSELoss()
    optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
    #+END_SRC
-   
+
    Here we move the inputs and targets to the GPU
    #+BEGIN_SRC python
    # move data to GPU
@@ -73,46 +136,46 @@
    #+END_SRC
 
 *** training
-   Nothing new 
+   Nothing new
    #+BEGIN_SRC python
-   # Training
-   def full_gd(model,
-               criterion,
-               optimizer,
-               X_train,
-               y_train,
-               X_test,
-               y_test,
-               epochs=1000):
+     # Training
+     def full_gd(model,
+                 criterion,
+                 optimizer,
+                 X_train,
+                 y_train,
+                 X_test,
+                 y_test,
+                 epochs=1000):
 
-     # Stuff to store
-     train_losses = np.zeros(epochs)
-     test_losses = np.zeros(epochs)
+       # Stuff to store
+       train_losses = np.zeros(epochs)
+       test_losses = np.zeros(epochs)
 
-     for it in range(epochs):
-       # zero the parameter gradients
-       optimizer.zero_grad()
+       for it in range(epochs):
+         # zero the parameter gradients
+         optimizer.zero_grad()
 
-       # Forward pass
-       outputs = model(X_train)
-       loss = criterion(outputs, y_train)
-      
-       # Backward and optimize
-       loss.backward()
-       optimizer.step()
+         # Forward pass
+         outputs = model(X_train)
+         loss = criterion(outputs, y_train)
 
-       # Save losses
-       train_losses[it] = loss.item()
+         # Backward and optimize
+         loss.backward()
+         optimizer.step()
 
-       # Test loss
-       test_outputs = model(X_test)
-       test_loss = criterion(test_outputs, y_test)
-       test_losses[it] = test_loss.item()
-      
-       if (it + 1) % 5 == 0:
-         print(f'Epoch {it+1}/{epochs}, Train Loss: {loss.item():.4f}, Test Loss: {test_loss.item():.4f}')
-  
-     return train_losses, test_losses
+         # Save losses
+         train_losses[it] = loss.item()
+
+         # Test loss
+         test_outputs = model(X_test)
+         test_loss = criterion(test_outputs, y_test)
+         test_losses[it] = test_loss.item()
+
+         if (it + 1) % 5 == 0:
+           print(f'Epoch {it+1}/{epochs}, Train Loss: {loss.item():.4f}, Test Loss: {test_loss.item():.4f}')
+
+       return train_losses, test_losses
    #+END_SRC
 
 
@@ -203,12 +266,8 @@
    plt.plot(validation_predictions, label='forecast prediction')
    plt.legend()
    #+END_SRC
-   
+
    As a sidenote all the plots are in the images folder
-   
+
 *** Summary
    As of now you should know how to create a simple RNN
-
-
- 
- 

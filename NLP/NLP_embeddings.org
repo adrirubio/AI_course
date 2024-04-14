@@ -1,0 +1,30 @@
+* Embeddings in NLP
+** Introduction
+Embeddings in NLP are dense vector representations of words that capture the semantic meanings, syntactic properties, and relationships with other words. Unlike sparse representations like one-hot encoding, embeddings provide a more efficient and expressive way to represent words in a continuous vector space.
+
+** Why Use Embeddings?
+- Capture semantic meaning in a dense representation.
+- Reduce dimensionality compared to sparse representations.
+- Improve performance of NLP models on tasks like classification, translation, and sentiment analysis.
+
+** Converting Words into Integers
+To use word embeddings in machine learning models, we first need to convert words into integers, as models do not understand text data directly.
+
+1. Tokenization: Split text into individual words or tokens.
+2. Building a Vocabulary: Create a mapping of word to a unique integer.
+3. Word to Integer Mapping: Convert each word in the corpus to its corresponding integer based on the vocabulary.
+
+** Creating a Weight Matrix
+Once we have converted words into integers, the next step is to create a weight matrix for the embedding layer of a neural network.
+
+1. Initialize an empty matrix with dimensions (vocabulary size, embedding dimension).
+2. Fill the matrix with the embeddings of the words. Each row corresponds to the vector representation of the word indexed by the integer in the vocabulary.
+
+** Using Embeddings in a Neural Network
+- Embedding Layer: The first layer in the model where the weight matrix is used to convert word integers into dense vector embeddings.
+- Training: During training, the model adjusts the embeddings to reduce the loss, thereby learning task-specific word representations.
+
+** Conclusion
+Embeddings are a powerful concept in NLP, providing a way to represent text data in a form that machine learning models can understand and process efficiently. By converting words into embeddings, we enable models to learn about the semantics of text and perform various NLP tasks more effectively.
+
+

@@ -9,11 +9,11 @@
   import numpy as np
   import matplotlib.pyplot as plt
   #+END_SRC
-  
+
 ** The first step is to download the data
-  
+
 **** Train Data
-  
+
   #+BEGIN_SRC python
   train_dataset = torchvision.datasets.MNIST(
     # specify where to download the data, '.' means the current directory
@@ -285,8 +285,3 @@
 ** Conclusion
 
    In summary, this document has provided a detailed explanation of how to create an image classificatin ANN model.
-
-
-
-
-

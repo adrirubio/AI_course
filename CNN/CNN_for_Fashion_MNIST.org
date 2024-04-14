@@ -1,3 +1,4 @@
+
 ** Full Walkthrough
 
 *** Imports
@@ -9,7 +10,7 @@
     import torchvision.transforms as transforms
     import numpy as np
     import matplotlib.pyplot as plt
-    from datetime import datetime 
+    from datetime import datetime
     #+END_SRC
 
 *** Loading the data
@@ -23,7 +24,7 @@
     transform=transforms.ToTensor(),
     download=True)
     #+END_SRC
-      
+
 ***** Test data
     #+BEGIN_SRC python
     test_dataset = torchvision.datasets.FashionMNIST(
@@ -62,7 +63,7 @@
         out = self.conv_layers(X)
 	out = out.view(out.size(0), -1)
 	out = self.dense_layers(out)
-	return out    
+	return out
     #+END_SRC
 
 **** Overview
@@ -144,12 +145,12 @@
     # and takes care of shuffling
 
     batch_size = 128
-    train_loader = torch.utils.data.DataLoader(dataset=train_dataset, 
-                                               batch_size=batch_size, 
+    train_loader = torch.utils.data.DataLoader(dataset=train_dataset,
+                                               batch_size=batch_size,
                                                shuffle=True)
 
-    test_loader = torch.utils.data.DataLoader(dataset=test_dataset, 
-                                              batch_size=batch_size, 
+    test_loader = torch.utils.data.DataLoader(dataset=test_dataset,
+                                              batch_size=batch_size,
                                               shuffle=False)
     #+END_SRC
 
@@ -227,7 +228,7 @@
       Epoch 15/15, Train Loss: 0.1737,       Test Loss: 0.2900, Duration: 0:00:06.572188
       #+END_SRC
 
-      
+
 *** Plot the loss
     Same as with ANN
     #+BEGIN_SRC python
@@ -256,7 +257,7 @@
 	# Get prediction
 	# torch.max returns both max and argmax
 	_, predictions = torch.max(outputs, 1)
-  
+
 	# update counts
 	n_correct += (predictions == targets).sum().item()
 	n_total += targets.shape[0]
@@ -276,7 +277,7 @@
 	# Get prediction
 	# torch.max returns both max and argmax
 	_, predictions = torch.max(outputs, 1)
-  
+
 	# update counts
 	n_correct += (predictions == targets).sum().item()
 	n_total += targets.shape[0]
@@ -291,5 +292,3 @@
       #+END_SRC
 
 *** Conclusion
-    This model was very similar to the ANN but the only main difference was defining the model.
- 
