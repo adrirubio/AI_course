@@ -80,3 +80,90 @@ optimizer = torch.optim.Adam(model.parameters())
 # shuffle the data in corresponding order
 user_ids, movie_ids, ratings = shuffle(user_ids, movie_ids, ratings)
 
+# shuffle the data in corresponding order
+user_ids, movie_ids, ratings = shuffle(user_ids, movie_ids, ratings)
+
+# convert to tensors
+user_ids_t = torch.from_numpy(user_ids).long()
+movie_ids_t = torch.from_numpy(movie_ids).long()
+ratings_t = torch.from_numpy(ratings)
+
+# Make datasets
+Ntrain = int(0.8 * len(ratings))
+train_dataset = torch.utils.data.TensorDataset(
+    user_ids_t[:Ntrain],
+    movie_ids_t[:Ntrain],
+    ratings_t[:Ntrain],
+)
+
+test_dataset = torch.utils.data.TensorDataset(
+    user_ids_t[Ntrain:],
+    movie_ids_t[Ntrain:],
+    ratings_t[Ntrain:],
+)
+
+# Data loaders
+batch_size = 512
+train_loader = torch.utils.data.DataLoader(dataset=train_dataset,
+                                           batch_size=batch_size,
+                                           shuffle=True)
+
+test_loader = torch.utils.data.DataLoader(dataset=test_dataset,
+                                          batch_size=batch_size,
+                                          shuffle=False)
+
+# A function to encapsulate the training loop
+def batch_gd(model, criterion, optimizer, train_iter, test_iter, epochs):
+  train_losses = np.zeros(epochs)
+  test_losses = np.zeros(epochs)
+
+  for it in range(epochs):
+    t0 = datetime.now()
+    train_loss = []
+    for users, movies, targets in train_loader:
+      targets = targets.view(-1, 1).float()
+
+      # move data to GPU
+      users, movies, targets = users.to(device), movies.to(device), targets.to(device)
+
+      # zero the parameter gradients
+      optimizer.zero_grad()
+
+      # Forward pass
+      outputs = model(users, movies)
+      loss = criterion(outputs, targets)
+
+      # Backward and optimize
+      loss.backward()
+      optimizer.step()
+
+      train_loss.append(loss.item())
+
+    # Get train loss and test loss
+    train_loss = np.mean(train_loss) # a little misleading
+
+    test_loss = []
+    for users, movies, targets in test_loader:
+      users, movies, targets = users.to(device), movies.to(device), targets.to(device)
+      targets = targets.view(-1, 1).float()
+      outputs = model(users, movies)
+      loss = criterion(outputs, targets)
+      test_loss.append(loss.item())
+    test_loss = np.mean(test_loss)
+
+    # Save losses
+    train_losses[it] = train_loss
+    test_losses[it] = test_loss
+
+    dt = datetime.now() - t0
+    print(f'Epoch {it+1}/{epochs}, Train Loss: {train_loss:.4f}, '
+          f'Test Loss: {test_loss:.4f}, Duration: {dt}')
+
+  return train_losses, test_losses
+# train_losses, test_losses = batch_gd(
+#     model, criterion, optimizer, train_loader, test_loader, 25)
+# profile this using
+
+
+train_losses, test_losses = batch_gd( \
+    model, criterion, optimizer, train_loader, test_loader, 25)
