@@ -1,5 +1,4 @@
 ** Recommender Systems in Deep Learning
-
 *** Introduction
    Recommender systems are crucial in various domains to help users discover items they might be interested in.
 
