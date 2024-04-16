@@ -71,3 +71,12 @@ class Model(nn.Module):
 model = Model(N, M, D)
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
+# Loss and optimizer
+criterion = nn.MSELoss()
+optimizer = torch.optim.Adam(model.parameters())
+# optimizer = torch.optim.SGD(model.parameters(), lr=0.08, momentum=0.9)
+
+# shuffle the data in corresponding order
+user_ids, movie_ids, ratings = shuffle(user_ids, movie_ids, ratings)
+
