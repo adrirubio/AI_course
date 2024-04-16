@@ -9,6 +9,8 @@ from sklearn.utils import shuffle
 import os
 import zipfile
 import urllib.request
+import cProfile
+
 
 # Define the URL to download the MovieLens dataset
 url = "http://files.grouplens.org/datasets/movielens/ml-20m.zip"
@@ -123,9 +125,6 @@ def batch_gd(model, criterion, optimizer, train_iter, test_iter, epochs):
     for users, movies, targets in train_loader:
       targets = targets.view(-1, 1).float()
 
-      # move data to GPU
-      users, movies, targets = users.to(device), movies.to(device), targets.to(device)
-
       # zero the parameter gradients
       optimizer.zero_grad()
 
@@ -144,7 +143,6 @@ def batch_gd(model, criterion, optimizer, train_iter, test_iter, epochs):
 
     test_loss = []
     for users, movies, targets in test_loader:
-      users, movies, targets = users.to(device), movies.to(device), targets.to(device)
       targets = targets.view(-1, 1).float()
       outputs = model(users, movies)
       loss = criterion(outputs, targets)
@@ -160,10 +158,10 @@ def batch_gd(model, criterion, optimizer, train_iter, test_iter, epochs):
           f'Test Loss: {test_loss:.4f}, Duration: {dt}')
 
   return train_losses, test_losses
+
+
 # train_losses, test_losses = batch_gd(
 #     model, criterion, optimizer, train_loader, test_loader, 25)
-# profile this using
 
 
-train_losses, test_losses = batch_gd( \
-    model, criterion, optimizer, train_loader, test_loader, 25)
+train_losses, test_losses = batch_gd(model, criterion, optimizer, train_loader, test_loader, 25)
