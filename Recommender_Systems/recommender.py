@@ -16,6 +16,14 @@ import cProfile
 url = "http://files.grouplens.org/datasets/movielens/ml-20m.zip"
 filename = "ml-20m.zip"
 
+# Check if the file already exists before downloading
+if not os.path.exists(filename):
+    # Download the file
+    urllib.request.urlretrieve(url, filename)
+    print("File downloaded successfully.")
+else:
+    print("File already exists.")
+
 # Unzip the downloaded file
 with zipfile.ZipFile(filename, 'r') as zip_ref:
     zip_ref.extractall("movielens_data")
