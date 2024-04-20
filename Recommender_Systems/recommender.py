@@ -6,6 +6,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from datetime import datetime
 from sklearn.utils import shuffle
+<<<<<<< HEAD
 import os
 import zipfile
 import urllib.request
@@ -180,3 +181,5 @@ plt.plot(train_losses, label='train loss')
 plt.plot(test_losses, label='test loss')
 plt.legend()
 plt.show()
+=======
+>>>>>>> ddc820becbc40d438684b90ed15147fb4326bcac
