@@ -11,7 +11,6 @@ import zipfile
 import urllib.request
 import cProfile
 
-
 # Define the URL to download the MovieLens dataset
 url = "http://files.grouplens.org/datasets/movielens/ml-20m.zip"
 filename = "ml-20m.zip"
@@ -180,5 +179,3 @@ plt.plot(train_losses, label='train loss')
 plt.plot(test_losses, label='test loss')
 plt.legend()
 plt.show()
-=======
->>>>>>> ddc820becbc40d438684b90ed15147fb4326bcac
