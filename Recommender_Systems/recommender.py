@@ -11,7 +11,6 @@ import zipfile
 import urllib.request
 import cProfile
 
-
 # Define the URL to download the MovieLens dataset
 url = "http://files.grouplens.org/datasets/movielens/ml-20m.zip"
 filename = "ml-20m.zip"
