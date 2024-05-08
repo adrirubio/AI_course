@@ -43,3 +43,10 @@ data_dir = 'movielens_data/ml-20m/'
 #+END_SRC
 
 *** reading the CSV file
+First we read the file with pandas
+#+BEGIN_SRC python
+# Now read the CSV file
+df = pd.read_csv(data_dir + 'ratings.csv')
+#+END_SRC
+
+Next we 
