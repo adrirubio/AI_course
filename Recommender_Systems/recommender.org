@@ -49,4 +49,35 @@ First we read the file with pandas
 df = pd.read_csv(data_dir + 'ratings.csv')
 #+END_SRC
 
-Next we 
+Next we convert the categorical variables 'userID' and 'movieID' into numerical codes and store them.
+#+BEGIN_SRC python
+df.userId = pd.Categorical(df.userId)
+df['new_user_id'] = df.userId.cat.codes
+
+df.movieId = pd.Categorical(df.movieId)
+df['new_movie_id'] = df.movieId.cat.codes
+#+END_SRC
+
+Now we get user, movie and rating ID's as separate arrays
+#+BEGIN_SRC python
+# Get user IDs, movie IDs, and ratings as separate arrays
+user_ids = df['new_user_id'].values
+movie_ids = df['new_movie_id'].values
+ratings = df['rating'].values - 2.5
+#+END_SRC
+
+In the next code we set the length of users and movies, then we set the embedding dimensions to 10.
+#+BEGIN_SRC python
+# Get number of users and number of movies
+N = len(set(user_ids))
+M = len(set(movie_ids))
+
+# Set embedding dimension
+# Using embeddings just like in NLP
+D = 10
+#+END_SRC
+
+*** defining the model
+
+
+
