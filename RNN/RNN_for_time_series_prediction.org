@@ -1,11 +1,6 @@
 ** RNN for time series prediction
-<<<<<<< HEAD
-   Most of the code in this notebook has been seen before in previous notebooks so will not be revised.
+   Most of the code in this notebook has been seen before in previous notebooks so it will not be revised.
 
-=======
-Most of the code in this notebook has been seen before in previous notebooks so will not be revised.
- 
->>>>>>> f1e68bb40ad498c952fecccec2b783978e5c321f
 *** imports
     #+BEGIN_SRC python
     import torch
