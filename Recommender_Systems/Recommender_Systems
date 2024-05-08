@@ -1,9 +1,7 @@
   /home/adrian/Documents/AI_course/Recommender_Systems:
-  drwxrwxr-x 4 adrian adrian      4096 abr 20 22:10   .
-  drwxrwxr-x 8 adrian adrian      4096 abr 22 17:52   ..
-  drwxrwxr-x 2 adrian adrian      4096 abr 21 17:49   Images
-  -rw-rw-r-- 1 adrian adrian      1615 abr 16 21:06   Recommender_systems_theory.org
-  -rw-rw-r-- 1 adrian adrian       808 abr  8 19:18   feature_concatination.org
-  -rw-rw-r-- 1 adrian adrian 198702078 abr 17 19:59   ml-20m.zip
-  drwxrwxr-x 3 adrian adrian      4096 abr 15 21:20   movielens_data
-  -rw-rw-r-- 1 adrian adrian      5096 abr 20 22:10   recommender.py
+  drwxrwxr-x 3 adrian adrian 4096 may  8 20:13   .
+  drwxrwxr-x 8 adrian adrian 4096 may  3 19:27   ..
+  drwxrwxr-x 2 adrian adrian 4096 abr 21 17:49   Images
+  -rw-rw-r-- 1 adrian adrian 1615 abr 16 21:06   Recommender_systems_theory.org
+  -rw-rw-r-- 1 adrian adrian  808 may  3 19:24   feature_concatination.org
+  -rw-rw-r-- 1 adrian adrian 5039 may  8 20:06   recommender.py
