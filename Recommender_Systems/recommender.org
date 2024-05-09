@@ -78,6 +78,3 @@ D = 10
 #+END_SRC
 
 *** defining the model
-
-
-
