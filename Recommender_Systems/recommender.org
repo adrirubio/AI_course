@@ -20,7 +20,7 @@ import cProfile
 
 *** loading the data
 - Now we load the data from the url:
-  (Beware from now on the datasets get very bit)
+- (Beware from now on the datasets get very bit)
 
 #+BEGIN_SRC python
 # Define the URL to download the MovieLens dataset
