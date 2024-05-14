@@ -129,6 +129,14 @@ Here we shuffle the data
 user_ids, movie_ids, ratings = shuffle(user_ids, movie_ids, ratings)
 #+END_SRC
 
+Next we convert the data to tensors
+#+BEGIN_SRC python
+user_ids_t = torch.from_numpy(user_ids).long()
+movie_ids_t = torch.from_numpy(movie_ids).long()
+ratings_t = torch.from_numpy(ratings)
+#+END_SRC
+
+In this code we use 80
 
 
 
