@@ -78,7 +78,7 @@ D = 10
 #+END_SRC
 
 *** defining the model
-- Now we will define the model, its very similar to the latest NLP
+- Now we will define a simple the model, its very similar to the latest NLP
 
 #+BEGIN_SRC python
 # Make a neural network
