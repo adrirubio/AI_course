@@ -105,4 +105,19 @@ class Model(nn.Module):
     out = self.fc1(out)
     out = F.relu(out)
     out = self.fc2(out)
+    return out
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+print(device)
+
+model = Model(N, M, D)
 #+END_SRC
+
+*** loss and optimizer
+
+#+BEGIN_SRC python
+# Loss and optimizer
+criterion = nn.MSELoss()
+optimizer = torch.optim.Adam(model.parameters())
+# optimizer = torch.optim.SGD(model.parameters(), lr=0.08, momentum=0.9)
+
+
