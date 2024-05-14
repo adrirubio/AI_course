@@ -113,7 +113,7 @@ test_dataset = torch.utils.data.TensorDataset(
 batch_size = 512
 train_loader = torch.utils.data.DataLoader(dataset=train_dataset,
                                            batch_size=batch_size,
-                                           shuffle=True)
+                                            shuffle=True)
 
 test_loader = torch.utils.data.DataLoader(dataset=test_dataset,
                                           batch_size=batch_size,

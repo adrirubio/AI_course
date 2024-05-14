@@ -166,5 +166,70 @@ test_loader = torch.utils.data.DataLoader(dataset=test_dataset,
 #+END_SRC
 
 *** start training
-Here like always we do the training
+Here like always we train the model
 #+BEGIN_SRC python
+# A function to encapsulate the training loop
+def batch_gd(model, criterion, optimizer, train_iter, test_iter, epochs):
+  train_losses = np.zeros(epochs)
+  test_losses = np.zeros(epochs)
+
+  for it in range(epochs):
+    t0 = datetime.now()
+    train_loss = []
+    for users, movies, targets in train_loader:
+      targets = targets.view(-1, 1).float()
+
+      # zero the parameter gradients
+      optimizer.zero_grad()
+
+      # Forward pass
+      outputs = model(users, movies)
+      loss = criterion(outputs, targets)
+
+      # Backward and optimize
+      loss.backward()
+      optimizer.step()
+
+      train_loss.append(loss.item())
+
+    # Get train loss and test loss
+    train_loss = np.mean(train_loss) # a little misleading
+
+    test_loss = []
+    for users, movies, targets in test_loader:
+      targets = targets.view(-1, 1).float()
+      outputs = model(users, movies)
+      loss = criterion(outputs, targets)
+      test_loss.append(loss.item())
+    test_loss = np.mean(test_loss)
+
+    # Save losses
+    train_losses[it] = train_loss
+    test_losses[it] = test_loss
+
+    dt = datetime.now() - t0
+    print(f'Epoch {it+1}/{epochs}, Train Loss: {train_loss:.4f}, '
+          f'Test Loss: {test_loss:.4f}, Duration: {dt}')
+
+  return train_losses, test_losses
+
+
+# train_losses, test_losses = batch_gd(
+#     model, criterion, optimizer, train_loader, test_loader, 25)
+
+
+train_losses, test_losses = batch_gd(model, criterion, optimizer, train_loader, test_loader, 25)
+#+END_SRC
+
+*** Plot the loss
+Now to finish things off we plot the loss
+
+#+BEGIN_SRC python
+# Plot the train loss and test loss per iteration
+plt.plot(train_losses, label='train loss')
+plt.plot(test_losses, label='test loss')
+plt.legend()
+plt.show()
+#+END_SRC
+
+As you can see this was a simple recommmender model.
