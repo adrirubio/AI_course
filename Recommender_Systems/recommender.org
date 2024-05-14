@@ -78,3 +78,31 @@ D = 10
 #+END_SRC
 
 *** defining the model
+- Now we will define the model, its very similar to the latest NLP
+
+#+BEGIN_SRC python
+# Make a neural network
+class Model(nn.Module):
+  def __init__(self, n_users, n_items, embed_dim, n_hidden=1024):
+    super(Model, self).__init__()
+    self.N = n_users
+    self.M = n_items
+    self.D = embed_dim
+
+    self.u_emb = nn.Embedding(self.N, self.D)
+    self.m_emb = nn.Embedding(self.M, self.D)
+    self.fc1 = nn.Linear(2 * self.D, n_hidden)
+    self.fc2 = nn.Linear(n_hidden, 1)
+
+  def forward(self, u, m):
+    u = self.u_emb(u) # output is (num_samples, D)
+    m = self.m_emb(m) # output is (num_samples, D)
+
+    # merge
+    out = torch.cat((u, m), 1) # output is (num_samples, 2D)
+
+    # ANN
+    out = self.fc1(out)
+    out = F.relu(out)
+    out = self.fc2(out)
+#+END_SRC
