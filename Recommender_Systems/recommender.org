@@ -123,7 +123,6 @@ optimizer = torch.optim.Adam(model.parameters())
 
 *** preparing and creating the data loaders
 Here we shuffle the data
-
 #+BEGIN_SRC python
 # shuffle the data in corresponding order
 user_ids, movie_ids, ratings = shuffle(user_ids, movie_ids, ratings)
@@ -136,12 +135,36 @@ movie_ids_t = torch.from_numpy(movie_ids).long()
 ratings_t = torch.from_numpy(ratings)
 #+END_SRC
 
-In this code we use 80
+In this code we use 80% of the dataset for training and 20% for testing
+#+BEGIN_SRC python
+# Make datasets
+Ntrain = int(0.8 * len(ratings))
+train_dataset = torch.utils.data.TensorDataset(
+    user_ids_t[:Ntrain],
+    movie_ids_t[:Ntrain],
+    ratings_t[:Ntrain],
+)
 
+test_dataset = torch.utils.data.TensorDataset(
+    user_ids_t[Ntrain:],
+    movie_ids_t[Ntrain:],
+    ratings_t[Ntrain:],
+)
+#+END_SRC
 
+To finish we create the data loaders
+#+BEGIN_SRC python
+# Data loaders
+batch_size = 512
+train_loader = torch.utils.data.DataLoader(dataset=train_dataset,
+                                           batch_size=batch_size,
+                                            shuffle=True)
 
+test_loader = torch.utils.data.DataLoader(dataset=test_dataset,
+                                          batch_size=batch_size,
+                                          shuffle=False)
+#+END_SRC
 
-
-
-
-
+*** start training
+Here like always we do the training
+#+BEGIN_SRC python
