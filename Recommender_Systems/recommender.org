@@ -119,5 +119,21 @@ model = Model(N, M, D)
 criterion = nn.MSELoss()
 optimizer = torch.optim.Adam(model.parameters())
 # optimizer = torch.optim.SGD(model.parameters(), lr=0.08, momentum=0.9)
+#+END_SRC
+
+*** preparing and creating the data loaders
+Here we shuffle the data
+
+#+BEGIN_SRC python
+# shuffle the data in corresponding order
+user_ids, movie_ids, ratings = shuffle(user_ids, movie_ids, ratings)
+#+END_SRC
+
+
+
+
+
+
+
 
 

@@ -90,9 +90,6 @@ optimizer = torch.optim.Adam(model.parameters())
 # shuffle the data in corresponding order
 user_ids, movie_ids, ratings = shuffle(user_ids, movie_ids, ratings)
 
-# shuffle the data in corresponding order
-user_ids, movie_ids, ratings = shuffle(user_ids, movie_ids, ratings)
-
 # convert to tensors
 user_ids_t = torch.from_numpy(user_ids).long()
 movie_ids_t = torch.from_numpy(movie_ids).long()
