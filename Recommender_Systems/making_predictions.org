@@ -25,7 +25,6 @@ len(set(potential_movie_ids))
 #+END_SRC
 
 ***** preparing user ID's for recommendations
-
 This creates an array of ones with the same length as potential_movie_ids.
 
 #+BEGIN_SRC python
@@ -39,4 +38,39 @@ t_user_ids = torch.from_numpy(user_id_to_recommend).long()
 t_movie_ids = torch.from_numpy(potential_movie_ids).long()
 #+END_SRC
 
-***** 
+***** generating predictions
+#+BEGIN_SRC python
+with torch.no_grad():
+    predictions = model(t_user_ids, t_movie_ids)
+#+END_SRC
+
+Now we convert the prediction is converted into a NumPy array.
+
+#+BEGIN_SRC python
+predictions_np = predictions.cpu().numpy().flatten()
+#+END_SRC
+
+
+***** sorting predictions
+This sorts the predictions from highest to lowest
+
+#+BEGIN_SRC python
+sort_idx = np.argsort(-predictions_np)
+#+END_SRC
+
+
+Next we select the top ten
+
+#+BEGIN_SRC python
+top_10_movie_ids = potential_movie_ids[sort_idx[:10]]
+top_10_scores = predictions_np[sort_idx[:10]]
+#+END_SRC
+
+
+***** printing the predictions
+Finally we can print the predictions
+
+#+BEGIN_SRC python
+for movie, score in zip(top_10_movie_ids, top_10_scores):
+    print("movie:", movie, "score:", score)
+#+END_SRC
