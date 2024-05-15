@@ -1,3 +1,7 @@
 *** How to make predictions
+- In this notebook for the first time we actually make predictions using the model.
 
+***** Finding the watched movies
+This line gets all the movies that the user with new_user_id 1 has already watched. The result is stored in watched_movie_ids.
 
+#+BEGIN_SRC python
