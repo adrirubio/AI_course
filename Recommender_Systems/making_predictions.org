@@ -32,4 +32,11 @@ This creates an array of ones with the same length as potential_movie_ids.
 user_id_to_recommend = np.ones_like(potential_movie_ids)
 #+END_SRC
 
+Now this line converts the NumPy arrays of user IDs and potential movie IDs to tensors.
 
+#+BEGIN_SRC python
+t_user_ids = torch.from_numpy(user_id_to_recommend).long()
+t_movie_ids = torch.from_numpy(potential_movie_ids).long()
+#+END_SRC
+
+***** 
