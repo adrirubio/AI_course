@@ -1,7 +1,35 @@
 *** How to make predictions
 - In this notebook for the first time we actually make predictions using the model.
 
-***** Finding the watched movies
+***** finding watched movies
 This line gets all the movies that the user with new_user_id 1 has already watched. The result is stored in watched_movie_ids.
 
 #+BEGIN_SRC python
+# Suppose I want to find recommendations for user_id = 1
+# First find all the movie_ids for movies they haven't yet watched
+watched_movie_ids = df[df.new_user_id == 1].new_movie_id.values
+#+END_SRC
+
+***** finding unwatched movies
+This line identifies movie IDs that the user hasn't watched yet. It does this by excluding the watched_movie_ids from all available movie IDs.
+
+#+BEGIN_SRC python
+potential_movie_ids = df[~df.new_movie_id.isin(watched_movie_ids)].new_movie_id.unique()
+#+END_SRC
+
+Printing the exact number of unwatched movies.
+
+#+BEGIN_SRC python
+potential_movie_ids.shape
+len(set(potential_movie_ids))
+#+END_SRC
+
+***** preparing user ID's for recommendations
+
+This creates an array of ones with the same length as potential_movie_ids.
+
+#+BEGIN_SRC python
+user_id_to_recommend = np.ones_like(potential_movie_ids)
+#+END_SRC
+
+
