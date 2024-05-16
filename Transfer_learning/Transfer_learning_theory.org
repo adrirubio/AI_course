@@ -14,7 +14,7 @@ The idea is that the pre-trained model has already learned useful features from 
 
 ** Types of Transfer Learning
 - Feature Extraction: Using the convolutional base of a pre-trained model to extract features from new data, and training a new classifier on top of these features.
-- **Fine-Tuning**: Unfreezing some of the top layers of the pre-trained model base and jointly training both the newly added classifier layers and the unfrozen layers.
+- Fine-Tuning: Unfreezing some of the top layers of the pre-trained model base and jointly training both the newly added classifier layers and the unfrozen layers.
 
 ** Steps for Transfer Learning
 1. **Select a Pre-Trained Model**: Choose a model pre-trained on a large dataset (e.g., VGG16, ResNet, Inception).
