@@ -8,7 +8,7 @@ Transfer learning involves taking a pre-trained model and adapting it to a new, 
 The idea is that the pre-trained model has already learned useful features from the initial training data, which can be reused for the new task.
 
 ** Why Use Transfer Learning?
-- Data Efficiency**: Requires less data to achieve high performance since the model starts with pre-learned features.
+- Data Efficiency: Requires less data to achieve high performance since the model starts with pre-learned features.
 - **Computational Efficiency**: Reduces the computational resources needed because the base model has already been trained.
 - **Improved Performance**: Often results in better performance on the new task compared to training from scratch.
 
