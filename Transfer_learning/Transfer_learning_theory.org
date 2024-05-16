@@ -1,0 +1,29 @@
+*** Introduction
+Transfer learning is a machine learning technique where a pre-trained model is used as the starting point for a model on a new task.
+In computer vision, this approach leverages models that have been trained on large datasets (e.g., ImageNet) to perform tasks on smaller, domain-specific datasets.
+
+*** Theory
+**** What is Transfer Learning?
+Transfer learning involves taking a pre-trained model and adapting it to a new, but related, task.
+The idea is that the pre-trained model has already learned useful features from the initial training data, which can be reused for the new task.
+
+** Why Use Transfer Learning?
+- **Data Efficiency**: Requires less data to achieve high performance since the model starts with pre-learned features.
+- **Computational Efficiency**: Reduces the computational resources needed because the base model has already been trained.
+- **Improved Performance**: Often results in better performance on the new task compared to training from scratch.
+
+** Types of Transfer Learning
+- **Feature Extraction**: Using the convolutional base of a pre-trained model to extract features from new data, and training a new classifier on top of these features.
+- **Fine-Tuning**: Unfreezing some of the top layers of the pre-trained model base and jointly training both the newly added classifier layers and the unfrozen layers.
+
+** Steps for Transfer Learning
+1. **Select a Pre-Trained Model**: Choose a model pre-trained on a large dataset (e.g., VGG16, ResNet, Inception).
+2. **Modify the Model**: Replace the final layer(s) to match the number of classes in the new dataset.
+3. **Freeze Layers (Optional)**: Freeze some of the early layers to retain learned features and only train the remaining layers.
+4. **Compile the Model**: Choose a loss function and optimizer.
+5. **Train the Model**: Train the modified model on the new dataset.
+6. **Evaluate and Fine-Tune**: Evaluate the model and fine-tune if necessary by unfreezing more layers and retraining.
+
+
+*** Conclusion
+Transfer learning is a powerful tool in computer vision, allowing for efficient and effective model training on new tasks by leveraging pre-trained models. By using techniques such as feature extraction and fine-tuning, one can achieve high performance with less data and 
