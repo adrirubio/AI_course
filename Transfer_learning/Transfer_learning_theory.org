@@ -18,7 +18,7 @@ The idea is that the pre-trained model has already learned useful features from 
 
 ** Steps for Transfer Learning
 1. Select a Pre-Trained Model: Choose a model pre-trained on a large dataset (e.g., VGG16, ResNet, Inception).
-2. **Modify the Model**: Replace the final layer(s) to match the number of classes in the new dataset.
+2. Modify the Model: Replace the final layer(s) to match the number of classes in the new dataset.
 3. **Freeze Layers (Optional)**: Freeze some of the early layers to retain learned features and only train the remaining layers.
 4. **Compile the Model**: Choose a loss function and optimizer.
 5. **Train the Model**: Train the modified model on the new dataset.
