@@ -28,3 +28,37 @@ transform = transforms.Compose([
         transforms.ToTensor(),
         transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
 ])
+
+train_dataset = datasets.ImageFolder(
+    '/home/adrian/data/train',
+    transform=transform
+)
+test_dataset = datasets.ImageFolder(
+    '/home/adrian/data/test',
+    transform=transform
+)
+
+batch_size = 128
+train_loader = torch.utils.data.DataLoader(
+    train_dataset,
+    batch_size=batch_size,
+    shuffle=True
+)
+test_loader = torch.utils.data.DataLoader(
+    test_dataset,
+    batch_size=batch_size,
+)
+
+# Define the pretrained model
+vgg = models.vgg16(pretrained=True)
+
+class VGGFeatures(nn.Module):
+  def __init__(self, vgg):
+    super(VGGFeatures, self).__init__()
+    self.vgg = vgg
+
+  def forward(self, X):
+    out = self.vgg.features(X)
+    out = self.vgg.avgpool(out)
+    out = out.view(out.size(0), -1) # flatten
+    return out
