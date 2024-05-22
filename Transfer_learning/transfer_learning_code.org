@@ -70,10 +70,15 @@ Which would print:
 0_1023.jpg  0_140.jpg	0_446.jpg  0_832.jpg   1_1218.jpg  1_254.jpg  1_640.jpg
 #+END_SRC
 
-As you can see there are files that start with 0's and others that start with 1's
-The files that start with 0's are nonfood images while the ones that start with 1's are food.
+Now lets run this on the terminal
+#+BEGIN_SRC
+mv Food-5K/* .
+#+END_SRC
 
-Lets plot some examples:
+As you can see there are files that start with 0's and others that start with 1's
+The files that start with 0's are nonfood images while the ones that start with 1's are food. 
+
+Lets plot some examples(Python):
 
 #+BEGIN_SRC python
 image_path = '/home/adrian/data/train/nonfood/0_951.jpg'
@@ -89,4 +94,14 @@ plt.imshow(imageio.imread(image_path))
 plt.show()
 #+END_SRC
 
+Next lets return to the terminal and run these lines of code
+First lets create a directory and some sub directories and then add the files
+
+#+BEGIN_SRC
+mkdir data
+#+END_SRC
+
+#+BEGIN_SRC
+data/train
+#+END_SRC
 
