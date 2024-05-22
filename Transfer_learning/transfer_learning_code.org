@@ -105,3 +105,41 @@ mkdir data
 data/train
 #+END_SRC
 
+#+BEGIN_SRC
+data/test
+#+END_SRC
+
+#+BEGIN_SRC
+data/train/nonfood
+#+END_SRC
+
+#+BEGIN_SRC
+data/train/food
+#+END_SRC
+
+#+BEGIN_SRC
+data/test/nonfood
+#+END_SRC
+
+#+BEGIN_SRC
+data/test/food
+#+END_SRC
+
+Next lets add the files
+
+#+BEGIN_SRC
+mv training/0*.jpg data/train/nonfood
+#+END_SRC
+
+#+BEGIN_SRC
+mv training/1*.jpg data/train/food
+#+END_SRC
+
+#+BEGIN_SRC
+mv validation/0*.jpg data/test/nonfood
+#+END_SRC
+
+#+BEGIN_SRC
+mv validation/1*.jpg data/test/food
+#+END_SRC
+
