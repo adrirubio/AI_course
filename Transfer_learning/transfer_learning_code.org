@@ -88,3 +88,5 @@ image_path = '/home/adrian/data/train/food/1_293.jpg'
 plt.imshow(imageio.imread(image_path))
 plt.show()
 #+END_SRC
+
+
