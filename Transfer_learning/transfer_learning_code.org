@@ -143,3 +143,6 @@ mv validation/0*.jpg data/test/nonfood
 mv validation/1*.jpg data/test/food
 #+END_SRC
 
+Ok once this is finished we have downloaded the data and we can start working on the model.
+
+*** 
