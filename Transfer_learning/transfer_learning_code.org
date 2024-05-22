@@ -17,4 +17,74 @@ from glob import glob
 import imageio
 #+END_SRC
 
-*** 
+*** downloading the data
+Ok, in this model we are going to download the data from the terminal.
+First go to your home directory and run this line of code:
+
+#+BEGIN_SRC
+wget -nc https://archive.org/download/food-5-k/Food-5K.zip
+#+END_SRC
+
+Next unzip the data
+
+#+BEGIN_SRC
+unzip -qq -o Food-5K.zip
+#+END_SRC
+
+Now if you run an "ls" you will see that there now is a new directory called "Food-5K"
+After that you can run this "ls" to see the data
+
+#+BEGIN_SRC
+ls Food-5K/training
+#+END_SRC
+
+Which would print:
+
+#+BEGIN_SRC
+0_0.jpg     0_1387.jpg	0_422.jpg  0_809.jpg   1_1195.jpg  1_230.jpg  1_617.jpg
+0_1000.jpg  0_1388.jpg	0_423.jpg  0_80.jpg    1_1196.jpg  1_231.jpg  1_618.jpg
+0_1001.jpg  0_1389.jpg	0_424.jpg  0_810.jpg   1_1197.jpg  1_232.jpg  1_619.jpg
+0_1002.jpg  0_138.jpg	0_425.jpg  0_811.jpg   1_1198.jpg  1_233.jpg  1_61.jpg
+0_1003.jpg  0_1390.jpg	0_426.jpg  0_812.jpg   1_1199.jpg  1_234.jpg  1_620.jpg
+0_1004.jpg  0_1391.jpg	0_427.jpg  0_813.jpg   1_119.jpg   1_235.jpg  1_621.jpg
+0_1005.jpg  0_1392.jpg	0_428.jpg  0_814.jpg   1_11.jpg    1_236.jpg  1_622.jpg
+0_1006.jpg  0_1393.jpg	0_429.jpg  0_815.jpg   1_1200.jpg  1_237.jpg  1_623.jpg
+0_1007.jpg  0_1394.jpg	0_42.jpg   0_816.jpg   1_1201.jpg  1_238.jpg  1_624.jpg
+0_1008.jpg  0_1395.jpg	0_430.jpg  0_817.jpg   1_1202.jpg  1_239.jpg  1_625.jpg
+0_1009.jpg  0_1396.jpg	0_431.jpg  0_818.jpg   1_1203.jpg  1_23.jpg   1_626.jpg
+0_100.jpg   0_1397.jpg	0_432.jpg  0_819.jpg   1_1204.jpg  1_240.jpg  1_627.jpg
+0_1010.jpg  0_1398.jpg	0_433.jpg  0_81.jpg    1_1205.jpg  1_241.jpg  1_628.jpg
+0_1011.jpg  0_1399.jpg	0_434.jpg  0_820.jpg   1_1206.jpg  1_242.jpg  1_629.jpg
+0_1012.jpg  0_139.jpg	0_435.jpg  0_821.jpg   1_1207.jpg  1_243.jpg  1_62.jpg
+0_1013.jpg  0_13.jpg	0_436.jpg  0_822.jpg   1_1208.jpg  1_244.jpg  1_630.jpg
+0_1014.jpg  0_1400.jpg	0_437.jpg  0_823.jpg   1_1209.jpg  1_245.jpg  1_631.jpg
+0_1015.jpg  0_1401.jpg	0_438.jpg  0_824.jpg   1_120.jpg   1_246.jpg  1_632.jpg
+0_1016.jpg  0_1402.jpg	0_439.jpg  0_825.jpg   1_1210.jpg  1_247.jpg  1_633.jpg
+0_1017.jpg  0_1403.jpg	0_43.jpg   0_826.jpg   1_1211.jpg  1_248.jpg  1_634.jpg
+0_1018.jpg  0_1404.jpg	0_440.jpg  0_827.jpg   1_1212.jpg  1_249.jpg  1_635.jpg
+0_1019.jpg  0_1405.jpg	0_441.jpg  0_828.jpg   1_1213.jpg  1_24.jpg   1_636.jpg
+0_101.jpg   0_1406.jpg	0_442.jpg  0_829.jpg   1_1214.jpg  1_250.jpg  1_637.jpg
+0_1020.jpg  0_1407.jpg	0_443.jpg  0_82.jpg    1_1215.jpg  1_251.jpg  1_638.jpg
+0_1021.jpg  0_1408.jpg	0_444.jpg  0_830.jpg   1_1216.jpg  1_252.jpg  1_639.jpg
+0_1022.jpg  0_1409.jpg	0_445.jpg  0_831.jpg   1_1217.jpg  1_253.jpg  1_63.jpg
+0_1023.jpg  0_140.jpg	0_446.jpg  0_832.jpg   1_1218.jpg  1_254.jpg  1_640.jpg
+#+END_SRC
+
+As you can see there are files that start with 0's and others that start with 1's
+The files that start with 0's are nonfood images while the ones that start with 1's are food.
+
+Lets plot some examples:
+
+#+BEGIN_SRC python
+image_path = '/home/adrian/data/train/nonfood/0_951.jpg'
+
+plt.imshow(imageio.imread(image_path))
+plt.show()
+#+END_SRC
+
+#+BEGIN_SRC python
+image_path = '/home/adrian/data/train/food/1_293.jpg'
+
+plt.imshow(imageio.imread(image_path))
+plt.show()
+#+END_SRC
