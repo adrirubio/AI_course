@@ -26,4 +26,4 @@ The idea is that the pre-trained model has already learned useful features from 
 
 
 *** Conclusion
-Transfer learning is a powerful tool in computer vision, allowing for efficient and effective model training on new tasks by leveraging pre-trained models. By using techniques such as feature extraction and fine-tuning, one can achieve high performance with less data and 
+Transfer learning is a powerful tool in computer vision, allowing for efficient and effective model training on new tasks by leveraging pre-trained models. By using techniques such as feature extraction and fine-tuning, one can achieve high performance with less data.
