@@ -183,3 +183,20 @@ test_dataset = datasets.ImageFolder(
 )
 #+END_SRC
 
+*** creating the data loader
+We have done this step many times, we create a simple data loader for the train and test datasets
+
+#+BEGIN_SRC python
+batch_size = 128
+train_loader = torch.utils.data.DataLoader(
+    train_dataset,
+    batch_size=batch_size,
+    shuffle=True
+)
+test_loader = torch.utils.data.DataLoader(
+    test_dataset,
+    batch_size=batch_size,
+)
+#+END_SRC
+
+*** defining the model
