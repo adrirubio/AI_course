@@ -393,3 +393,71 @@ train_losses, test_losses = batch_gd(
 #+END_SRC
 
 The training would look something like this:
+
+#+BEGIN_SRC
+Epoch 1/5, Train Loss: 0.3514,       Test Loss: 0.0641, Duration: 0:00:40.585510
+Epoch 2/5, Train Loss: 0.0625,       Test Loss: 0.0846, Duration: 0:00:40.623662
+Epoch 3/5, Train Loss: 0.0463,       Test Loss: 0.0637, Duration: 0:00:40.593905
+Epoch 4/5, Train Loss: 0.0289,       Test Loss: 0.0619, Duration: 0:00:40.574836
+Epoch 5/5, Train Loss: 0.0162,       Test Loss: 0.0520, Duration: 0:00:40.545110
+#+END_SRC
+
+*** plotting the loss
+Like always:
+
+#+BEGIN_SRC python
+# Plot the train loss and test loss per iteration
+plt.plot(train_losses, label='train loss')
+plt.plot(test_losses, label='test loss')
+plt.legend()
+plt.show()
+#+END_SRC
+
+*** accuracy
+And we see how well the model did.
+
+#+BEGIN_SRC python
+# Accuracy
+
+n_correct = 0.
+n_total = 0.
+for inputs, targets in train_loader:
+
+  # Forward pass
+  outputs = model(inputs)
+
+  # Get prediction
+  # torch.max returns both max and argmax
+  _, predictions = torch.max(outputs, 1)
+
+  # update counts
+  n_correct += (predictions == targets).sum().item()
+  n_total += targets.shape[0]
+
+train_acc = n_correct / n_total
+
+
+n_correct = 0.
+n_total = 0.
+for inputs, targets in test_loader:
+
+  # Forward pass
+  outputs = model(inputs)
+
+  # Get prediction
+  # torch.max returns both max and argmax
+  _, predictions = torch.max(outputs, 1)
+
+  # update counts
+  n_correct += (predictions == targets).sum().item()
+  n_total += targets.shape[0]
+
+test_acc = n_correct / n_total
+print(f"Train acc: {train_acc:.4f}, Test acc: {test_acc:.4f}")
+#+END_SRC
+
+And as you can see the model did quite well:
+
+#+BEGIN_SRC
+Train acc: 0.9933, Test acc: 0.9870
+#+END_SRC
