@@ -72,6 +72,8 @@ n_features = model.classifier[0].in_features
 # We're doing binary classification
 model.classifier = nn.Linear(n_features, 2)
 
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
 # Loss and optimizer
 criterion = nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(model.parameters())
