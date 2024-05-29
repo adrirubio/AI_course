@@ -336,7 +336,7 @@ optimizer = torch.optim.Adam(model.parameters())
 #+END_SRC
 
 *** training
-And just like always we train the model
+Just like always we train the model
 
 #+BEGIN_SRC python
 def batch_gd(model, criterion, optimizer, train_loader, test_loader, epochs):
@@ -414,7 +414,7 @@ plt.show()
 #+END_SRC
 
 *** accuracy
-And we see how well the model did.
+We see how well the model did.
 
 #+BEGIN_SRC python
 # Accuracy
