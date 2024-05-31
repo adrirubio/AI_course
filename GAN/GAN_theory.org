@@ -8,7 +8,6 @@ Generative Adversarial Networks (GANs) are a class of machine learning models co
 - Process: Takes random noise as input and transforms it into an image (In our case).
 - Objective: To fool the discriminator into believing that the generated data is real.
 
-
 ***** Discriminator
 - Purpose: To distinguish between real data (from the training set) and fake data (made by the generator).
 - Process: Takes an input (real or fake) and outputs a probability, a value between 0 and 1, representing the likelihood that the input is real.
