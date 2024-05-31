@@ -58,6 +58,7 @@ G = nn.Sequential(
 
 # Set device
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+print(device)
 
 
 # Loss and optimizers
@@ -149,4 +150,4 @@ for epoch in range(200):
 
   # PyTorch has a function to save a batch of images to file
   fake_images = fake_images.reshape(-1, 1, 28, 28)
-  save_image(scale_image(fake_images), f"gan_images/{epoch+1}.png")
+  save_image(scale_image(fake_images), f"/home/adrian/gan_images/{epoch+1}.png")
