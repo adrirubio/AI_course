@@ -51,4 +51,54 @@ data_loader = torch.utils.data.DataLoader(dataset=train_dataset,
 #+END_SRC
 
 *** defining the discriminator and the generator
+Lets start by explaining the layers of the discriminator
 
+#+BEGIN_SRC python
+# Discriminator
+D = nn.Sequential(
+    nn.Linear(784, 512),
+    nn.LeakyReLU(0.2),
+    nn.Linear(512, 256),
+    nn.LeakyReLU(0.2),
+    nn.Linear(256, 1),
+    # nn.Sigmoid()
+)
+#+END_SRC
+
+Input Layer: ~nn.Linear(784, 512)~ - Takes a flattened 28x28 image (784 pixels) and outputs 512 features.
+Hidden Layer 1: ~nn.LeakyReLU(0.2)~ - Adds non-linearity with a Leaky ReLU activation.
+Hidden Layer 2: ~nn.Linear(512, 256)~ - Reduces the features from 512 to 256.
+Hidden Layer 3: ~nn.LeakyReLU(0.2)~ - Another Leaky ReLU activation.
+Output Layer: ~nn.Linear(256, 1)~ - Outputs a single value indicating real or fake.
+
+#+BEGIN_SRC python
+# Generator
+latent_dim = 100
+G = nn.Sequential(
+    nn.Linear(latent_dim, 256),
+    nn.LeakyReLU(0.2),
+    nn.BatchNorm1d(256, momentum=0.7),
+    nn.Linear(256, 512),
+    nn.LeakyReLU(0.2),
+    nn.BatchNorm1d(512, momentum=0.7),
+    nn.Linear(512, 1024),
+    nn.LeakyReLU(0.2),
+    nn.BatchNorm1d(1024, momentum=0.7),
+    nn.Linear(1024, 784),
+    nn.Tanh()
+)
+#+END_SRC
+
+Input Layer: ~nn.Linear(latent_dim, 256)~ - Takes a 100-dimensional noise vector and outputs 256 features.
+Hidden Layer 1: ~nn.LeakyReLU(0.2)~ - Adds non-linearity with a Leaky ReLU activation.
+Batch Norm 1: ~nn.BatchNorm1d(256, momentum=0.7)~ - Normalizes the 256 features to stabilize training.
+Hidden Layer 2: ~nn.Linear(256, 512)~ - Increases the features from 256 to 512.
+Hidden Layer 3: ~nn.LeakyReLU(0.2)~ - Another Leaky ReLU activation.
+Batch Norm 2: ~nn.BatchNorm1d(512, momentum=0.7)~ - Normalizes the 512 features.
+Hidden Layer 4: ~nn.Linear(512, 1024)~ - Further increases the features from 512 to 1024.
+Hidden Layer 5: ~nn.LeakyReLU(0.2)~ - Another Leaky ReLU activation.
+Batch Norm 3: ~nn.BatchNorm1d(1024, momentum=0.7)~ - Normalizes the 1024 features.
+Output Layer: ~nn.Linear(1024, 784)~ - Outputs a 784-dimensional vector (flattened 28x28 image).
+Output Activation: ~nn.Tanh()~ - Squashes the output to a range between -1 and 1.
+
+*** using GPU
