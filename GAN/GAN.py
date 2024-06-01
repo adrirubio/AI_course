@@ -151,3 +151,23 @@ for epoch in range(200):
   # PyTorch has a function to save a batch of images to file
   fake_images = fake_images.reshape(-1, 1, 28, 28)
   save_image(scale_image(fake_images), f"/home/adrian/gan_images/{epoch+1}.png")
+
+plt.plot(g_losses, label='g_losses')
+plt.plot(d_losses, label='d_losses')
+plt.legend()
+
+from skimage.io import imread
+a = imread('gan_images/1.png')
+plt.imshow(a)
+
+a = imread('gan_images/50.png')
+plt.imshow(a)
+
+a = imread('gan_images/100.png')
+plt.imshow(a)
+
+a = imread('gan_images/150.png')
+plt.imshow(a)
+
+a = imread('gan_images/200.png')
+plt.imshow(a)
