@@ -50,3 +50,5 @@ data_loader = torch.utils.data.DataLoader(dataset=train_dataset,
                                           shuffle=True)
 #+END_SRC
 
+*** defining the discriminator and the generator
+
