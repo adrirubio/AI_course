@@ -1,1 +1,4 @@
-*** 
+*** GAN model
+This is the GAN model explained.
+
+*** imports
