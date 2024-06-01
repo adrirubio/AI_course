@@ -76,7 +76,7 @@ mv Food-5K/* .
 #+END_SRC
 
 As you can see there are files that start with 0's and others that start with 1's
-The files that start with 0's are nonfood images while the ones that start with 1's are food. 
+The files that start with 0's are nonfood images while the ones that start with 1's are food.
 
 Lets plot some examples(Python):
 
