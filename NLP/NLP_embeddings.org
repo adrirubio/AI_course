@@ -26,5 +26,3 @@ Once we have converted words into integers, the next step is to create a weight 
 
 ** Conclusion
 Embeddings are a powerful concept in NLP, providing a way to represent text data in a form that machine learning models can understand and process efficiently. By converting words into embeddings, we enable models to learn about the semantics of text and perform various NLP tasks more effectively.
-
-
