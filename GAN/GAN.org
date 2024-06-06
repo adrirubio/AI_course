@@ -131,76 +131,121 @@ if not os.path.exists('/home/adrian/gan_images'):
 Training GANs is a bit different from previous model but we will cover the differences
 
 #+BEGIN_SRC python
-# Training loop
+# Labels to use in the loop
+ones_ = torch.ones(batch_size, 1).to(device)
+zeros_ = torch.zeros(batch_size, 1).to(device)
 
-# labels to use in the loop
-ones_ = torch.ones(batch_size, 1)
-zeros_ = torch.zeros(batch_size, 1)
-
-# save losses
+# Save losses
 d_losses = []
 g_losses = []
+#+END_SRC
 
+- Initialize tensors `ones_` and `zeros_` with shapes `(batch_size, 1)`, filled with ones and zeros respectively, and move them to the specified device (CPU or GPU).
+- Initialize lists `d_losses` and `g_losses` to store the discriminator and generator losses during training.
+
+**** Epoch Loop
+#+BEGIN_SRC python
 for epoch in range(200):
   for inputs, _ in data_loader:
-    # don't need targets
-
+    # Reshape and move to GPU
     n = inputs.size(0)
-    inputs = inputs.reshape(n, 784)
+    inputs = inputs.reshape(n, 784).to(device)
 
-    # set ones and zeros to correct size
+    # Set ones and zeros to correct size
     ones = ones_[:n]
     zeros = zeros_[:n]
+#+END_SRC
 
+- Loop over 200 epochs.
+- Within each epoch, iterate over batches of inputs from `data_loader`.
+- Reshape the inputs to a flat vector (784 dimensions for MNIST) and move them to the specified device.
+- Adjust the size of the `ones` and `zeros` tensors to match the current batch size `n`.
+
+**** Train Discriminator
+#+BEGIN_SRC python
     ###########################
     ### Train discriminator ###
     ###########################
 
-    # real images
+    # Real images
     real_outputs = D(inputs)
     d_loss_real = criterion(real_outputs, ones)
 
-    # fake images
-    noise = torch.randn(n, latent_dim)
+    # Fake images
+    noise = torch.randn(n, latent_dim).to(device)
     fake_images = G(noise)
     fake_outputs = D(fake_images)
     d_loss_fake = criterion(fake_outputs, zeros)
 
-    # gradient descent step
+    # Gradient descent step
     d_loss = 0.5 * (d_loss_real + d_loss_fake)
     d_optimizer.zero_grad()
     g_optimizer.zero_grad()
     d_loss.backward()
     d_optimizer.step()
+#+END_SRC
 
+- Real Images:
+  - Pass the real images through the discriminator `D` to get `real_outputs`.
+  - Compute the loss `d_loss_real` using `criterion` by comparing `real_outputs` with the `ones` tensor.
+- Fake Images:
+  - Generate random noise and pass it through the generator `G` to create fake images.
+  - Pass these fake images through the discriminator to get `fake_outputs`.
+  - Compute the loss `d_loss_fake` using `criterion` by comparing `fake_outputs` with the `zeros` tensor.
+- Gradient Descent Step:
+  - Compute the total discriminator loss `d_loss` as the average of `d_loss_real` and `d_loss_fake`.
+  - Zero the gradients of both `d_optimizer` and `g_optimizer`.
+  - Perform backpropagation on `d_loss` to compute the gradients.
+  - Update the discriminator's parameters using `d_optimizer.step()`.
+
+**** Train Generator
+#+BEGIN_SRC python
     #######################
     ### Train generator ###
     #######################
 
-    # do it twice:
+    # Do it twice:
     for _ in range(2):
-      # fake images
-      noise = torch.randn(n, latent_dim)
+      # Fake images
+      noise = torch.randn(n, latent_dim).to(device)
       fake_images = G(noise)
       fake_outputs = D(fake_images)
 
-      # reverse the labels!
+      # Reverse the labels!
       g_loss = criterion(fake_outputs, ones)
 
-      # gradient descent step
+      # Gradient descent step
       d_optimizer.zero_grad()
       g_optimizer.zero_grad()
       g_loss.backward()
       g_optimizer.step()
+#+END_SRC
 
+- Train the Generator Twice:
+  - Loop twice to train the generator more frequently.
+  - Fake Images:
+    - Generate random noise and pass it through the generator to create fake images.
+    - Pass these fake images through the discriminator to get `fake_outputs`.
+    - Compute the generator loss `g_loss` by comparing `fake_outputs` with the `ones` tensor (reversed labels).
+  - Gradient Descent Step:
+    - Zero the gradients of both `d_optimizer` and `g_optimizer`.
+    - Perform backpropagation on `g_loss` to compute the gradients.
+    - Update the generator's parameters using `g_optimizer.step()`.
+
+- The rest we know.
+#+BEGIN_SRC python
     # save losses
     d_losses.append(d_loss.item())
     g_losses.append(g_loss.item())
+
 
   ### print and save things ###
   print(f"Epoch: {epoch}, d_loss: {d_loss.item()}, g_loss: {g_loss.item()}")
 
   # PyTorch has a function to save a batch of images to file
   fake_images = fake_images.reshape(-1, 1, 28, 28)
-  save_image(scale_image(fake_images), f"/home/adrian/gan_images/{epoch+1}.png")
+  save_image(scale_image(fake_images), f"gan_images/{epoch+1}.png")
 #+END_SRC
+
+
+
