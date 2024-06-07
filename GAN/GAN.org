@@ -233,6 +233,7 @@ for epoch in range(200):
     - Update the generator's parameters using `g_optimizer.step()`.
 
 - The rest we know.
+
 #+BEGIN_SRC python
     # save losses
     d_losses.append(d_loss.item())
@@ -247,5 +248,44 @@ for epoch in range(200):
   save_image(scale_image(fake_images), f"gan_images/{epoch+1}.png")
 #+END_SRC
 
+**** Training
+- The training would look a bit like this:
 
+#+BEGIN_SRC python
+Epoch: 0, d_loss: 0.68047034740448, g_loss: 0.6662955284118652
+Epoch: 1, d_loss: 0.7071035504341125, g_loss: 0.8107303380966187
+Epoch: 2, d_loss: 0.6876696348190308, g_loss: 0.7310963869094849
+Epoch: 3, d_loss: 0.6825389862060547, g_loss: 0.7769100069999695
+Epoch: 4, d_loss: 0.6889893412590027, g_loss: 0.7556778788566589
+Epoch: 5, d_loss: 0.682299017906189, g_loss: 0.7201077938079834
+Epoch: 6, d_loss: 0.6838651895523071, g_loss: 0.740240752696991
+Epoch: 7, d_loss: 0.6866905689239502, g_loss: 0.727881908416748
+Epoch: 8, d_loss: 0.6904422044754028, g_loss: 0.6928049921989441
+Epoch: 9, d_loss: 0.6933594942092896, g_loss: 0.7346236705780029
+Epoch: 10, d_loss: 0.6938905715942383, g_loss: 0.722802996635437
+Epoch: 11, d_loss: 0.6922292709350586, g_loss: 0.7095546126365662
+Epoch: 12, d_loss: 0.6857796907424927, g_loss: 0.721759021282196
+Epoch: 13, d_loss: 0.7025293111801147, g_loss: 0.7216035723686218
+Epoch: 14, d_loss: 0.6925420761108398, g_loss: 0.7016552686691284
+Epoch: 15, d_loss: 0.6858004927635193, g_loss: 0.7063485980033875
+#+END_SRC
+
+*** loss
+- Plot loss
+
+#+BEGIN_SRC python
+plt.plot(g_losses, label='g_losses')
+plt.plot(d_losses, label='d_losses')
+plt.legend()
+#+END_SRC
+
+*** finished product
+- At the end of the project the images created by the generator look very similar to the MNIST dataset.
+
+#+BEGIN_SRC python
+a = imread('gan_images/200.png')
+plt.imshow(a)
+#+END_SRC
+
+(Images can be found in the images folders)
 
