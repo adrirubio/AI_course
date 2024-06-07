@@ -290,5 +290,5 @@ plt.imshow(a)
 (Images can be found in the images folders)
 
 *** summary
-Now
+Now you should know how to create GANs, we have discussed all of the necessary topics for you to now understand how GANs work. As you can see the results look quite like the MNIST dataset.
 
