@@ -289,3 +289,6 @@ plt.imshow(a)
 
 (Images can be found in the images folders)
 
+*** summary
+Now
+
