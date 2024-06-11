@@ -6,10 +6,10 @@
    - Applications: Used in stock market prediction, weather forecasting, demand forecasting in retail, etc.
 
 *** Key Concepts
-   - **Sequence Data**: Data where the order of inputs is significant.
-   - **Hidden State**: The 'memory' of the network, updated at each step of the sequence.
-   - **Time Steps**: Each individual point in the sequence.
-   - **Features**: Data points at each time step, can be multidimensional.
+   - Sequence Data: Data where the order of inputs is significant.
+   - Hidden State: The 'memory' of the network, updated at each step of the sequence.
+   - Time Steps: Each individual point in the sequence.
+   - Features: Data points at each time step, can be multidimensional.
 
 *** Training the Model
    - Data Preprocessing: Normalize data, convert to sequences.
@@ -17,6 +17,6 @@
    - Optimization: Use algorithms like Adam or SGD.
 
 *** Challenges in RNN Forecasting
-   - **Vanishing Gradient Problem**: Can occur during training of deep RNNs, where gradients shrink and learning slows down or stops.
-   - **Overfitting**: Especially in cases with noisy time series data.
-   - **Data Preprocessing**: Requires careful preparation of sequences and normalization.
+   - Vanishing Gradient Problem: Can occur during training of deep RNNs, where gradients shrink and learning slows down or stops.
+   - Overfitting: Especially in cases with noisy time series data.
+   - **Data Preprocessing: Requires careful preparation of sequences and normalization.
