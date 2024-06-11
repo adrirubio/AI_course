@@ -10,11 +10,7 @@
     - Handwriting Recognition
     - Biological Sequences
     - Language Translation
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> f1e68bb40ad498c952fecccec2b783978e5c321f
 *** What is a Sequence?
   - A sequence is an ordered collection of elements.
   - The order of these elements is crucial to the meaning or function of the sequence.
