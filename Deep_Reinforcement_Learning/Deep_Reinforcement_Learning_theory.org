@@ -3,7 +3,9 @@
 
 ** Key Components
    - State
-     - Definition: The current situation or configuration of the environment.
+     - Definition: The current situation or configuration of the environment. These are the types of states:
+       - Discrete States: Finite, distinct states (e.g., board positions in a chess game).
+       - Continuous States: Infinite, continuous range (e.g., position and velocity of a robot).
      - Example: In a chess game, a state can represent the positions of all pieces on the board.
 
    - Action
