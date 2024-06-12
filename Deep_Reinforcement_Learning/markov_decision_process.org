@@ -1,0 +1,28 @@
+*** Markov Decision Processes (MDPs)
+**** What is an MDP?
+A Markov Decision Process (MDP) is a way to describe a situation where you make decisions that lead to different outcomes. It's used in reinforcement learning to help an agent (like a robot or computer program) learn how to make good decisions.
+
+**** Parts of an MDP
+An MDP has four main parts:
+- States (S): All the possible situations the agent can be in.
+- Actions (A): The choices the agent can make.
+- Transition Function (T): The rules that tell us how we move from one state to another when an action is taken.
+- Reward Function (R): The feedback the agent gets after moving to a new state.
+
+**** The Goal
+The agent's goal is to find a policy (a way of choosing actions) that gets the most reward over time.
+
+**** How to Measure Success
+- State-Value (V): How good it is to be in a particular state.
+- Action-Value (Q): How good it is to take a specific action in a particular state.
+
+**** Solving an MDP
+To solve an MDP means finding the best policy. Common methods include:
+- Value Iteration: Update value estimates until they stop changing.
+- Policy Iteration: Alternate between improving the policy and updating value estimates.
+
+**** Deep Reinforcement Learning
+In deep reinforcement learning, we use neural networks to estimate V and Q, which helps the agent learn in complex situations.
+
+**** Summary
+MDPs are the basic framework for making decisions in reinforcement learning, helping agents learn the best actions to take to maximize their rewards.
