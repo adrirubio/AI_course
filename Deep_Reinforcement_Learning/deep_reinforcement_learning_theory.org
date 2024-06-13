@@ -1,4 +1,4 @@
-*** Reinforcement Learning (RL) Model
+*** Deep Reinforcement Learning (RL) Model
   A Reinforcement Learning (RL) model is a type of machine learning model designed for decision-making problems where an agent learns to make optimal choices by interacting with an environment to maximize cumulative rewards.
 
 **** Key Components
