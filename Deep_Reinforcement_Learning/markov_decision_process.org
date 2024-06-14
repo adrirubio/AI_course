@@ -1,12 +1,11 @@
-*** Markov Decision Processes (MDPs)
-**** What is an MDP?
+*** What is an MDP?
 A Markov Decision Process (MDP) is a way to describe a situation where you make decisions that lead to different outcomes. It's used in reinforcement learning to help an agent (like a robot or computer program) learn how to make good decisions.
 
 **** Parts of an MDP
 An MDP has four main parts:
 - States (S): All the possible situations the agent can be in.
 - Actions (A): The choices the agent can make.
-- Transition Function (T): The rules that tell us how we move from one state to another when an action is taken.
+- Transition Function (T): The rules that tell us how we move from one state to another when an action is taken, represented as \( p(s'|s, a) \). This is the probability of transitioning to state \( s' \) from state \( s \) after taking action \( a \).
 - Reward Function (R): The feedback the agent gets after moving to a new state.
 
 **** The Goal
