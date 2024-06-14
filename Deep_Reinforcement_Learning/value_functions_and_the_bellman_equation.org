@@ -1,0 +1,13 @@
+*** Value Function and The Bellman Equation
+
+**** Value Function
+The value function is a key concept in reinforcement learning and dynamic programming. It represents the expected cumulative reward an agent can achieve from a given state when following a specific strategy or policy.
+
+There are two main types of value functions:
+1. State Value Function: This function estimates how good it is for an agent to be in a specific state, in terms of the expected future rewards.
+2. Action Value Function: This function estimates how good it is for an agent to take a specific action in a specific state, in terms of the expected future rewards.
+
+**** Bellman Equation
+The Bellman equation provides a recursive decomposition for the value functions. It expresses the value of a state as the immediate reward plus the value of the next state, weighted by the probability of reaching that next state. Essentially, it breaks down the value of a decision into immediate rewards and future rewards, helping in the optimization of decision-making strategies.
+
+The Bellman equation helps in computing the value functions by relating them to each other in a recursive manner. This principle is fundamental in many algorithms for solving reinforcement learning problems.
