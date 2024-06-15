@@ -15,16 +15,16 @@ The epsilon-greedy strategy is a simple and widely used algorithm in reinforceme
 - With probability ε, choose a random action (exploration).
 - With probability 1 - ε, choose the best-known action (exploitation).
 
-** Example
+**** Example
 If ε = 0.1, then:
 - 10% of the time, the agent will explore by choosing a random action.
 - 90% of the time, the agent will exploit by choosing the action that currently has the highest estimated reward.
 
-** Advantages
+**** Advantages
 - Simplicity: The epsilon-greedy strategy is straightforward to implement and understand.
 - Effectiveness: Provides a basic but effective way to balance exploration and exploitation.
 
-** Disadvantages
+**** Disadvantages
 - Fixed Exploration Rate: The exploration rate ε is constant, which may not be optimal throughout the learning process.
 
 **** Summary
