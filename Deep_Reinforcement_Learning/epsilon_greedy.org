@@ -1,1 +1,31 @@
-***
+*** Epsilon-Greedy
+**** Introduction
+The epsilon-greedy strategy is a simple and widely used algorithm in reinforcement learning for balancing exploration and exploitation.
+
+**** Key Concepts
+***** Exploration vs. Exploitation
+- Exploration: Trying out new actions to discover their effects and potentially find more rewarding actions.
+- Exploitation: Choosing the best-known action to maximize the immediate reward based on past experience.
+
+***** Epsilon (ε)
+- A parameter between 0 and 1 that determines the likelihood of exploration.
+- Typically a small value like 0.1 or 0.2.
+
+***** Action Selection
+- With probability ε, choose a random action (exploration).
+- With probability 1 - ε, choose the best-known action (exploitation).
+
+** Example
+If ε = 0.1, then:
+- 10% of the time, the agent will explore by choosing a random action.
+- 90% of the time, the agent will exploit by choosing the action that currently has the highest estimated reward.
+
+** Advantages
+- Simplicity: The epsilon-greedy strategy is straightforward to implement and understand.
+- Effectiveness: Provides a basic but effective way to balance exploration and exploitation.
+
+** Disadvantages
+- Fixed Exploration Rate: The exploration rate ε is constant, which may not be optimal throughout the learning process.
+
+**** Summary
+The epsilon-greedy strategy is a fundamental technique in reinforcement learning that helps an agent balance the trade-off between exploring new actions and exploiting known rewarding actions. By adjusting the parameter ε, one can control the degree of exploration and thus influence the learning process.
