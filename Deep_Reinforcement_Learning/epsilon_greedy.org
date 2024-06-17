@@ -1,6 +1,6 @@
 *** Epsilon-Greedy
 **** Introduction
-The epsilon-greedy strategy is a simple and widely used algorithm in reinforcement learning for balancing exploration and exploitation.
+- The epsilon-greedy strategy is a simple and widely used algorithm in reinforcement learning for balancing exploration and exploitation.
 
 **** Key Concepts
 ***** Exploration vs. Exploitation
