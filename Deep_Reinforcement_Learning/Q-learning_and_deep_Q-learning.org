@@ -15,3 +15,18 @@
    - Neural Network: Used to approximate the Q-value function. The input to the network is the state, and the output is the Q-value for each action.
    - Experience Replay: A technique where the agent stores its experiences (state, action, reward, next state) in a replay buffer and uses random samples from this buffer to train the network. This helps in breaking the correlation between consecutive samples and leads to better training stability.
    - Target Network: A copy of the Q-network used to compute target Q-values. The target network is updated less frequently, which stabilizes training.
+
+**** Algorithm Steps
+   1. Initialize Replay Memory: Store experiences.
+   2. Initialize Q-Network: Create the neural network to predict Q-values.
+   3. For each episode:
+      - Initialize state.
+      - For each step in the episode:
+        - Select an action (exploration vs exploitation).
+        - Perform the action and observe the reward and next state.
+        - Store the experience in replay memory.
+        - Sample a random batch from replay memory.
+        - Compute the target Q-value.
+        - Update the Q-network.
+        - Update the state.
+      - Decay the exploration rate.
