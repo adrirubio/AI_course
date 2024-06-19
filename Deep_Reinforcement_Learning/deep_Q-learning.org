@@ -1,1 +1,11 @@
 *** Deep Q-Learning
+
+**** Introduction
+   Deep Q-Learning is a type of reinforcement learning algorithm that combines Q-Learning with deep neural networks. This approach is particularly useful for handling environments with high-dimensional state spaces, such as video games.
+
+**** Q-Learning
+   Q-Learning is a value-based method of supplying information to tell an agent what action to take under what circumstances. It works by learning a Q-value function, Q(s, a), which estimates the value of taking action *a* in state *s*.
+
+   - Q-Value (Quality Value): The expected future reward of an action taken in a given state.
+   - Policy: A strategy used by the agent to determine the next action based on the current state.
+
