@@ -45,4 +45,3 @@
    - Game Playing: An RL agent learns to play a game like chess by trying different moves, receiving feedback on which moves lead to wins or losses, and gradually improving its strategy to win more often.
 
 **** Summary
-   A Reinforcement Learning model continuously interacts with its environment, makes decisions, receives feedback, and learns from this feedback to make better decisions in the future, aiming to maximize its cumulative reward over time.
