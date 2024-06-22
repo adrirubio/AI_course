@@ -45,4 +45,4 @@
    - Game Playing: An RL agent learns to play a game like chess by trying different moves, receiving feedback on which moves lead to wins or losses, and gradually improving its strategy to win more often.
 
 **** Summary
-  Deep Q-Learning is a powerful algorithm that combines the concepts of Q-Learning with deep neural networks, enabling agents to learn optimal policies in complex environments. By leveraging techniques like experience replay and target networks, it achieves stable and efficient learning.
+
