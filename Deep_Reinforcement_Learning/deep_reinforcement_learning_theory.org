@@ -45,4 +45,7 @@
    - Game Playing: An RL agent learns to play a game like chess by trying different moves, receiving feedback on which moves lead to wins or losses, and gradually improving its strategy to win more often.
 
 **** Summary
+<<<<<<< HEAD
    Deep Reinforcement Learning merges the decision-making framework of reinforcement learning with the pattern recognition power of deep learning. This combination allows agents to learn from high-dimensional inputs and excel in complex environments, pushing the boundaries of what machines can achieve autonomously.
+=======
+>>>>>>> 5e4ae4fbb6f3b9c4f95bdc03fee1a6a9286e3353
