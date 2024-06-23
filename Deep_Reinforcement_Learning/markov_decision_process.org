@@ -5,7 +5,8 @@ A Markov Decision Process (MDP) is a way to describe a situation where you make 
 An MDP has four main parts:
 - States (S): All the possible situations the agent can be in.
 - Actions (A): The choices the agent can make.
-- Transition Function (T): The rules that tell us how we move from one state to another when an action is taken, represented as \( p(s'|s, a) \). This is the probability of transitioning to state \( s' \) from state \( s \) after taking action \( a \).
+- Transition Function (T): The rules that tell us how we move from one state to another when an action is taken, represented as \( p(s'|s, a) \). This is the probability of transitioning to state
+   \( s' \) from state \( s \) after taking action \( a \).
 - Reward Function (R): The feedback the agent gets after moving to a new state.
 
 **** The Goal
