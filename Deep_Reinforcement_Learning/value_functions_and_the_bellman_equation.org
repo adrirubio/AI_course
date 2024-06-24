@@ -10,4 +10,4 @@ There are two main types of value functions:
 **** Bellman Equation
 - The Bellman equation provides a recursive decomposition for the value functions. It expresses the value of a state as the immediate reward plus the value of the next state, weighted by the probability of reaching that next state. Essentially, it breaks down the value of a decision into immediate rewards and future rewards, helping in the optimization of decision-making strategies.
 
-- The Bellman equation helps in computing the value functions by relating them to each other in a recursive manner. This principle is fundamental in many algorithms for solving reinforcement learning problems.
+- The Bellman equation helps in computing the value functions by relating them to each other in a recursive manner.
